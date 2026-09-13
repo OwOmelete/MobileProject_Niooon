@@ -2,30 +2,44 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerControllerProto : MonoBehaviour
 {
-    [SerializeField] private TMP_Text textField;
     [SerializeField] private float maxSpeed;
+    [SerializeField] private float turnSpeed = 0.04f;
+    [SerializeField] private float acceleration = 0.03f;
+    [SerializeField] private float forwardThreshold = 0.5f;
+
+    [HideInInspector] public Gamepad g;
+
+    
     
     private Vector2 StickInputs;
     private Vector2 CurrentDirection;
-    private float CurrentSpeed;
+    public float CurrentSpeed;
     
     void Start()
     {
-        
     }
+
     
     void Update()
     {
-        StickInputs = Gamepad.current.leftStick.value.normalized;
-        CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, 0.008f).normalized;
-        Debug.Log(StickInputs);
+        StickInputs = g.leftStick.value.normalized;
+
+        if (g.aButton.wasPressedThisFrame)
+        {
+            SceneManager.LoadScene(0);
+        }
+        
+        
+        
     }
 
     private void FixedUpdate()
     {
+        CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, turnSpeed ).normalized;
         DirectionToRotation();
         SpeedAmount();
         Thrust();
@@ -33,19 +47,17 @@ public class PlayerControllerProto : MonoBehaviour
 
     private void DirectionToRotation()
     {
-        transform.rotation = Quaternion.Euler(90 ,0, -90 + Vector2.Angle(Vector2.right, CurrentDirection) * Mathf.Sign(CurrentDirection.y));
+        transform.rotation = Quaternion.Euler(0 ,0, -90 + Vector2.Angle(Vector2.right, CurrentDirection) * Mathf.Sign(CurrentDirection.y));
     }
 
     private void SpeedAmount()
     {
-        CurrentSpeed += (Vector2.Dot(StickInputs, CurrentDirection) - 0.3f) * 0.0005f;
+        CurrentSpeed += (Vector2.Dot(StickInputs, CurrentDirection) - forwardThreshold) * acceleration * Time.fixedDeltaTime;
         CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0, maxSpeed);
-        
-        textField.text = CurrentSpeed.ToString();
     }
 
     private void Thrust()
     {
-        transform.position = transform.position + new Vector3(CurrentDirection.x * CurrentSpeed, 0 , CurrentDirection.y * CurrentSpeed);
+        transform.position = transform.position + new Vector3(CurrentDirection.x * CurrentSpeed * Time.fixedDeltaTime, CurrentDirection.y * CurrentSpeed * Time.fixedDeltaTime , 0);
     }
 }
