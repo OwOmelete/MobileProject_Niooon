@@ -6,23 +6,18 @@ using UnityEngine.SceneManagement;
 
 public class PlayerControllerProto : MonoBehaviour
 {
+    
+    [Header("Movements")]
     [SerializeField] private float maxSpeed;
     [SerializeField] private float turnSpeed = 0.04f;
     [SerializeField] private float acceleration = 0.03f;
     [SerializeField] private float forwardThreshold = 0.5f;
 
     [HideInInspector] public Gamepad g;
-
-    
     
     private Vector2 StickInputs;
     private Vector2 CurrentDirection;
-    public float CurrentSpeed;
-    
-    void Start()
-    {
-    }
-
+    [HideInInspector] public float CurrentSpeed;
     
     void Update()
     {
@@ -32,9 +27,6 @@ public class PlayerControllerProto : MonoBehaviour
         {
             SceneManager.LoadScene(0);
         }
-        
-        
-        
     }
 
     private void FixedUpdate()
