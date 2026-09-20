@@ -12,6 +12,7 @@ public class PlayerControllerProto : MonoBehaviour
     [SerializeField] private float turnSpeed = 0.04f;
     [SerializeField] private float acceleration = 0.03f;
     [SerializeField] private float forwardThreshold = 0.5f;
+    [SerializeField] private Joystick joystick;
 
     [HideInInspector] public Gamepad g;
     
@@ -21,12 +22,8 @@ public class PlayerControllerProto : MonoBehaviour
     
     void Update()
     {
-        StickInputs = g.leftStick.value.normalized;
-
-        if (g.aButton.wasPressedThisFrame)
-        {
-            SceneManager.LoadScene(0);
-        }
+        StickInputs = joystick.Direction;
+        
     }
 
     private void FixedUpdate()

@@ -13,10 +13,12 @@ public class Pointe : MonoBehaviour
             {
                 Destroy(transform.parent.gameObject);
             }
+            
         }
         else
         {
             Destroy(other.transform.gameObject);
         }
+        
     }
 }

@@ -16,4 +16,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void Reload()
+    {
+        SceneManager.LoadScene(0);
+    }
+
 }
