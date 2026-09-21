@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 125553895168445320}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -180,7 +180,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: e501e27fb9f00e745b6dbf52b099711d, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -206,7 +206,12 @@ MonoBehaviour:
   acceleration: 1
   forwardThreshold: 0.75
   joystick: {fileID: 0}
+  isImmune: 0
+  blinkNumberAnim: 4
+  hp: 20
+  CurrentDirection: {x: 0, y: 0}
   CurrentSpeed: 0
+  hpDisplay: {fileID: 0}
 --- !u!60 &5865119277877100664
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -285,9 +290,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!96 &8009028308726679330
 TrailRenderer:
@@ -315,7 +320,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a71aa7a1733bba24f9fc3636f1d44ef0, type: 2}
+  - {fileID: 2100000, guid: 1a0978d463d30f046ad5aa75c4439442, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
