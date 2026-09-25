@@ -10,10 +10,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < playerList.Length; i++)
+        /*for (int i = 0; i < playerList.Length; i++)
         {
             playerList[i].g = Gamepad.all[i];
-        }
+        }*/
     }
 
     public void Reload()
