@@ -16,17 +16,14 @@ public class PlayerControllerProto : MonoBehaviour
     [SerializeField] private float turnSpeed = 0.04f;
     [SerializeField] private float acceleration = 0.03f;
     [SerializeField] private float forwardThreshold = 0.5f;
-    [SerializeField] private Joystick joystick;
-    [SerializeField] private float raysOffset;
     [SerializeField] private float slideThreshold;
+    [SerializeField] private Joystick joystick;
     [HideInInspector] public bool isImmune;
-
-    [SerializeField] private float blinkNumberAnim = 4;
+    [Header("Health")]
     [SerializeField] public float damageMult = 3;
-    
     [HideInInspector] public Gamepad g;
-
     public float hp = 20;
+    [SerializeField] private float blinkNumberAnim = 4;
 
     private SpriteRenderer sr;
     private Vector2 StickInputs;
@@ -111,7 +108,7 @@ public class PlayerControllerProto : MonoBehaviour
 
     private void SpeedAmount()
     {
-        CurrentSpeed += (Vector2.Dot(StickInputs, CurrentDirection) - forwardThreshold) * acceleration * Time.fixedDeltaTime;
+        CurrentSpeed += (Vector2.Dot(StickInputs, CurrentDirection) - forwardThreshold) * acceleration / ((forwardThreshold-1)*-1) * Time.fixedDeltaTime;
         CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0, maxSpeed);
     }
 
@@ -120,10 +117,11 @@ public class PlayerControllerProto : MonoBehaviour
     {
         LayerMask mask = LayerMask.GetMask("Walls");
 
-        RaycastHit2D leftHit = Physics2D.Raycast(transform.position - transform.right * raysOffset - transform.up * 0.4f, (transform.up - transform.right * 0.8f), 0.8f, mask);
+        RaycastHit2D leftHit = Physics2D.Raycast(transform.position - transform.up * 0.25f, (transform.up - transform.right * 0.8f), 0.6f, mask);
 
-        RaycastHit2D rightHit = Physics2D.Raycast(transform.position + transform.right * raysOffset - transform.up * 0.4f, (transform.up + transform.right * 0.8f), 0.8f, mask);
+        RaycastHit2D rightHit = Physics2D.Raycast(transform.position - transform.up * 0.25f, (transform.up + transform.right * 0.8f), 0.6f, mask);
 
+        Debug.DrawRay(transform.position - transform.up * 0.25f, (transform.up - transform.right * 0.8f)*0.6f);
 
 
         float dot = 1;
@@ -136,8 +134,9 @@ public class PlayerControllerProto : MonoBehaviour
                 {
                     CurrentSpeed *= dot-1;
                 }
-                CurrentDirection -= leftHit.normal * dot;
-                CurrentDirection.Normalize();
+                Vector2 newDir = CurrentDirection-leftHit.normal * dot;
+                
+                CurrentDirection = Vector2.Lerp(CurrentDirection, newDir, 0.3f).normalized;
             }
         }
         else if (rightHit)
@@ -149,8 +148,8 @@ public class PlayerControllerProto : MonoBehaviour
                 {
                     CurrentSpeed *= dot-1;
                 }
-                CurrentDirection -= rightHit.normal * dot;
-                CurrentDirection.Normalize();
+                Vector2 newDir = CurrentDirection-rightHit.normal * dot;
+                CurrentDirection = Vector2.Lerp(CurrentDirection, newDir, 0.3f).normalized;
             }
         }
 
