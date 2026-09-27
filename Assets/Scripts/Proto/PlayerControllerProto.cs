@@ -18,6 +18,7 @@ public class PlayerControllerProto : MonoBehaviour
     [SerializeField] private float forwardThreshold = 0.5f;
     [SerializeField] private Joystick joystick;
     [SerializeField] private float raysOffset;
+    [SerializeField] private float slideThreshold;
     [HideInInspector] public bool isImmune;
 
     [SerializeField] private float blinkNumberAnim = 4;
@@ -117,34 +118,11 @@ public class PlayerControllerProto : MonoBehaviour
 
     void HandleSlide()
     {
-        /*LayerMask mask = LayerMask.GetMask("Wall"); 
-
-        Debug.DrawRay(transform.position - transform.right * raysOffset - transform.up * 0.1f, (transform.up - transform.right * 0.2f)*0.2f);
-        Debug.DrawRay(transform.position + transform.right * raysOffset - transform.up * 0.1f, (transform.up + transform.right * 0.2f)*0.2f);
-        RaycastHit2D leftHit = Physics2D.Raycast(transform.position - transform.right * raysOffset - transform.up * 0.1f, (transform.up - transform.right * 0.2f), 0.2f, mask);
-
-        RaycastHit2D rightHit = Physics2D.Raycast(transform.position + transform.right * raysOffset - transform.up * 0.1f, (transform.up + transform.right * 0.2f), 0.2f, mask);
-
-        if (leftHit)
-        {
-            Debug.Log("ha");
-            //float dot = Vector2.Dot()
-
-            CurrentDirection =
-            CurrentDirection = -leftHit.normal;
-        }
-        else if (rightHit)
-        {
-            Debug.Log("ho");
-            CurrentDirection = -rightHit.normal;
-        }
-        */
-
         LayerMask mask = LayerMask.GetMask("Walls");
 
-        RaycastHit2D leftHit = Physics2D.Raycast(transform.position - transform.right * raysOffset - transform.up * 0.1f, (transform.up - transform.right * 0.2f), 0.2f, mask);
+        RaycastHit2D leftHit = Physics2D.Raycast(transform.position - transform.right * raysOffset - transform.up * 0.4f, (transform.up - transform.right * 0.8f), 0.8f, mask);
 
-        RaycastHit2D rightHit = Physics2D.Raycast(transform.position + transform.right * raysOffset - transform.up * 0.1f, (transform.up + transform.right * 0.2f), 0.2f, mask);
+        RaycastHit2D rightHit = Physics2D.Raycast(transform.position + transform.right * raysOffset - transform.up * 0.4f, (transform.up + transform.right * 0.8f), 0.8f, mask);
 
 
 
@@ -154,6 +132,10 @@ public class PlayerControllerProto : MonoBehaviour
             dot = Vector2.Dot(CurrentDirection, leftHit.normal);
             if (dot < 0)
             {
+                if (dot < -slideThreshold)
+                {
+                    CurrentSpeed *= dot-1;
+                }
                 CurrentDirection -= leftHit.normal * dot;
                 CurrentDirection.Normalize();
             }
@@ -163,6 +145,10 @@ public class PlayerControllerProto : MonoBehaviour
             dot = Vector2.Dot(CurrentDirection, rightHit.normal);
             if (dot < 0)
             {
+                if (dot < -slideThreshold)
+                {
+                    CurrentSpeed *= dot-1;
+                }
                 CurrentDirection -= rightHit.normal * dot;
                 CurrentDirection.Normalize();
             }
