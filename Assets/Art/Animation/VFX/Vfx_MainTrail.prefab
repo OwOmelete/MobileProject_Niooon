@@ -5353,12 +5353,12 @@ MonoBehaviour:
   turnSpeed: 0.04
   acceleration: 1
   forwardThreshold: 0.75
+  slideThreshold: 0
   joystick: {fileID: 0}
-  raysOffset: 0
   isImmune: 0
-  blinkNumberAnim: 4
   damageMult: 3
   hp: 20
+  blinkNumberAnim: 4
   CurrentDirection: {x: 0, y: 0}
   CurrentSpeed: 0
   hpDisplay: {fileID: 0}
@@ -5400,7 +5400,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.24625, y: 0.9175}
+    oldSize: {x: 0.788, y: 2.936}
     newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
