@@ -19,12 +19,29 @@ public class PlayerControllerProto : MonoBehaviour
     [SerializeField] private float slideThreshold;
     [SerializeField] private Joystick joystick;
     [HideInInspector] public bool isImmune;
+    [SerializeField, Range(0, 1)] private float mediumSpeedThreshold;
+    [SerializeField, Range(0, 1)] private float highSpeedThreshold;
+
+    private enum Speed
+    {
+        stop,
+        low,
+        medium,
+        high
+    }
+
+    private Speed speedState;
+    
     [Header("Health")]
     [SerializeField] public float damageMult = 3;
     [HideInInspector] public Gamepad g;
     public float hp = 20;
     [SerializeField] private float blinkNumberAnim = 4;
 
+
+    [Header("Other references")] [SerializeField]
+    private Animator trailBehaviour;
+    
     private SpriteRenderer sr;
     private Vector2 StickInputs;
     [HideInInspector] public Vector2 CurrentDirection;
@@ -36,7 +53,7 @@ public class PlayerControllerProto : MonoBehaviour
     {
         if (isImmune) return;
         hp -= n;
-        StartCoroutine(damageAnim());
+        //StartCoroutine(damageAnim());
         if (hp < 0)
         {
             hp = 0;
@@ -72,7 +89,7 @@ public class PlayerControllerProto : MonoBehaviour
     private void Start()
     {
         DisplayHp();
-        sr = GetComponent<SpriteRenderer>();
+        //sr = GetComponent<SpriteRenderer>();
         CurrentDirection = Vector2.up;
     }
 
@@ -88,9 +105,102 @@ public class PlayerControllerProto : MonoBehaviour
         DirectionToRotation();
 
         transform.position += (Vector3)(CurrentDirection * CurrentSpeed * Time.fixedDeltaTime);
+        
+       
 
     }
 
+
+    private void UpdateTrail()
+    {
+        float speedPercent = CurrentSpeed / maxSpeed;
+
+        if (speedPercent > highSpeedThreshold)
+        {
+            SwitchSpeedState(Speed.high);
+        }
+        else if (speedPercent > mediumSpeedThreshold)
+        {
+            SwitchSpeedState(Speed.medium);
+        }
+        else if(speedPercent > 0.02f)
+        {
+            SwitchSpeedState(Speed.low);
+        }
+        else
+        {
+            SwitchSpeedState(Speed.stop);
+        }
+    }
+
+    private void Update()
+    {
+        UpdateTrail();
+    }
+
+    private void SwitchSpeedState(Speed newState)
+    {
+        if (speedState == newState) return;
+        ResetAllTriggers();
+        
+        switch(speedState)
+        {
+            case Speed.stop:
+                if (newState >= Speed.low)
+                {
+                    trailBehaviour.SetTrigger("T_Start");
+                }
+                break;
+            case Speed.low:
+                if (newState == Speed.stop)
+                {
+                    trailBehaviour.SetTrigger("T_SlowingFromMin");
+                }
+                else
+                {
+                    trailBehaviour.SetTrigger("T_ToMid");
+                }
+                break;
+            case Speed.medium:
+                if (newState == Speed.stop)
+                {
+                    trailBehaviour.SetTrigger("T_BrutalStop");
+                }
+                else if (newState == Speed.low)
+                {
+                    trailBehaviour.SetTrigger("T_SlowingFromMid");
+                }
+                else
+                {
+                    trailBehaviour.SetTrigger("T_ToMax");
+                }
+                
+                break;
+            case Speed.high:
+                if (newState == Speed.stop)
+                {
+                    trailBehaviour.SetTrigger("T_BrutalStop");
+                }
+                else if (newState == Speed.medium)
+                {
+                    trailBehaviour.SetTrigger("T_SlowingFromMax");
+                }
+                break;
+        }
+
+        speedState = newState;
+    }
+    
+    private void ResetAllTriggers()
+    {
+        foreach (var param in trailBehaviour.parameters)
+        {
+            if (param.type == AnimatorControllerParameterType.Trigger)
+            {
+                trailBehaviour.ResetTrigger(param.name);
+            }
+        }
+    }
     
 
     private void DirectionToRotation()

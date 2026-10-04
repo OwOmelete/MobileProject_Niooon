@@ -262,7 +262,7 @@ Animator:
   m_GameObject: {fileID: 3363089985339655852}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6a2a4f99c16078241a91f5682fce26b8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0dce042d45c0e344588d089804779f21, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5559,13 +5559,16 @@ MonoBehaviour:
   maxSpeed: 20
   turnSpeed: 0.04
   acceleration: 4
-  forwardThreshold: 0.75
+  forwardThreshold: 0.9
   slideThreshold: 0.5
   joystick: {fileID: 0}
   isImmune: 0
+  mediumSpeedThreshold: 0.19
+  highSpeedThreshold: 0.56
   damageMult: 3
   hp: 20
   blinkNumberAnim: 4
+  trailBehaviour: {fileID: 982778337515102700}
   CurrentDirection: {x: 0, y: 0}
   CurrentSpeed: 0
   hpDisplay: {fileID: 0}
