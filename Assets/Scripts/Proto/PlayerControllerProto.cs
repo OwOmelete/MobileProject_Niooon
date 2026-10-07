@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -14,7 +15,13 @@ public class PlayerControllerProto : MonoBehaviour
     [Header("Movements")]
     [SerializeField] private float maxSpeed;
     [SerializeField] private float turnSpeed = 0.04f;
+
+    [SerializeField] private AnimationCurve rotationCurve;
+
     [SerializeField] private float acceleration = 0.03f;
+
+    [SerializeField] private AnimationCurve accelerationCurve;
+
     [SerializeField] private float forwardThreshold = 0.5f;
     [SerializeField] private float slideThreshold;
     [SerializeField] private Joystick joystick;
@@ -32,7 +39,7 @@ public class PlayerControllerProto : MonoBehaviour
 
     private Speed speedState;
     
-    [Header("Health")]
+    [Header("Health/Damage")]
     [SerializeField] public float damageMult = 3;
     [HideInInspector] public Gamepad g;
     public float hp = 20;
@@ -48,6 +55,7 @@ public class PlayerControllerProto : MonoBehaviour
     [HideInInspector] public float CurrentSpeed;
 
     [SerializeField] private TMP_Text hpDisplay;
+    private float maxSpeedPercent;
 
     public void takeDamage(float n)
     {
@@ -95,8 +103,10 @@ public class PlayerControllerProto : MonoBehaviour
 
     private void FixedUpdate()
     {
+        maxSpeedPercent = CurrentSpeed / maxSpeed;
+
         StickInputs = joystick.Direction;
-        CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, turnSpeed ).normalized;
+        CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, turnSpeed * rotationCurve.Evaluate(maxSpeedPercent)).normalized;
 
         SpeedAmount();
 
@@ -218,7 +228,7 @@ public class PlayerControllerProto : MonoBehaviour
 
     private void SpeedAmount()
     {
-        CurrentSpeed += (Vector2.Dot(StickInputs, CurrentDirection) - forwardThreshold) * acceleration / ((forwardThreshold-1)*-1) * Time.fixedDeltaTime;
+        CurrentSpeed += (Vector2.Dot(StickInputs, CurrentDirection) - forwardThreshold) * acceleration * accelerationCurve.Evaluate(maxSpeedPercent) / ((forwardThreshold-1)*-1) * Time.fixedDeltaTime;
         CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0, maxSpeed);
     }
 
