@@ -240,7 +240,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -1698438478, guid: b53e0c790cbf7d540b1a5f5205a8ea3a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5081,7 +5081,7 @@ ParticleSystemRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -5161,7 +5161,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 242
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5275,7 +5275,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -1188198217, guid: f303f6aa54703ee4bb32c4122772675d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5557,8 +5557,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerControllerProto
   maxSpeed: 20
-  turnSpeed: 0.04
+  turnSpeed: 0.5
+  rotationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.00064468384
+      value: 1
+      inSlope: -3.6518319
+      outSlope: -3.6518319
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.016751809
+    - serializedVersion: 3
+      time: 1.000644
+      value: 0.19941776
+      inSlope: -0.1644007
+      outSlope: -0.1644007
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.035438854
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   acceleration: 4
+  accelerationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.7957294
+      outSlope: -0.7957294
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.0006104
+      value: 0.20378494
+      inSlope: -0.7957294
+      outSlope: -0.7957294
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   forwardThreshold: 0.9
   slideThreshold: 0.5
   joystick: {fileID: 0}
