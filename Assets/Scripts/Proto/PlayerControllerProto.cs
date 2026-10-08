@@ -24,6 +24,8 @@ public class PlayerControllerProto : MonoBehaviour
     [HideInInspector] public bool isImmune;
     [SerializeField, Range(0, 1)] private float mediumSpeedThreshold;
     [SerializeField, Range(0, 1)] private float highSpeedThreshold;
+    private bool isOnWall = false;
+
 
     private enum Speed
     {
@@ -44,6 +46,8 @@ public class PlayerControllerProto : MonoBehaviour
 
     [Header("Other references")] [SerializeField]
     private Animator trailBehaviour;
+    [SerializeField] private GameObject dust;
+    [SerializeField] private GameObject stars;
     
     private SpriteRenderer sr;
     private Vector2 StickInputs;
@@ -94,6 +98,10 @@ public class PlayerControllerProto : MonoBehaviour
     {
         DisplayHp();
         //sr = GetComponent<SpriteRenderer>();
+
+        stars.SetActive(false);
+        dust.SetActive(false);
+
         CurrentDirection = Vector2.up;
     }
 
@@ -115,98 +123,13 @@ public class PlayerControllerProto : MonoBehaviour
        
 
     }
-
-
-    private void UpdateTrail()
-    {
-        float speedPercent = CurrentSpeed / maxSpeed;
-
-        if (speedPercent > highSpeedThreshold)
-        {
-            SwitchSpeedState(Speed.high);
-        }
-        else if (speedPercent > mediumSpeedThreshold)
-        {
-            SwitchSpeedState(Speed.medium);
-        }
-        else if(speedPercent > 0.02f)
-        {
-            SwitchSpeedState(Speed.low);
-        }
-        else
-        {
-            SwitchSpeedState(Speed.stop);
-        }
-    }
-
     private void Update()
     {
         UpdateTrail();
     }
 
-    private void SwitchSpeedState(Speed newState)
-    {
-        if (speedState == newState) return;
-        ResetAllTriggers();
-        
-        switch(speedState)
-        {
-            case Speed.stop:
-                if (newState >= Speed.low)
-                {
-                    trailBehaviour.SetTrigger("T_Start");
-                }
-                break;
-            case Speed.low:
-                if (newState == Speed.stop)
-                {
-                    trailBehaviour.SetTrigger("T_SlowingFromMin");
-                }
-                else
-                {
-                    trailBehaviour.SetTrigger("T_ToMid");
-                }
-                break;
-            case Speed.medium:
-                if (newState == Speed.stop)
-                {
-                    trailBehaviour.SetTrigger("T_BrutalStop");
-                }
-                else if (newState == Speed.low)
-                {
-                    trailBehaviour.SetTrigger("T_SlowingFromMid");
-                }
-                else
-                {
-                    trailBehaviour.SetTrigger("T_ToMax");
-                }
-                
-                break;
-            case Speed.high:
-                if (newState == Speed.stop)
-                {
-                    trailBehaviour.SetTrigger("T_BrutalStop");
-                }
-                else if (newState == Speed.medium)
-                {
-                    trailBehaviour.SetTrigger("T_SlowingFromMax");
-                }
-                break;
-        }
 
-        speedState = newState;
-    }
     
-    private void ResetAllTriggers()
-    {
-        foreach (var param in trailBehaviour.parameters)
-        {
-            if (param.type == AnimatorControllerParameterType.Trigger)
-            {
-                trailBehaviour.ResetTrigger(param.name);
-            }
-        }
-    }
     
 
     private void DirectionToRotation()
@@ -246,28 +169,135 @@ public class PlayerControllerProto : MonoBehaviour
             dot = Vector2.Dot(CurrentDirection, leftHit.normal);
             if (dot < 0)
             {
-                if (dot < -slideThreshold)
+                if (dot < -slideThreshold && !isOnWall)
                 {
-                    CurrentSpeed *= dot-1;
+                    CurrentSpeed *= Mathf.Clamp((1 + dot)*3, 0, 1);
                 }
                 Vector2 newDir = CurrentDirection-leftHit.normal * dot;
                 
                 CurrentDirection = Vector2.Lerp(CurrentDirection, newDir, 0.3f).normalized;
             }
+            isOnWall = true;
         }
         else if (rightHit)
         {
             dot = Vector2.Dot(CurrentDirection, rightHit.normal);
             if (dot < 0)
             {
-                if (dot < -slideThreshold)
+                if (dot < -slideThreshold && !isOnWall)
                 {
-                    CurrentSpeed *= dot-1;
+                    CurrentSpeed *= Mathf.Clamp((1 + dot) * 3, 0, 1);
                 }
                 Vector2 newDir = CurrentDirection-rightHit.normal * dot;
                 CurrentDirection = Vector2.Lerp(CurrentDirection, newDir, 0.3f).normalized;
             }
+            isOnWall = true;
+        }
+        else
+        {
+            isOnWall = false;
+        }
+        
+    }
+
+    #region Visuals
+
+
+    private void UpdateTrail()
+    {
+        float speedPercent = CurrentSpeed / maxSpeed;
+
+        if (speedPercent > highSpeedThreshold)
+        {
+            SwitchSpeedState(Speed.high);
+        }
+        else if (speedPercent > mediumSpeedThreshold)
+        {
+            SwitchSpeedState(Speed.medium);
+        }
+        else if (speedPercent > 0.02f)
+        {
+            SwitchSpeedState(Speed.low);
+        }
+        else
+        {
+            SwitchSpeedState(Speed.stop);
+        }
+    }
+
+
+    private void SwitchSpeedState(Speed newState)
+    {
+        if (speedState == newState) return;
+        ResetAllTriggers();
+
+        switch (speedState)
+        {
+            case Speed.stop:
+                if (newState >= Speed.low)
+                {
+                    trailBehaviour.SetTrigger("T_Start");
+                }
+                break;
+            case Speed.low:
+                if (newState == Speed.stop)
+                {
+                    trailBehaviour.SetTrigger("T_SlowingFromMin");
+                }
+                else
+                {
+                    trailBehaviour.SetTrigger("T_ToMid");
+                    dust.SetActive(true);
+                }
+                break;
+            case Speed.medium:
+                if (newState == Speed.stop)
+                {
+                    trailBehaviour.SetTrigger("T_BrutalStop");
+                    dust.SetActive(false);
+                }
+                else if (newState == Speed.low)
+                {
+                    trailBehaviour.SetTrigger("T_SlowingFromMid");
+                    dust.SetActive(false);
+                }
+                else
+                {
+                    trailBehaviour.SetTrigger("T_ToMax");
+                    stars.SetActive(true);
+                }
+
+                break;
+            case Speed.high:
+                if (newState == Speed.stop)
+                {
+                    trailBehaviour.SetTrigger("T_BrutalStop");
+                    dust.SetActive(false);
+                    stars.SetActive(false);
+                }
+                else if (newState == Speed.medium)
+                {
+                    trailBehaviour.SetTrigger("T_SlowingFromMax");
+                    stars.SetActive(false);
+                }
+                break;
         }
 
+        speedState = newState;
     }
+
+    private void ResetAllTriggers()
+    {
+        foreach (var param in trailBehaviour.parameters)
+        {
+            if (param.type == AnimatorControllerParameterType.Trigger)
+            {
+                trailBehaviour.ResetTrigger(param.name);
+            }
+        }
+    }
+
+    #endregion
+
+
 }

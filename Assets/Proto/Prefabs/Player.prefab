@@ -5608,7 +5608,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   forwardThreshold: 0.9
-  slideThreshold: 0.5
+  slideThreshold: 0.25
   joystick: {fileID: 0}
   isImmune: 0
   mediumSpeedThreshold: 0.19
@@ -5617,6 +5617,8 @@ MonoBehaviour:
   hp: 20
   blinkNumberAnim: 4
   trailBehaviour: {fileID: 982778337515102700}
+  dust: {fileID: 4720604267626401073}
+  stars: {fileID: 6596779290406294416}
   CurrentDirection: {x: 0, y: 0}
   CurrentSpeed: 0
   hpDisplay: {fileID: 0}
