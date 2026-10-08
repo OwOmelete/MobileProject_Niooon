@@ -714,6 +714,114 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 370742671}
   m_CullTransparentMesh: 1
+--- !u!1 &550140672
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 550140675}
+  - component: {fileID: 550140674}
+  - component: {fileID: 550140676}
+  m_Layer: 8
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!68 &550140674
+EdgeCollider2D:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550140672}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.6459733, y: -0.30200315}
+  - {x: -1.4510016, y: 0.16134782}
+  - {x: -2.0437253, y: 0.67938566}
+  - {x: -2.435946, y: 1.2380475}
+  - {x: -2.6394675, y: 1.8232707}
+  - {x: -2.6660912, y: 2.4209924}
+  - {x: -2.5276213, y: 3.01715}
+  - {x: -2.2358592, y: 3.5976799}
+  - {x: -1.8026077, y: 4.1485205}
+  - {x: -1.2396698, y: 4.655608}
+  - {x: -0.55884814, y: 5.104881}
+  - {x: 0.22805476, y: 5.482275}
+  - {x: 1.1092362, y: 5.773728}
+  - {x: 2.0728936, y: 5.9651775}
+  - {x: 3.1072245, y: 6.0425606}
+  - {x: 4.200426, y: 5.991814}
+  - {x: 5.3406954, y: 5.798876}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
+--- !u!4 &550140675
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550140672}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.5, y: 0.54, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &550140676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550140672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de7fbed7bffc03c4a89609be6c744573, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BezierCollider2D
+  firstPoint: {x: -0.6459737, y: -0.3020028}
+  secondPoint: {x: 5.3406954, y: 5.798876}
+  handlerFirstPoint: {x: -5.5265884, y: 1.9983709}
+  handlerSecondPoint: {x: -0.845274, y: 7.2320604}
+  pointsQuantity: 16
 --- !u!1001 &606058991
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3645,12 +3753,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1465780602}
     - target: {fileID: 5496026933858481439, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
-      propertyPath: turnSpeed
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5496026933858481439, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
-      propertyPath: slideThreshold
-      value: 0.25
+      propertyPath: mediumSpeedThreshold
+      value: 0.305
       objectReference: {fileID: 0}
     - target: {fileID: 9093718995677682698, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
       propertyPath: m_Name
@@ -3674,3 +3778,4 @@ SceneRoots:
   - {fileID: 1672347271}
   - {fileID: 1333121123}
   - {fileID: 766133148}
+  - {fileID: 550140675}
