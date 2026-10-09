@@ -77,7 +77,7 @@ public class PlayerControllerProto : MonoBehaviour
 
     private void DisplayHp()
     {
-        hpDisplay.text = (Mathf.Round(hp * 10) * 0.1f).ToString();
+        //hpDisplay.text = (Mathf.Round(hp * 10) * 0.1f).ToString();
     }
 
     IEnumerator damageAnim()
@@ -118,6 +118,8 @@ public class PlayerControllerProto : MonoBehaviour
         HandleSlide();
 
         DirectionToRotation();
+
+        hpDisplay.text = CurrentSpeed.ToString();
 
         transform.position += (Vector3)(CurrentDirection * CurrentSpeed * Time.fixedDeltaTime);
         
@@ -207,6 +209,7 @@ public class PlayerControllerProto : MonoBehaviour
     private void UpdateTrail()
     {
         float speedPercent = CurrentSpeed / maxSpeed;
+        Debug.Log(speedPercent);
 
         if (speedPercent > highSpeedThreshold)
         {
@@ -216,7 +219,7 @@ public class PlayerControllerProto : MonoBehaviour
         {
             SwitchSpeedState(Speed.medium);
         }
-        else if (speedPercent > 0.02f)
+        else if (speedPercent > 0.01f)
         {
             SwitchSpeedState(Speed.low);
         }
@@ -229,71 +232,43 @@ public class PlayerControllerProto : MonoBehaviour
 
     private void SwitchSpeedState(Speed newState)
     {
-        if (speedState == newState) return;
-        ResetAllTriggers();
+        //if (speedState == newState) return;
+        ResetAnimBools();
 
         switch (speedState)
         {
             case Speed.stop:
-                if (newState >= Speed.low)
-                {
-                    trailBehaviour.SetTrigger("T_Start");
-                }
+                trailBehaviour.SetBool("Stop", true);
+                dust.SetActive(false);
+                stars.SetActive(false);
                 break;
             case Speed.low:
-                if (newState == Speed.stop)
-                {
-                    trailBehaviour.SetTrigger("T_SlowingFromMin");
-                }
-                else
-                {
-                    trailBehaviour.SetTrigger("T_ToMid");
-                    dust.SetActive(true);
-                }
+                trailBehaviour.SetBool("Low", true);
+                dust.SetActive(false);
+                stars.SetActive(false);
                 break;
             case Speed.medium:
-                if (newState == Speed.stop)
-                {
-                    trailBehaviour.SetTrigger("T_BrutalStop");
-                    dust.SetActive(false);
-                }
-                else if (newState == Speed.low)
-                {
-                    trailBehaviour.SetTrigger("T_SlowingFromMid");
-                    dust.SetActive(false);
-                }
-                else
-                {
-                    trailBehaviour.SetTrigger("T_ToMax");
-                    stars.SetActive(true);
-                }
-
+                trailBehaviour.SetBool("Mid", true);
+                dust.SetActive(true);
+                stars.SetActive(false);
                 break;
             case Speed.high:
-                if (newState == Speed.stop)
-                {
-                    trailBehaviour.SetTrigger("T_BrutalStop");
-                    dust.SetActive(false);
-                    stars.SetActive(false);
-                }
-                else if (newState == Speed.medium)
-                {
-                    trailBehaviour.SetTrigger("T_SlowingFromMax");
-                    stars.SetActive(false);
-                }
+                trailBehaviour.SetBool("High", true);
+                dust.SetActive(true);
+                stars.SetActive(true);
                 break;
         }
 
         speedState = newState;
     }
 
-    private void ResetAllTriggers()
+    private void ResetAnimBools()
     {
         foreach (var param in trailBehaviour.parameters)
         {
-            if (param.type == AnimatorControllerParameterType.Trigger)
+            if (param.type == AnimatorControllerParameterType.Bool)
             {
-                trailBehaviour.ResetTrigger(param.name);
+                trailBehaviour.SetBool(param.name, false);
             }
         }
     }
