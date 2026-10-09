@@ -5611,12 +5611,13 @@ MonoBehaviour:
   slideThreshold: 0.25
   joystick: {fileID: 0}
   isImmune: 0
-  mediumSpeedThreshold: 0.19
+  mediumSpeedThreshold: 0.305
   highSpeedThreshold: 0.56
   damageMult: 3
   hp: 20
   blinkNumberAnim: 4
   trailBehaviour: {fileID: 982778337515102700}
+  rb: {fileID: 7127300283743931185}
   dust: {fileID: 4720604267626401073}
   stars: {fileID: 6596779290406294416}
   CurrentDirection: {x: 0, y: 0}

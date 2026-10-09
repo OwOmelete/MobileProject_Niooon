@@ -46,6 +46,7 @@ public class PlayerControllerProto : MonoBehaviour
 
     [Header("Other references")] [SerializeField]
     private Animator trailBehaviour;
+    [SerializeField] private Rigidbody2D rb;
     [SerializeField] private GameObject dust;
     [SerializeField] private GameObject stars;
     

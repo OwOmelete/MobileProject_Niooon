@@ -4,13 +4,13 @@ using System.Collections.Generic;
 [RequireComponent(typeof(EdgeCollider2D))]
 public class BezierCollider2D : MonoBehaviour
 {
-    public Vector2 firstPoint;
-    public Vector2 secondPoint;
+    public Vector2 firstPoint = Vector2.zero;
+    public Vector2 secondPoint = Vector2.right;
 
-    public Vector2 handlerFirstPoint;
-    public Vector2 handlerSecondPoint;
+    public Vector2 handlerFirstPoint = Vector2.up;
+    public Vector2 handlerSecondPoint = new Vector2(1, 1);
 
-    public int pointsQuantity;
+    public int pointsQuantity = 5;
 
     Vector3 CalculateBezierPoint(float t, Vector3 p0, Vector3 handlerP0, Vector3 handlerP1, Vector3 p1)
     {
