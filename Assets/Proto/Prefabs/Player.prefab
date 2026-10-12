@@ -5314,7 +5314,7 @@ Transform:
   m_GameObject: {fileID: 5592596243808431984}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.272, y: 0.148, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5367,7 +5367,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.28}
+  m_Offset: {x: 0, y: 0.8864641}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5377,7 +5377,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.2, y: 0.08}
+  m_Size: {x: 0.2, y: 1.2929282}
   m_EdgeRadius: 0
 --- !u!1 &6596779290406294416
 GameObject:
@@ -5557,52 +5557,79 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerControllerProto
   maxSpeed: 20
-  turnSpeed: 0.5
+  turnSpeed: 0.3
   rotationCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0.00064468384
       value: 1
-      inSlope: -3.6518319
-      outSlope: -3.6518319
+      inSlope: -4.3505535
+      outSlope: -4.3505535
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.016751809
+      outWeight: 0.20789114
+    - serializedVersion: 3
+      time: 0.07507007
+      value: 0.691269
+      inSlope: -2.2126806
+      outSlope: -2.2126806
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.38652462
+      outWeight: 0.12240586
+    - serializedVersion: 3
+      time: 0.33682814
+      value: 0.37664822
+      inSlope: -0.6550733
+      outSlope: -0.6550733
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.1840112
     - serializedVersion: 3
       time: 1.000644
       value: 0.19941776
-      inSlope: -0.1644007
-      outSlope: -0.1644007
+      inSlope: -0.070903696
+      outSlope: -0.070903696
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.035438854
+      inWeight: 0.3660745
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  acceleration: 4
+  acceleration: 4.5
   accelerationCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -0.7957294
-      outSlope: -0.7957294
+      inSlope: -1.3279977
+      outSlope: -1.3279977
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.0006104
-      value: 0.20378494
-      inSlope: -0.7957294
-      outSlope: -0.7957294
-      tangentMode: 34
+      time: 0.51287687
+      value: 0.31890067
+      inSlope: -0.6129351
+      outSlope: -0.6129351
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
+      outWeight: 0.23921636
+    - serializedVersion: 3
+      time: 1.0006104
+      value: 0.20378494
+      inSlope: -0.03172335
+      outSlope: -0.03172335
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.36756968
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -5620,7 +5647,7 @@ MonoBehaviour:
   rb: {fileID: 7127300283743931185}
   dust: {fileID: 4720604267626401073}
   stars: {fileID: 6596779290406294416}
-  CurrentDirection: {x: 0, y: 0}
+  CurrentDirection: {x: -0.4470326, y: -0.89451766}
   CurrentSpeed: 0
   hpDisplay: {fileID: 0}
 --- !u!60 &5865119277877100664
@@ -5672,11 +5699,11 @@ PolygonCollider2D:
     - - {x: 0.20609884, y: -0.22405559}
       - {x: 0.19163413, y: -0.17818569}
       - {x: 0.14178012, y: 0.021264993}
-      - {x: 0.06851761, y: 0.24114153}
-      - {x: -0.076657474, y: 0.24312401}
+      - {x: 0.10217753, y: 0.65035367}
+      - {x: -0.07358107, y: 0.6494808}
       - {x: -0.1921702, y: -0.19205342}
-      - {x: -0.20230696, y: -0.2724514}
-      - {x: 0.20645724, y: -0.26628914}
+      - {x: -0.2279177, y: -0.34784698}
+      - {x: 0.23269802, y: -0.33660546}
   m_UseDelaunayMesh: 1
 --- !u!50 &7127300283743931185
 Rigidbody2D:
