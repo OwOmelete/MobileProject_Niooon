@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerControllerProto : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     
     [Header("Movements")]
@@ -22,6 +22,7 @@ public class PlayerControllerProto : MonoBehaviour
     [SerializeField] private float slideThreshold;
     [SerializeField] private Joystick joystick;
     [HideInInspector] public bool isImmune;
+    [SerializeField, Range(0, 1)] private float lowSpeedThreshold;
     [SerializeField, Range(0, 1)] private float mediumSpeedThreshold;
     [SerializeField, Range(0, 1)] private float highSpeedThreshold;
     private bool isOnWall = false;
@@ -37,13 +38,9 @@ public class PlayerControllerProto : MonoBehaviour
 
     private Speed speedState;
     
-    [Header("Health/Damage")]
-    [SerializeField] public float damageMult = 3;
+
+
     [HideInInspector] public Gamepad g;
-    public float hp = 20;
-    [SerializeField] private float blinkNumberAnim = 4;
-
-
     [Header("Other references")] [SerializeField]
     private Animator trailBehaviour;
     [SerializeField] private Rigidbody2D rb;
@@ -60,42 +57,14 @@ public class PlayerControllerProto : MonoBehaviour
 
     [SerializeField] private LayerMask collisionMask;
 
-    public void takeDamage(float n)
-    {
-        if (isImmune) return;
-        hp -= n;
-        //StartCoroutine(damageAnim());
-        if (hp < 0)
-        {
-            hp = 0;
-            DisplayHp();
-            Destroy(gameObject);
-        }
-        else
-        {
-            DisplayHp();
-        }
-    }
+    
 
     private void DisplayHp()
     {
         //hpDisplay.text = (Mathf.Round(hp * 10) * 0.1f).ToString();
     }
 
-    IEnumerator damageAnim()
-    {
-        isImmune = true;
-        Color baseColor = sr.color;
-        for (int i = 0; i < blinkNumberAnim; i++)
-        {
-            sr.color = Color.white;
-            yield return new WaitForSeconds(0.2f);
-            sr.color = baseColor;
-            yield return new WaitForSeconds(0.2f);
-        }
 
-        isImmune = false;
-    }
 
     private void Start()
     {

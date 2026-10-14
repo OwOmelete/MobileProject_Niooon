@@ -2777,10 +2777,6 @@ PrefabInstance:
       propertyPath: hpDisplay
       value: 
       objectReference: {fileID: 1465780602}
-    - target: {fileID: 5496026933858481439, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
-      propertyPath: collisionMask.m_Bits
-      value: 256
-      objectReference: {fileID: 0}
     - target: {fileID: 9093718995677682698, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
       propertyPath: m_Name
       value: Player

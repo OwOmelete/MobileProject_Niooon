@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private PlayerControllerProto[] playerList;
+    [SerializeField] private PlayerController[] playerList;
 
 
     private void Start()

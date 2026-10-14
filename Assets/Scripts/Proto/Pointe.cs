@@ -1,28 +1,37 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Pointe : MonoBehaviour
 {
-    public PlayerControllerProto controller;
+    public PlayerController controller;
+    
+    [Header("Health/Damage")]
+    [SerializeField] private float damageMult = 3;
+    [SerializeField] private float blinkNumberAnim = 3;
+
+    public float hp = 20;
+
+    private bool isImmune = false;
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (controller.isImmune) return;
-        
         if (other.CompareTag("Pointe"))
         {
             Pointe point = other.GetComponent<Pointe>();
             if (controller.CurrentSpeed < point.controller.CurrentSpeed)
             {
-                controller.takeDamage(CalculateDamage(controller.CurrentDirection * controller.CurrentSpeed,
+                takeDamage(CalculateDamage(controller.CurrentDirection * controller.CurrentSpeed,
                     point.controller.CurrentDirection * point.controller.CurrentSpeed));
             }
             
         }
         else if(other.CompareTag("Player"))
         {
-            PlayerControllerProto opponentController = other.GetComponent<PlayerControllerProto>();
-            opponentController.takeDamage(CalculateDamage(opponentController.CurrentDirection * opponentController.CurrentSpeed,
+            PlayerController opponentController = other.GetComponent<PlayerController>();
+            opponentController.takeDamage(CalculateDamage(point.controller.CurrentDirection * point.controller.CurrentSpeed,
                 controller.CurrentDirection * controller.CurrentSpeed));
         }
         
@@ -31,12 +40,41 @@ public class Pointe : MonoBehaviour
     private float CalculateDamage(Vector2 playerVector, Vector2 opponentVector)
     {
         float f = Mathf.Abs (playerVector.magnitude - opponentVector.magnitude);
-        return (f * controller.damageMult)+5;
+        return (f * damageMult)+5;
     }
 
     private bool isTriggeredFromBehind(Collider2D other)
     {
         Vector2 direction = other.transform.position - transform.position;
         return Vector2.Dot(transform.up, direction) <= 0;
+    }
+    
+    public void takeDamage(float n)
+    {
+        if (isImmune) return;
+        hp -= n;
+        StartCoroutine(damageAnim());
+        if (hp < 0)
+        {
+            hp = 0;
+            Destroy(gameObject);
+        }
+        else
+        {
+        }
+    }
+    
+    IEnumerator damageAnim()
+    {
+        isImmune = true;
+        for (int i = 0; i < blinkNumberAnim; i++)
+        {
+            //sr.color = Color.white;
+            yield return new WaitForSeconds(0.2f);
+            // sr.color = baseColor;
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        isImmune = false;
     }
 }

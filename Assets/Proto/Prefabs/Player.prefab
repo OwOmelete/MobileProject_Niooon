@@ -5333,6 +5333,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pointe
   controller: {fileID: 5496026933858481439}
+  damageMult: 3
+  blinkNumberAnim: 3
+  hp: 20
 --- !u!61 &7904552971764197890
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5638,11 +5641,9 @@ MonoBehaviour:
   slideThreshold: 0.25
   joystick: {fileID: 0}
   isImmune: 0
+  lowSpeedThreshold: 0
   mediumSpeedThreshold: 0.305
   highSpeedThreshold: 0.56
-  damageMult: 3
-  hp: 20
-  blinkNumberAnim: 4
   trailBehaviour: {fileID: 982778337515102700}
   rb: {fileID: 7127300283743931185}
   dust: {fileID: 4720604267626401073}
@@ -5650,6 +5651,9 @@ MonoBehaviour:
   CurrentDirection: {x: -0.4470326, y: -0.89451766}
   CurrentSpeed: 0
   hpDisplay: {fileID: 0}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!60 &5865119277877100664
 PolygonCollider2D:
   m_ObjectHideFlags: 0
