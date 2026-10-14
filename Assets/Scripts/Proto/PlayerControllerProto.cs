@@ -58,6 +58,8 @@ public class PlayerControllerProto : MonoBehaviour
     [SerializeField] private TMP_Text hpDisplay;
     private float maxSpeedPercent;
 
+    [SerializeField] private LayerMask collisionMask;
+
     public void takeDamage(float n)
     {
         if (isImmune) return;
@@ -121,9 +123,10 @@ public class PlayerControllerProto : MonoBehaviour
 
         hpDisplay.text = CurrentSpeed.ToString();
 
-        transform.position += (Vector3)(CurrentDirection * CurrentSpeed * Time.fixedDeltaTime);
-        
-       
+        FinalMovement();
+
+
+
 
     }
     private void Update()
@@ -132,6 +135,27 @@ public class PlayerControllerProto : MonoBehaviour
     }
 
 
+
+    private void FinalMovement()
+    {
+        if (!PositionInterpolation())
+        {
+            transform.position += (Vector3)(CurrentDirection * CurrentSpeed * Time.fixedDeltaTime);
+        }
+    }
+    
+    private bool PositionInterpolation()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, CurrentDirection, CurrentSpeed * Time.fixedDeltaTime, collisionMask);
+
+        if (hit)
+        {
+            transform.position = hit.point;
+            return true;
+        }
+
+        return false;
+    }
     
     
 
@@ -157,11 +181,11 @@ public class PlayerControllerProto : MonoBehaviour
 
     void HandleSlide()
     {
-        LayerMask mask = LayerMask.GetMask("Walls");
+        
 
-        RaycastHit2D leftHit = Physics2D.Raycast(transform.position - transform.up * 0.25f, (transform.up - transform.right * 0.8f), 0.6f, mask);
+        RaycastHit2D leftHit = Physics2D.Raycast(transform.position - transform.up * 0.25f, (transform.up - transform.right * 0.8f), 0.6f, collisionMask);
 
-        RaycastHit2D rightHit = Physics2D.Raycast(transform.position - transform.up * 0.25f, (transform.up + transform.right * 0.8f), 0.6f, mask);
+        RaycastHit2D rightHit = Physics2D.Raycast(transform.position - transform.up * 0.25f, (transform.up + transform.right * 0.8f), 0.6f, collisionMask);
 
         Debug.DrawRay(transform.position - transform.up * 0.25f, (transform.up - transform.right * 0.8f)*0.6f);
 
@@ -209,7 +233,6 @@ public class PlayerControllerProto : MonoBehaviour
     private void UpdateTrail()
     {
         float speedPercent = CurrentSpeed / maxSpeed;
-        Debug.Log(speedPercent);
 
         if (speedPercent > highSpeedThreshold)
         {
