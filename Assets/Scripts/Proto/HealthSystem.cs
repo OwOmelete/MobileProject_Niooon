@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Pointe : MonoBehaviour
+public class HealthSystem : MonoBehaviour
 {
     public PlayerController controller;
     
@@ -17,10 +17,10 @@ public class Pointe : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (controller.isImmune) return;
+        if (isImmune) return;
         if (other.CompareTag("Pointe"))
         {
-            Pointe point = other.GetComponent<Pointe>();
+            HealthSystem point = other.GetComponent<HealthSystem>();
             if (controller.CurrentSpeed < point.controller.CurrentSpeed)
             {
                 takeDamage(CalculateDamage(controller.CurrentDirection * controller.CurrentSpeed,
@@ -30,8 +30,8 @@ public class Pointe : MonoBehaviour
         }
         else if(other.CompareTag("Player"))
         {
-            PlayerController opponentController = other.GetComponent<PlayerController>();
-            opponentController.takeDamage(CalculateDamage(point.controller.CurrentDirection * point.controller.CurrentSpeed,
+            HealthSystem opponentPoint = other.GetComponentInChildren<HealthSystem>();
+            opponentPoint.takeDamage(CalculateDamage(opponentPoint.controller.CurrentDirection * opponentPoint.controller.CurrentSpeed,
                 controller.CurrentDirection * controller.CurrentSpeed));
         }
         

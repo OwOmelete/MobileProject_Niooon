@@ -5332,7 +5332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67ccdf38c0e97d34aa74c088b903795b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pointe
-  controller: {fileID: 5496026933858481439}
+  controller: {fileID: 0}
   damageMult: 3
   blinkNumberAnim: 3
   hp: 20
@@ -5514,11 +5514,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2748876562517728140}
-  - component: {fileID: 5496026933858481439}
   - component: {fileID: 5865119277877100664}
   - component: {fileID: 7127300283743931185}
   - component: {fileID: 8009028308726679330}
   - component: {fileID: 125553895168445320}
+  - component: {fileID: 2140233776343572560}
+  - component: {fileID: 4009038482267430137}
+  - component: {fileID: 4774631891308666000}
+  - component: {fileID: 6236550775713841119}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -5547,113 +5550,6 @@ Transform:
   - {fileID: 3446464594352833022}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &5496026933858481439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9093718995677682698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c6e3cabd7ed36f49829a037bb1297d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerControllerProto
-  maxSpeed: 20
-  turnSpeed: 0.3
-  rotationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.00064468384
-      value: 1
-      inSlope: -4.3505535
-      outSlope: -4.3505535
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.20789114
-    - serializedVersion: 3
-      time: 0.07507007
-      value: 0.691269
-      inSlope: -2.2126806
-      outSlope: -2.2126806
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.38652462
-      outWeight: 0.12240586
-    - serializedVersion: 3
-      time: 0.33682814
-      value: 0.37664822
-      inSlope: -0.6550733
-      outSlope: -0.6550733
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.1840112
-    - serializedVersion: 3
-      time: 1.000644
-      value: 0.19941776
-      inSlope: -0.070903696
-      outSlope: -0.070903696
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.3660745
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  acceleration: 4.5
-  accelerationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -1.3279977
-      outSlope: -1.3279977
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.51287687
-      value: 0.31890067
-      inSlope: -0.6129351
-      outSlope: -0.6129351
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.23921636
-    - serializedVersion: 3
-      time: 1.0006104
-      value: 0.20378494
-      inSlope: -0.03172335
-      outSlope: -0.03172335
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.36756968
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  forwardThreshold: 0.9
-  slideThreshold: 0.25
-  joystick: {fileID: 0}
-  isImmune: 0
-  lowSpeedThreshold: 0
-  mediumSpeedThreshold: 0.305
-  highSpeedThreshold: 0.56
-  trailBehaviour: {fileID: 982778337515102700}
-  rb: {fileID: 7127300283743931185}
-  dust: {fileID: 4720604267626401073}
-  stars: {fileID: 6596779290406294416}
-  CurrentDirection: {x: -0.4470326, y: -0.89451766}
-  CurrentSpeed: 0
-  hpDisplay: {fileID: 0}
-  collisionMask:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!60 &5865119277877100664
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5900,3 +5796,93 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0.04}
   m_Radius: 0.24
+--- !u!114 &2140233776343572560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9093718995677682698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d00c97c04747d54e95675e30168d7e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
+  maxSpeed: 0
+  maxRotationSpeed: 0.04
+  rotationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  acceleration: 0.03
+  accelerationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  forwardThreshold: 0.5
+  slideThreshold: 0
+  lowSpeedThreshold: 0
+  mediumSpeedThreshold: 0
+  highSpeedThreshold: 0
+  lowSpeedDamage: 0
+  mediumSpeedDamage: 0
+  highSpeedDamage: 0
+  weaponData: {fileID: 11400000, guid: 71402f3cafbd16c41b24812c8301dc90, type: 2}
+  speedState: 0
+  hpDisplay: {fileID: 0}
+--- !u!114 &4009038482267430137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9093718995677682698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c6e3cabd7ed36f49829a037bb1297d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  joystick: {fileID: 0}
+  CurrentDirection: {x: 0, y: 0}
+  CurrentSpeed: 0
+  hpDisplay: {fileID: 0}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 256
+  visuals: {fileID: 6236550775713841119}
+  player: {fileID: 2140233776343572560}
+--- !u!114 &4774631891308666000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9093718995677682698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67ccdf38c0e97d34aa74c088b903795b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
+  controller: {fileID: 4009038482267430137}
+  damageMult: 3
+  blinkNumberAnim: 3
+  hp: 20
+--- !u!114 &6236550775713841119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9093718995677682698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac30e97e0d646924aa4d8623441ff48d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerVisuals
+  trailBehaviour: {fileID: 982778337515102700}
+  dust: {fileID: 4720604267626401073}
+  stars: {fileID: 6596779290406294416}

@@ -9,55 +9,26 @@ public class PlayerController : MonoBehaviour
 {
     
     [Header("Movements")]
-    [SerializeField] private float maxSpeed;
-    [SerializeField] private float turnSpeed = 0.04f;
-
-    [SerializeField] private AnimationCurve rotationCurve;
-
-    [SerializeField] private float acceleration = 0.03f;
-
-    [SerializeField] private AnimationCurve accelerationCurve;
-
-    [SerializeField] private float forwardThreshold = 0.5f;
-    [SerializeField] private float slideThreshold;
-    [SerializeField] private Joystick joystick;
-    [HideInInspector] public bool isImmune;
-    [SerializeField, Range(0, 1)] private float lowSpeedThreshold;
-    [SerializeField, Range(0, 1)] private float mediumSpeedThreshold;
-    [SerializeField, Range(0, 1)] private float highSpeedThreshold;
     private bool isOnWall = false;
+    [SerializeField] private Joystick joystick;
 
 
-    private enum Speed
-    {
-        stop,
-        low,
-        medium,
-        high
-    }
-
-    private Speed speedState;
-    
-
-
-    [HideInInspector] public Gamepad g;
     [Header("Other references")] [SerializeField]
-    private Animator trailBehaviour;
-    [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private GameObject dust;
-    [SerializeField] private GameObject stars;
-    
-    private SpriteRenderer sr;
-    private Vector2 StickInputs;
+   
     [HideInInspector] public Vector2 CurrentDirection;
     [HideInInspector] public float CurrentSpeed;
 
+    private Vector2 StickInputs;
     [SerializeField] private TMP_Text hpDisplay;
     private float maxSpeedPercent;
 
     [SerializeField] private LayerMask collisionMask;
 
-    
+    [SerializeField] private PlayerVisuals visuals;
+
+    public Player player;
+
+
 
     private void DisplayHp()
     {
@@ -69,20 +40,15 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         DisplayHp();
-        //sr = GetComponent<SpriteRenderer>();
-
-        stars.SetActive(false);
-        dust.SetActive(false);
-
         CurrentDirection = Vector2.up;
     }
 
     private void FixedUpdate()
     {
-        maxSpeedPercent = CurrentSpeed / maxSpeed;
+        maxSpeedPercent = CurrentSpeed / player.maxSpeed;
 
         StickInputs = joystick.Direction;
-        CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, turnSpeed * rotationCurve.Evaluate(maxSpeedPercent)).normalized;
+        CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, player.maxRotationSpeed * player.rotationCurve.Evaluate(maxSpeedPercent)).normalized;
 
         SpeedAmount();
 
@@ -93,10 +59,6 @@ public class PlayerController : MonoBehaviour
         hpDisplay.text = CurrentSpeed.ToString();
 
         FinalMovement();
-
-
-
-
     }
     private void Update()
     {
@@ -143,8 +105,8 @@ public class PlayerController : MonoBehaviour
 
     private void SpeedAmount()
     {
-        CurrentSpeed += (Vector2.Dot(StickInputs, CurrentDirection) - forwardThreshold) * acceleration * accelerationCurve.Evaluate(maxSpeedPercent) / ((forwardThreshold-1)*-1) * Time.fixedDeltaTime;
-        CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0, maxSpeed);
+        CurrentSpeed += (Vector2.Dot(StickInputs, CurrentDirection) - player.forwardThreshold) * player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) / ((player.forwardThreshold -1)*-1) * Time.fixedDeltaTime;
+        CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0, player.maxSpeed);
     }
 
 
@@ -165,7 +127,7 @@ public class PlayerController : MonoBehaviour
             dot = Vector2.Dot(CurrentDirection, leftHit.normal);
             if (dot < 0)
             {
-                if (dot < -slideThreshold && !isOnWall)
+                if (dot < -player.slideThreshold && !isOnWall)
                 {
                     CurrentSpeed *= Mathf.Clamp((1 + dot)*3, 0, 1);
                 }
@@ -180,7 +142,7 @@ public class PlayerController : MonoBehaviour
             dot = Vector2.Dot(CurrentDirection, rightHit.normal);
             if (dot < 0)
             {
-                if (dot < -slideThreshold && !isOnWall)
+                if (dot < -player.slideThreshold && !isOnWall)
                 {
                     CurrentSpeed *= Mathf.Clamp((1 + dot) * 3, 0, 1);
                 }
@@ -201,69 +163,51 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateTrail()
     {
-        float speedPercent = CurrentSpeed / maxSpeed;
+        float speedPercent = CurrentSpeed / player.maxSpeed;
 
-        if (speedPercent > highSpeedThreshold)
+        if (speedPercent > player.highSpeedThreshold)
         {
-            SwitchSpeedState(Speed.high);
+            SwitchSpeedState(Player.Speed.high);
         }
-        else if (speedPercent > mediumSpeedThreshold)
+        else if (speedPercent > player.mediumSpeedThreshold)
         {
-            SwitchSpeedState(Speed.medium);
+            SwitchSpeedState(Player.Speed.medium);
         }
-        else if (speedPercent > 0.01f)
+        else if (speedPercent > player.lowSpeedThreshold)
         {
-            SwitchSpeedState(Speed.low);
+            SwitchSpeedState(Player.Speed.low);
         }
         else
         {
-            SwitchSpeedState(Speed.stop);
+            SwitchSpeedState(Player.Speed.stop);
         }
     }
 
 
-    private void SwitchSpeedState(Speed newState)
+    private void SwitchSpeedState(Player.Speed newState)
     {
         //if (speedState == newState) return;
-        ResetAnimBools();
+        visuals.ResetAnimBools();
 
-        switch (speedState)
+        switch (player.speedState)
         {
-            case Speed.stop:
-                trailBehaviour.SetBool("Stop", true);
-                dust.SetActive(false);
-                stars.SetActive(false);
+            case Player.Speed.stop:
+                visuals.ToStop();
                 break;
-            case Speed.low:
-                trailBehaviour.SetBool("Low", true);
-                dust.SetActive(false);
-                stars.SetActive(false);
+            case Player.Speed.low:
+                visuals.ToLow();
                 break;
-            case Speed.medium:
-                trailBehaviour.SetBool("Mid", true);
-                dust.SetActive(true);
-                stars.SetActive(false);
+            case Player.Speed.medium:
+                visuals.ToMedium();
                 break;
-            case Speed.high:
-                trailBehaviour.SetBool("High", true);
-                dust.SetActive(true);
-                stars.SetActive(true);
+            case Player.Speed.high:
+                visuals.ToHigh();
                 break;
         }
 
-        speedState = newState;
+        player.speedState = newState;
     }
 
-    private void ResetAnimBools()
-    {
-        foreach (var param in trailBehaviour.parameters)
-        {
-            if (param.type == AnimatorControllerParameterType.Bool)
-            {
-                trailBehaviour.SetBool(param.name, false);
-            }
-        }
-    }
 
     #endregion
 
