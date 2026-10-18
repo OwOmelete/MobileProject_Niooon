@@ -20,6 +20,9 @@ public class WeaponData : ScriptableObject
     public float mediumSpeedDamage;
     public float highSpeedDamage;
 
+    [Range(0, 1)] public float forwardThreshold;
+    [Range(0, 1)] public float slideThreshold;
+
 
 
 

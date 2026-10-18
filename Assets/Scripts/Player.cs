@@ -64,6 +64,9 @@ public class Player : MonoBehaviour
         lowSpeedThreshold = data.lowSpeedPercent;
         mediumSpeedThreshold = data.mediumSpeedPercent;
         highSpeedThreshold = data.highSpeedPercent;
+
+        forwardThreshold = data.forwardThreshold;
+        slideThreshold = data.slideThreshold;
     }
 
     // Update is called once per frame

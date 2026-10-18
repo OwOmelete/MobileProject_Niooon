@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
 
     public Player player;
 
+    [SerializeField] private bool AutoMove = false;
+
 
 
     private void DisplayHp()
@@ -105,7 +107,15 @@ public class PlayerController : MonoBehaviour
 
     private void SpeedAmount()
     {
-        CurrentSpeed += (Vector2.Dot(StickInputs, CurrentDirection) - player.forwardThreshold) * player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) / ((player.forwardThreshold -1)*-1) * Time.fixedDeltaTime;
+        if (StickInputs == Vector2.zero && AutoMove)
+        {
+            CurrentSpeed += player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) *
+                            Time.fixedDeltaTime;
+        }
+        else
+        {
+            CurrentSpeed += (Vector2.Dot(StickInputs, CurrentDirection) - player.forwardThreshold) * player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) / ((player.forwardThreshold -1)*-1) * Time.fixedDeltaTime;
+        }
         CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0, player.maxSpeed);
     }
 
