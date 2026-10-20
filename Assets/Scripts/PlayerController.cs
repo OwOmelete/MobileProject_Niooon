@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public float CurrentSpeed;
 
     private Vector2 StickInputs;
-    [SerializeField] private TMP_Text hpDisplay;
+    [SerializeField] private TMP_Text speedDisplay;
     private float maxSpeedPercent;
 
     [SerializeField] private LayerMask collisionMask;
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
 
         DirectionToRotation();
 
-        hpDisplay.text = CurrentSpeed.ToString();
+        speedDisplay.text = CurrentSpeed.ToString();
 
         FinalMovement();
     }

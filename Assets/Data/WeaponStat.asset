@@ -63,9 +63,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  hp: 5
   lowSpeedPercent: 0.1
   mediumSpeedPercent: 0.3
   highSpeedPercent: 0.8
   lowSpeedDamage: 1
   mediumSpeedDamage: 3
   highSpeedDamage: 5
+  forwardThreshold: 0
+  slideThreshold: 0

@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,8 +23,13 @@ public class Player : MonoBehaviour
     [HideInInspector] public float lowSpeedDamage;
     [HideInInspector] public float mediumSpeedDamage;
     [HideInInspector] public float highSpeedDamage;
+    public float hp;
+
+    [HideInInspector] public bool isImmune;
 
     [SerializeField] private WeaponData weaponData;
+
+    [SerializeField] private float blinkNumberAnim = 3;
 
     public enum Speed
     {
@@ -48,6 +54,42 @@ public class Player : MonoBehaviour
         GetWeaponStats(weaponData);
     }
 
+    public void takeDamage(float n)
+    {
+        if (isImmune) return;
+        hp -= n;
+        UpdateHpDisplay();
+        StartCoroutine(damageAnim());
+        if (hp < 0)
+        {
+            hp = 0;
+            UpdateHpDisplay();
+            Destroy(gameObject);
+        }
+        else
+        {
+        }
+    }
+
+    IEnumerator damageAnim()
+    {
+        isImmune = true;
+        for (int i = 0; i < blinkNumberAnim; i++)
+        {
+            //sr.color = Color.white;
+            yield return new WaitForSeconds(0.2f);
+            // sr.color = baseColor;
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        isImmune = false;
+    }
+
+    private void UpdateHpDisplay()
+    {
+        hpDisplay.text = hp.ToString();
+    }
+
     void GetWeaponStats(WeaponData data)
     {
         maxSpeed = data.maxSpeed;
@@ -67,6 +109,10 @@ public class Player : MonoBehaviour
 
         forwardThreshold = data.forwardThreshold;
         slideThreshold = data.slideThreshold;
+
+        hp = data.hp;
+
+        UpdateHpDisplay();
     }
 
     // Update is called once per frame

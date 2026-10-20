@@ -5297,6 +5297,7 @@ GameObject:
   m_Component:
   - component: {fileID: 504274743231574040}
   - component: {fileID: 7904552971764197890}
+  - component: {fileID: 843031255607078536}
   m_Layer: 7
   m_Name: Pointe
   m_TagString: Pointe
@@ -5365,6 +5366,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.2, y: 1.2929282}
   m_EdgeRadius: 0
+--- !u!114 &843031255607078536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5592596243808431984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67ccdf38c0e97d34aa74c088b903795b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
+  controller: {fileID: 4009038482267430137}
 --- !u!1 &6596779290406294416
 GameObject:
   m_ObjectHideFlags: 0
@@ -5813,7 +5827,10 @@ MonoBehaviour:
   lowSpeedDamage: 0
   mediumSpeedDamage: 0
   highSpeedDamage: 0
+  hp: 0
+  isImmune: 0
   weaponData: {fileID: 11400000, guid: 71402f3cafbd16c41b24812c8301dc90, type: 2}
+  blinkNumberAnim: 3
   speedState: 0
   hpDisplay: {fileID: 0}
 --- !u!114 &4009038482267430137
@@ -5829,6 +5846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   joystick: {fileID: 0}
+  slidingStick: {fileID: 0}
   CurrentDirection: {x: 0, y: 0}
   CurrentSpeed: 0
   hpDisplay: {fileID: 0}
