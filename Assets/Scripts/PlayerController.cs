@@ -31,13 +31,31 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private bool AutoMove = false;
 
-
+    bool c = false;
 
     private void DisplayHp()
     {
         //hpDisplay.text = (Mathf.Round(hp * 10) * 0.1f).ToString();
     }
 
+    public void changeMoveMode()
+    {
+        AutoMove = !AutoMove;
+    }
+
+    public void changeStick()
+    {
+        if (c)
+        {
+            slidingStick.transform.parent.parent.gameObject.SetActive(true);
+            c = false;
+        }
+        else
+        {
+            slidingStick.transform.parent.parent.gameObject.SetActive(false);
+            c = true;
+        }
+    }
 
 
     private void Start()
