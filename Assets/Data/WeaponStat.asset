@@ -12,28 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6abfb1c0e2c0cd04e97014daabef4e35, type: 3}
   m_Name: WeaponStat
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  maxSpeed: 17.5
-  maxAcceleration: 3.5
+  maxSpeed: 20
+  maxAcceleration: 4
   accelerationCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -2.6129222
-      outSlope: -2.6129222
+      inSlope: -0.8167711
+      outSlope: -0.8167711
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.030125605
+      outWeight: 0.09166667
     - serializedVersion: 3
-      time: 1
-      value: 0.2
-      inSlope: -0.12571713
-      outSlope: -0.12571713
+      time: 0.3782928
+      value: 0.35487396
+      inSlope: -0.8488412
+      outSlope: -0.8488412
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.06647158
+      inWeight: 0.33333334
+      outWeight: 0.18870845
+    - serializedVersion: 3
+      time: 1.0041647
+      value: 0.16903512
+      inSlope: -0.120966166
+      outSlope: -0.120966166
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.31949592
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -43,32 +52,40 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -1.4196192
-      outSlope: -1.4196192
+      time: 0.041052353
+      value: 0.8103293
+      inSlope: -0.11795235
+      outSlope: -0.11795235
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.0246085
+      outWeight: 0.96529233
     - serializedVersion: 3
-      time: 1
-      value: 0.2
-      inSlope: -0.11414813
-      outSlope: -0.11414813
+      time: 0.31833047
+      value: 0.49582916
+      inSlope: -1.3230511
+      outSlope: -1.3230511
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.06375843
+      inWeight: 0.21924919
+      outWeight: 0.23328707
+    - serializedVersion: 3
+      time: 0.9957794
+      value: 0.19294363
+      inSlope: -0.034772273
+      outSlope: -0.034772273
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.24271357
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  hp: 5
   lowSpeedPercent: 0.1
-  mediumSpeedPercent: 0.3
+  mediumSpeedPercent: 0.5
   highSpeedPercent: 0.8
-  lowSpeedDamage: 1
-  mediumSpeedDamage: 3
-  highSpeedDamage: 5
-  forwardThreshold: 0.5
-  slideThreshold: 0
+  lowSpeedDamage: 2
+  mediumSpeedDamage: 4
+  highSpeedDamage: 6
+  forwardThreshold: 0.9
+  slideThreshold: 0.2
