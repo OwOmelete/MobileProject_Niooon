@@ -12,28 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6abfb1c0e2c0cd04e97014daabef4e35, type: 3}
   m_Name: WeaponStat
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  maxSpeed: 20
-  maxAcceleration: 4.5
+  maxSpeed: 17.5
+  maxAcceleration: 3.5
   accelerationCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -3.310101
-      outSlope: -3.310101
+      inSlope: -2.6129222
+      outSlope: -2.6129222
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.01802962
+      outWeight: 0.030125605
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: -0.43752655
-      outSlope: -0.43752655
+      value: 0.2
+      inSlope: -0.12571713
+      outSlope: -0.12571713
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.039922714
+      inWeight: 0.06647158
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -45,20 +45,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -3.310101
-      outSlope: -3.310101
+      inSlope: -1.4196192
+      outSlope: -1.4196192
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.01802962
+      outWeight: 0.0246085
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: -0.43752655
-      outSlope: -0.43752655
+      value: 0.2
+      inSlope: -0.11414813
+      outSlope: -0.11414813
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.039922714
+      inWeight: 0.06375843
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -70,5 +70,5 @@ MonoBehaviour:
   lowSpeedDamage: 1
   mediumSpeedDamage: 3
   highSpeedDamage: 5
-  forwardThreshold: 0
+  forwardThreshold: 0.5
   slideThreshold: 0
