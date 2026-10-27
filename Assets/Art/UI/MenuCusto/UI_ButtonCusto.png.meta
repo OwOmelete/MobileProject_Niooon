@@ -113,10 +113,10 @@ TextureImporter:
       name: UI_ButtonCusto_1
       rect:
         serializedVersion: 2
-        x: 347
-        y: 0
-        width: 347
-        height: 465
+        x: 348
+        y: 466
+        width: 348
+        height: 466
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -136,9 +136,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 347
-        height: 465
+        y: 466
+        width: 348
+        height: 466
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -157,10 +157,10 @@ TextureImporter:
       name: UI_ButtonCusto_2
       rect:
         serializedVersion: 2
-        x: 694
-        y: 0
-        width: 347
-        height: 465
+        x: 696
+        y: 466
+        width: 348
+        height: 466
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,10 +179,10 @@ TextureImporter:
       name: UI_ButtonCusto_3
       rect:
         serializedVersion: 2
-        x: 1041
+        x: 0
         y: 0
-        width: 347
-        height: 465
+        width: 348
+        height: 466
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -201,10 +201,10 @@ TextureImporter:
       name: UI_ButtonCusto_4
       rect:
         serializedVersion: 2
-        x: 1388
+        x: 348
         y: 0
-        width: 347
-        height: 465
+        width: 348
+        height: 466
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,6 +215,28 @@ TextureImporter:
       bones: []
       spriteID: 2f6bd6153efb1484c80552fd41a335a2
       internalID: 56850086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_ButtonCusto_5
+      rect:
+        serializedVersion: 2
+        x: 696
+        y: 0
+        width: 348
+        height: 466
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51861fba2e9fc3141b2d11b08cab7b0a
+      internalID: 342108006
       vertices: []
       indices: 
       edges: []
@@ -233,13 +255,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":5.0,"y":1.0},"gridSpriteSize":{"x":347.0,"y":465.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":2.0},"gridSpriteSize":{"x":348.0,"y":466.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       UI_ButtonCusto_0: -1807182433
       UI_ButtonCusto_1: 1741703765
       UI_ButtonCusto_2: 1610748248
       UI_ButtonCusto_3: -358527854
       UI_ButtonCusto_4: 56850086
+      UI_ButtonCusto_5: 342108006
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
