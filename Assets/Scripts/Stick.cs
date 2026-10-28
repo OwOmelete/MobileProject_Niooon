@@ -10,24 +10,29 @@ public class Stick : MonoBehaviour
     public RectTransform handleTransform;
     public Image handleImage;
 
-    private int currentTouch;
+    private int currentTouch = -1;
 
     public float StickRange;
 
     public float MaxRangeX;
     public float MaxRangeY;
+    public float OuterMaxRangeY;
+    public float OuterMaxRangeX;
 
     public Collider2D stickZone;
     public RectTransform stickZoneTransform;
-    
     
     public RectTransform parent;
 
     public Vector2 startPosition;
 
+    private float canvaScale;
+    
     private void Start()
     {
         startPosition = parent.anchoredPosition;
+        
+        canvaScale = parent.GetComponentInParent<Canvas>().scaleFactor;
     }
 
     private void Update()
@@ -36,18 +41,26 @@ public class Stick : MonoBehaviour
         {
             foreach (Touch touch in Input.touches)
             {
-                LayerMask mask = LayerMask.GetMask("UI");
-                RaycastHit2D hit = Physics2D.Raycast(touch.position, Vector2.zero, mask);
+                //LayerMask mask = LayerMask.GetMask("UI");
+                //RaycastHit2D hit = Physics2D.Raycast(touch.position, Vector2.zero, mask);
                 if (currentTouch == touch.fingerId)
                 {
-                    switch (touch.phase)
+                    if (isInRange(touch.position.x, touch.position.y))
                     {
-                        case TouchPhase.Moved:
-                            HandleTouchMoved(touch.position);
-                            break;
-                        case TouchPhase.Ended:
-                            HandleTouchEnded(touch.position);
-                            break;
+                        switch (touch.phase)
+                        {
+                            case TouchPhase.Moved:
+                                HandleTouchMoved(touch.position);
+                                break;
+                            case TouchPhase.Ended:
+                                HandleTouchEnded();
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        
+                        HandleTouchEnded();
                     }
 
                     return;
@@ -68,7 +81,7 @@ public class Stick : MonoBehaviour
         }
     }
 
-    private void HandleTouchEnded(Vector2 touchPosition)
+    private void HandleTouchEnded()
     {
         currentTouch = -1;
         Direction = Vector2.zero;
@@ -79,8 +92,7 @@ public class Stick : MonoBehaviour
 
     private void HandleTouchMoved(Vector2 touchPosition)
     {
-        Position = new Vector2(touchPosition.x - parent.transform.position.x,
-            touchPosition.y - parent.transform.position.y);
+        Position = (touchPosition - (Vector2)parent.position) / canvaScale;
         Direction = (Position + parent.anchoredPosition) - parent.anchoredPosition;
         StickSlide();
         
@@ -90,13 +102,23 @@ public class Stick : MonoBehaviour
     private void HandleTouchBegan(Vector2 touchPosition)
     {
         handleImage.enabled = true;
-        Position = new Vector2(touchPosition.x - parent.transform.position.x,
-            touchPosition.y - parent.transform.position.y);
-        Direction = (Position + parent.anchoredPosition) - parent.anchoredPosition;        
-        
-        MoveImage();
-    }
 
+        Position = Vector2.zero;
+        Direction = Vector2.zero;
+
+        RectTransform parentRect = parent.parent as RectTransform;
+
+        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(
+                parentRect,
+                touchPosition,
+                null,
+                out Vector3 worldPosition))
+        {
+            parent.position = worldPosition;
+        }
+
+        handleTransform.anchoredPosition = Vector2.zero;
+    }
     private void MoveImage()
     {
         handleTransform.anchoredPosition = Position;
@@ -114,10 +136,10 @@ public class Stick : MonoBehaviour
 
     private bool isInRange(float x, float y)
     {
-        return (x < stickZone.transform.position.x + MaxRangeX &&
-            x > stickZone.transform.position.x - MaxRangeX && 
-            y < stickZone.transform.position.y + MaxRangeY &&
-            y > stickZone.transform.position.y - MaxRangeY) ;
+        return (x < stickZone.transform.position.x + OuterMaxRangeX &&
+            x > stickZone.transform.position.x - OuterMaxRangeX && 
+            y < stickZone.transform.position.y + OuterMaxRangeY &&
+            y > stickZone.transform.position.y - OuterMaxRangeY) ;
     }
     
 }
