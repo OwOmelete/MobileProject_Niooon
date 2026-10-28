@@ -2,6 +2,7 @@
 using System.Collections;
 
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Joystick joystick;
     [SerializeField] private Stick slidingStick;
 
+    [SerializeField, Range(0, 90)] private float maxAngleWhileSliding;
 
     [Header("Other references")] [SerializeField]
    
@@ -76,8 +78,10 @@ public class PlayerController : MonoBehaviour
         {
             StickInputs = slidingStick.Direction.normalized;
         }
+        
         CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, player.maxRotationSpeed * player.rotationCurve.Evaluate(maxSpeedPercent)).normalized;
-
+ 
+        
         SpeedAmount();
 
         HandleSlide();
@@ -133,7 +137,7 @@ public class PlayerController : MonoBehaviour
 
     private void SpeedAmount()
     {
-        if (StickInputs == Vector2.zero && AutoMove)
+        if ((StickInputs == Vector2.zero && AutoMove) || isOnWall)
         {
             CurrentSpeed += player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) *
                             Time.fixedDeltaTime;
@@ -161,30 +165,41 @@ public class PlayerController : MonoBehaviour
         if (leftHit)
         {
             dot = Vector2.Dot(CurrentDirection, leftHit.normal);
-            if (dot < 0)
+            float dotInput = Vector2.Dot(StickInputs, Vector2.Perpendicular(leftHit.normal));
+            if (Mathf.Acos(Mathf.Abs(dotInput)) * Mathf.Rad2Deg > maxAngleWhileSliding)
             {
-                if (dot < -player.slideThreshold && !isOnWall)
+                if (true)
                 {
-                    CurrentSpeed *= Mathf.Clamp((1 + dot)*3, 0, 1);
-                }
-                Vector2 newDir = CurrentDirection-leftHit.normal * dot;
+                    Vector2 newDir = CurrentDirection-leftHit.normal * dot;
                 
-                CurrentDirection = Vector2.Lerp(CurrentDirection, newDir, 0.3f).normalized;
+                    CurrentDirection = Vector2.Lerp(CurrentDirection, newDir, 0.3f).normalized;
+                }
+            }
+            else
+            {
+                CurrentDirection = Vector2.Perpendicular(leftHit.normal).normalized;
             }
             isOnWall = true;
         }
         else if (rightHit)
         {
             dot = Vector2.Dot(CurrentDirection, rightHit.normal);
-            if (dot < 0)
+            float dotInput = Vector2.Dot(StickInputs, Vector2.Perpendicular(rightHit.normal));
+            if (Mathf.Acos(Mathf.Abs(dotInput)) * Mathf.Rad2Deg > maxAngleWhileSliding)
             {
-                if (dot < -player.slideThreshold && !isOnWall)
+                if (true)
                 {
-                    CurrentSpeed *= Mathf.Clamp((1 + dot) * 3, 0, 1);
+                    Vector2 newDir = CurrentDirection-rightHit.normal * dot;
+                    CurrentDirection = Vector2.Lerp(CurrentDirection, newDir, 0.3f).normalized;
                 }
-                Vector2 newDir = CurrentDirection-rightHit.normal * dot;
-                CurrentDirection = Vector2.Lerp(CurrentDirection, newDir, 0.3f).normalized;
+                
             }
+            else
+            {
+
+                CurrentDirection = -Vector2.Perpendicular(rightHit.normal).normalized;
+            }
+            
             isOnWall = true;
         }
         else

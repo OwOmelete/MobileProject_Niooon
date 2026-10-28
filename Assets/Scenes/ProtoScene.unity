@@ -419,6 +419,10 @@ PrefabInstance:
       propertyPath: speedDisplay
       value: 
       objectReference: {fileID: 1073317680}
+    - target: {fileID: 4009038482267430137, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: maxAngleWhileSliding
+      value: 60.7
+      objectReference: {fileID: 0}
     - target: {fileID: 4774631891308666000, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -690,17 +694,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2140233776343572560, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
-      propertyPath: hpText
-      value: 
-      objectReference: {fileID: 1555834675}
-    - target: {fileID: 2140233776343572560, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
       propertyPath: hpDisplay
       value: 
       objectReference: {fileID: 1555834675}
-    - target: {fileID: 2140233776343572560, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
-      propertyPath: weaponData
-      value: 
-      objectReference: {fileID: 11400000, guid: 71402f3cafbd16c41b24812c8301dc90, type: 2}
     - target: {fileID: 2748876562517728140, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.69
@@ -746,10 +742,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 606058993}
     - target: {fileID: 4009038482267430137, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
-      propertyPath: hpDisplay
-      value: 
-      objectReference: {fileID: 1465780602}
-    - target: {fileID: 4009038482267430137, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
       propertyPath: slidingStick
       value: 
       objectReference: {fileID: 1144664034}
@@ -757,6 +749,10 @@ PrefabInstance:
       propertyPath: speedDisplay
       value: 
       objectReference: {fileID: 1465780602}
+    - target: {fileID: 4009038482267430137, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: maxAngleWhileSliding
+      value: 60.7
+      objectReference: {fileID: 0}
     - target: {fileID: 9093718995677682698, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
       propertyPath: m_Name
       value: Player (2)
@@ -2587,7 +2583,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 12.91
+  orthographic size: 17.51
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
