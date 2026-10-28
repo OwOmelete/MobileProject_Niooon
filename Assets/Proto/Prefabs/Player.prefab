@@ -5847,9 +5847,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   joystick: {fileID: 0}
   slidingStick: {fileID: 0}
+  maxAngleWhileSliding: 30
   CurrentDirection: {x: 0, y: 0}
   CurrentSpeed: 0
-  hpDisplay: {fileID: 0}
+  speedDisplay: {fileID: 0}
   collisionMask:
     serializedVersion: 2
     m_Bits: 256
