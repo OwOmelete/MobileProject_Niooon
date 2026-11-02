@@ -90,7 +90,7 @@ public class Player : MonoBehaviour
         hpDisplay.text = hp.ToString();
     }
 
-    void GetWeaponStats(WeaponData data)
+    public void GetWeaponStats(WeaponData data)
     {
         maxSpeed = data.maxSpeed;
         acceleration = data.maxAcceleration;
