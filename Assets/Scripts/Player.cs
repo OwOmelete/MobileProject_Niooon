@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public float lowSpeedDamage;
     [HideInInspector] public float mediumSpeedDamage;
     [HideInInspector] public float highSpeedDamage;
+    [HideInInspector] public float maxAngleWhileSliding;
     public float hp;
 
     [HideInInspector] public bool isImmune;
@@ -110,6 +111,8 @@ public class Player : MonoBehaviour
         forwardThreshold = data.forwardThreshold;
         slideThreshold = data.slideThreshold;
 
+        maxAngleWhileSliding = data.MaxAngleWallStick;
+        
         hp = data.hp;
 
         UpdateHpDisplay();
