@@ -95,8 +95,8 @@ MonoBehaviour:
   StickRange: 50
   InnerMaxRangeX: 220
   InnerMaxRangeY: 220
-  OuterMaxRangeX: 500
-  OuterMaxRangeY: 500
+  OuterMaxRangeX: 330
+  OuterMaxRangeY: 330
   stickZone: {fileID: 440085087779601131}
   stickZoneTransform: {fileID: 9858571707434702}
   parent: {fileID: 8638557847268652386}
