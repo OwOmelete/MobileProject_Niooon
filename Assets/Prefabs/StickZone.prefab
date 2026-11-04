@@ -92,11 +92,11 @@ MonoBehaviour:
   Position: {x: 0, y: 0}
   handleTransform: {fileID: 7647835360755872119}
   handleImage: {fileID: 2430412368197345189}
-  StickRange: 50
-  InnerMaxRangeX: 220
-  InnerMaxRangeY: 220
-  OuterMaxRangeX: 330
-  OuterMaxRangeY: 330
+  StickRange: 70
+  InnerMaxRangeX: 180
+  InnerMaxRangeY: 180
+  OuterMaxRangeX: 220
+  OuterMaxRangeY: 220
   stickZone: {fileID: 440085087779601131}
   stickZoneTransform: {fileID: 9858571707434702}
   parent: {fileID: 8638557847268652386}
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.6024072, b: 1, a: 0.33333334}
+  m_Color: {r: 1, g: 0, b: 0.040395737, a: 0.33333334}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
