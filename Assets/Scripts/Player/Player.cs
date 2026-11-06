@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float blinkNumberAnim = 3;
 
+    public int ID;
+    
     public enum Speed
     {
         stop,
