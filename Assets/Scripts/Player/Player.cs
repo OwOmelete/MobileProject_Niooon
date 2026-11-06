@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
@@ -23,6 +26,10 @@ public class Player : MonoBehaviour
     [HideInInspector] public float lowSpeedDamage;
     [HideInInspector] public float mediumSpeedDamage;
     [HideInInspector] public float highSpeedDamage;
+    [HideInInspector] public float maxAngleWhileSliding;
+
+    [HideInInspector] public bool canMove = true;
+    private float maxHp;
     public float hp;
 
     [HideInInspector] public bool isImmune;
@@ -31,6 +38,12 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float blinkNumberAnim = 3;
 
+    [SerializeField] private Vector3 startPos;
+    
+    public static Action<int> OnDeath;
+    
+    public int ID;
+    
     public enum Speed
     {
         stop,
@@ -52,23 +65,33 @@ public class Player : MonoBehaviour
     void Start()
     {
         GetWeaponStats(weaponData);
+        startPos = transform.position;
     }
 
     public void takeDamage(float n)
     {
         if (isImmune) return;
+        
         hp -= n;
+        
+        Debug.Log(hp);
         UpdateHpDisplay();
         StartCoroutine(damageAnim());
         if (hp < 0)
         {
             hp = 0;
             UpdateHpDisplay();
-            Destroy(gameObject);
+            OnDeath?.Invoke(ID);
+            gameObject.SetActive(false);
         }
-        else
-        {
-        }
+    }
+
+    public void ResetPlayer()
+    {
+        transform.position = startPos;
+        hp = maxHp;
+        isImmune = false;
+        UpdateHpDisplay();
     }
 
     IEnumerator damageAnim()
@@ -110,14 +133,11 @@ public class Player : MonoBehaviour
         forwardThreshold = data.forwardThreshold;
         slideThreshold = data.slideThreshold;
 
+        maxAngleWhileSliding = data.MaxAngleWallStick;
+        
         hp = data.hp;
+        maxHp = data.hp;
 
         UpdateHpDisplay();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

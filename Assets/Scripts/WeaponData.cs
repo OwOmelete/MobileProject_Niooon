@@ -23,6 +23,8 @@ public class WeaponData : ScriptableObject
     [Range(0, 1)] public float forwardThreshold;
     [Range(0, 1)] public float slideThreshold;
 
+    [Range(0, 90)] public float MaxAngleWallStick;
+
 
 
 

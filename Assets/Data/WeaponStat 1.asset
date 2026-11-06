@@ -72,3 +72,4 @@ MonoBehaviour:
   highSpeedDamage: 5
   forwardThreshold: 0.742
   slideThreshold: 0
+  MaxAngleWallStick: 60

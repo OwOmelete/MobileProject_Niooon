@@ -4,20 +4,20 @@ using UnityEngine.UI;
 
 public class Stick : MonoBehaviour
 {
-    public Vector2 Direction;
-    public Vector2 Position;
+    [HideInInspector] public Vector2 Direction;
+    [HideInInspector]public Vector2 Position;
 
     public RectTransform handleTransform;
     public Image handleImage;
 
     private int currentTouch = -1;
 
-    public float StickRange;
+    [SerializeField] private float StickRange;
 
-    public float MaxRangeX;
-    public float MaxRangeY;
-    public float OuterMaxRangeY;
-    public float OuterMaxRangeX;
+    [SerializeField] private float InnerMaxRangeX;
+    [SerializeField] private float InnerMaxRangeY;
+    [SerializeField] private float OuterMaxRangeX;
+    [SerializeField] private float OuterMaxRangeY;
 
     public Collider2D stickZone;
     public RectTransform stickZoneTransform;
@@ -129,8 +129,8 @@ public class Stick : MonoBehaviour
         if (Direction.magnitude > StickRange)
         {
             parent.anchoredPosition += Direction - Direction.normalized * StickRange;
-            parent.anchoredPosition = new Vector2( Mathf.Clamp(parent.anchoredPosition.x,startPosition.x - MaxRangeX, startPosition.x + MaxRangeX),
-                Mathf.Clamp(parent.anchoredPosition.y,startPosition.y - MaxRangeY, startPosition.y + MaxRangeY));
+            parent.anchoredPosition = new Vector2( Mathf.Clamp(parent.anchoredPosition.x,startPosition.x - InnerMaxRangeX, startPosition.x + InnerMaxRangeX),
+                Mathf.Clamp(parent.anchoredPosition.y,startPosition.y - InnerMaxRangeY, startPosition.y + InnerMaxRangeY));
         }
     }
 

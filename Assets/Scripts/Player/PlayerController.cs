@@ -13,8 +13,7 @@ public class PlayerController : MonoBehaviour
     private bool isOnWall = false;
     [SerializeField] private Joystick joystick;
     [SerializeField] private Stick slidingStick;
-
-    [SerializeField, Range(0, 90)] private float maxAngleWhileSliding;
+    
 
     [Header("Other references")] [SerializeField]
    
@@ -62,12 +61,18 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        player.canMove = true;
         DisplayHp();
         CurrentDirection = Vector2.up;
     }
 
     private void FixedUpdate()
     {
+        if (!player.canMove)
+        {
+            return;
+        }
+        
         maxSpeedPercent = CurrentSpeed / player.maxSpeed;
 
         if (joystick.enabled)
@@ -96,9 +101,7 @@ public class PlayerController : MonoBehaviour
     {
         UpdateTrail();
     }
-
-
-
+    
     private void FinalMovement()
     {
         if (!PositionInterpolation())
@@ -137,7 +140,7 @@ public class PlayerController : MonoBehaviour
 
     private void SpeedAmount()
     {
-        if ((StickInputs == Vector2.zero && AutoMove) || isOnWall)
+        if ((StickInputs == Vector2.zero && AutoMove))
         {
             CurrentSpeed += player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) *
                             Time.fixedDeltaTime;
@@ -166,7 +169,7 @@ public class PlayerController : MonoBehaviour
         {
             dot = Vector2.Dot(CurrentDirection, leftHit.normal);
             float dotInput = Vector2.Dot(StickInputs, Vector2.Perpendicular(leftHit.normal));
-            if (Mathf.Acos(Mathf.Abs(dotInput)) * Mathf.Rad2Deg > maxAngleWhileSliding)
+            if (Mathf.Acos(Mathf.Abs(dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding)
             {
                 if (true)
                 {
@@ -185,7 +188,7 @@ public class PlayerController : MonoBehaviour
         {
             dot = Vector2.Dot(CurrentDirection, rightHit.normal);
             float dotInput = Vector2.Dot(StickInputs, Vector2.Perpendicular(rightHit.normal));
-            if (Mathf.Acos(Mathf.Abs(dotInput)) * Mathf.Rad2Deg > maxAngleWhileSliding)
+            if (Mathf.Acos(Mathf.Abs(dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding)
             {
                 if (true)
                 {
