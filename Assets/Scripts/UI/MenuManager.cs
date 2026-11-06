@@ -12,18 +12,44 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private WeaponData[] weaponDatas;
 
     [SerializeField] private GameObject ButtonPrefab;
-    [SerializeField] private Transform P1Parent;
-    [SerializeField] private Transform P2Parent;
+    [SerializeField] private Transform P1UiParent;
+    [SerializeField] private Transform P2UiParent;
 
     private Button[] buttonsP1;
     private Button[] buttonsP2;
 
     private UnityAction action;
+    
+    [SerializeField] private GameObject MainMenuUI;
+    [SerializeField] private GameObject InGameUI;
+    
+    
+    
 
     private void Start()
     {
-        UpdateButtons();
+        //UpdateButtons();
+        
+        
+        
+        
+        
     }
+
+    public void MainToGame()
+    {
+        MainMenuUI.SetActive(false);
+        InGameUI.SetActive(true);
+        
+    }
+
+    public void GameToMain()
+    {
+        InGameUI.SetActive(false);
+        MainMenuUI.SetActive(true);
+        GameManager.INSTANCE.SwitchGameState(GameManager.GameState.MainMenu);
+    }
+    
     
     public void EquipWeapon(int i, int p)
     {
@@ -44,7 +70,7 @@ public class MenuManager : MonoBehaviour
         {
 
 
-            GameObject go = Instantiate(ButtonPrefab, P1Parent);
+            GameObject go = Instantiate(ButtonPrefab, P1UiParent);
 
             Button btn = go.GetComponent<Button>();
             
@@ -55,7 +81,7 @@ public class MenuManager : MonoBehaviour
             
             
             
-            btn = Instantiate(ButtonPrefab, P2Parent).GetComponent<Button>();
+            btn = Instantiate(ButtonPrefab, P2UiParent).GetComponent<Button>();
             btn.onClick.AddListener(googoo);
         }
     }

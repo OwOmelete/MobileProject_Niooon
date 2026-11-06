@@ -12,11 +12,13 @@ public class RoundManager : MonoBehaviour
     private void OnEnable()
     {
         Player.OnDeath += HandlePlayerDeath;
+        GameManager.INSTANCE.OnGameStart += StartNewRound;
     }
 
     private void OnDisable()
     {
         Player.OnDeath -= HandlePlayerDeath;
+        GameManager.INSTANCE.OnGameStart -= StartNewRound;
     }
 
     private void HandlePlayerDeath(int n)

@@ -11,9 +11,60 @@ public class GameManager : MonoBehaviour
     private int CurrentP1Score;
     private int CurrentP2Score;
 
+    [SerializeField] private MenuManager menuManager;
     [SerializeField] private TMP_Text UIScore;
     
     public static GameManager INSTANCE;
+
+    public event Action OnGameStart;
+
+    public enum GameState
+    {
+        MainMenu,
+        PreparingGame,
+        InGame
+    }
+
+    public GameState currentState;
+
+
+    public void SwitchGameState(GameState newState)
+    {
+        switch (newState)
+        {
+            case GameState.MainMenu:
+                
+                ResetGame();
+                UpdateScore();
+                
+                break;
+            case GameState.PreparingGame:
+                break;
+            case GameState.InGame:
+                
+                ResetGame();
+                
+                OnGameStart?.Invoke();
+                
+                
+                break;
+        }
+
+        currentState = newState;
+    }
+
+    public void MainToGame()
+    {
+        SwitchGameState(GameManager.GameState.InGame);
+        menuManager.MainToGame();
+    }
+
+    public void GameToMain()
+    {
+        SwitchGameState(GameManager.GameState.MainMenu);
+        menuManager.GameToMain();
+    }
+    
     
     private void Awake()
     {
@@ -23,6 +74,11 @@ public class GameManager : MonoBehaviour
         }
         INSTANCE = this;
         DontDestroyOnLoad(this);
+    }
+
+    private void Start()
+    {
+        UpdateScore();
     }
 
     public void Reload()
@@ -55,14 +111,14 @@ public class GameManager : MonoBehaviour
         if (CurrentP1Score >= RoundToWin || CurrentP2Score >= RoundToWin)
         {
             EndGame();
+            
         }
     }
 
     private void EndGame()
     {
-        Debug.Log("partie terminée");
-        
         ResetGame();
+        GameToMain();
     }
 
     private void UpdateScore()
