@@ -61,12 +61,18 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        player.canMove = true;
         DisplayHp();
         CurrentDirection = Vector2.up;
     }
 
     private void FixedUpdate()
     {
+        if (!player.canMove)
+        {
+            return;
+        }
+        
         maxSpeedPercent = CurrentSpeed / player.maxSpeed;
 
         if (joystick.enabled)
@@ -95,9 +101,7 @@ public class PlayerController : MonoBehaviour
     {
         UpdateTrail();
     }
-
-
-
+    
     private void FinalMovement()
     {
         if (!PositionInterpolation())

@@ -1,23 +1,25 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private PlayerController[] playerList;
 
     [SerializeField] private int RoundToWin;
     private int CurrentP1Score;
     private int CurrentP2Score;
 
+    [SerializeField] private TMP_Text UIScore;
+    
     public static GameManager INSTANCE;
     
     private void Awake()
     {
         if (INSTANCE != null)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         INSTANCE = this;
         DontDestroyOnLoad(this);
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
     public void Reload()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        UpdateScore();
     }
 
     public void ResetGame()
@@ -44,6 +47,7 @@ public class GameManager : MonoBehaviour
         {
             CurrentP2Score++;
         }
+        UpdateScore();
     }
     
     public void EndRound()
@@ -56,7 +60,14 @@ public class GameManager : MonoBehaviour
 
     private void EndGame()
     {
+        Debug.Log("partie terminée");
         
+        ResetGame();
+    }
+
+    private void UpdateScore()
+    {
+        UIScore.text = CurrentP1Score + " - " + CurrentP2Score;
     }
     
 }
