@@ -15,7 +15,7 @@ public class Pointe : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (isImmune) return;
-        if (other.CompareTag("Pointe"))
+        if (other.CompareTag("Hitbox"))
         {
             Pointe opponentPoint = other.GetComponent<Pointe>();
             if (controller.CurrentSpeed < opponentPoint.controller.CurrentSpeed)
@@ -24,7 +24,7 @@ public class Pointe : MonoBehaviour
             }
             
         }
-        else if(other.CompareTag("Player"))
+        else if(other.CompareTag("Hurtbox"))
         {
             Pointe opponentPoint = other.GetComponentInChildren<Pointe>();
             opponentPoint.controller.player.takeDamage(CalculateDamage());
