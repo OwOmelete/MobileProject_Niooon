@@ -169,8 +169,15 @@ public class PlayerController : MonoBehaviour
         {
             dot = Vector2.Dot(CurrentDirection, leftHit.normal);
             float dotInput = Vector2.Dot(StickInputs, Vector2.Perpendicular(leftHit.normal));
+            
+            
+            
             if (Mathf.Acos(Mathf.Abs(dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding)
             {
+                if (dot < -player.slideThreshold && !isOnWall)
+                {
+                    CurrentSpeed *= Mathf.Clamp((1 + dot)*3, 0, 1);
+                }
                 if (true)
                 {
                     Vector2 newDir = CurrentDirection-leftHit.normal * dot;
@@ -188,8 +195,16 @@ public class PlayerController : MonoBehaviour
         {
             dot = Vector2.Dot(CurrentDirection, rightHit.normal);
             float dotInput = Vector2.Dot(StickInputs, Vector2.Perpendicular(rightHit.normal));
+            
+            
+            
             if (Mathf.Acos(Mathf.Abs(dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding)
             {
+                if (dot < -player.slideThreshold && !isOnWall)
+                {
+                    CurrentSpeed *= Mathf.Clamp((1 + dot)*3, 0, 1);
+                }
+                
                 if (true)
                 {
                     Vector2 newDir = CurrentDirection-rightHit.normal * dot;
