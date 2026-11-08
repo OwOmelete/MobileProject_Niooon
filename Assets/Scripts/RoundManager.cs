@@ -45,7 +45,7 @@ public class RoundManager : MonoBehaviour
 
     IEnumerator NewRoundDelay()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         OnRoundEnd?.Invoke();
 
     }

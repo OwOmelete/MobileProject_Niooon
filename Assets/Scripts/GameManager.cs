@@ -17,9 +17,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text UIScore;
     [SerializeField] private Image[] UIScoreNotches;
     [SerializeField] private TMP_Text UIRound;
+    [SerializeField] private GameObject WinnerUI;
 
+    
+    
     public static GameManager INSTANCE;
 
+    private bool hasWinner;
+    public int Winner;
+    
     public event Action OnGameStart;
 
     public enum GameState
@@ -34,13 +40,16 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        MenuManager.OnRoundTransitionEnd += EndRound;
+        MenuManager.OnRoundTransitionEnd += EndRoundTransition;
+        RoundManager.OnRoundEnd += EndRound;
     }
 
     private void OnDisable()
     {
-        MenuManager.OnRoundTransitionEnd -= EndRound;
+        MenuManager.OnRoundTransitionEnd -= EndRoundTransition;
+        RoundManager.OnRoundEnd -= EndRound;
     }
+    
 
     public void SwitchGameState(GameState newState)
     {
@@ -106,9 +115,11 @@ public class GameManager : MonoBehaviour
     {
         CurrentP1Score = 0;
         CurrentP2Score = 0;
-        CurrentRound = 0;
+        CurrentRound = 1;
+        hasWinner = false;
+        WinnerUI.SetActive(false);
         ResetScoreUi();
-        UIRound.text = "Round " + (CurrentRound+1);
+        UIRound.text = "Round " + (CurrentRound);
     }
 
     public void AddScore(int player)
@@ -123,11 +134,13 @@ public class GameManager : MonoBehaviour
         }
         AddScoreToUi(player);
         UpdateScore();
+        CurrentRound += 1;
+        UIRound.text = "Round " + (CurrentRound);
     }
 
     private void AddScoreToUi(int player)
     {
-        UIRound.text = "Round " + (CurrentRound+1);
+        
         if (player == 1)
         {
             UIScoreNotches[CurrentRound-1].color = Color.blue;
@@ -148,12 +161,27 @@ public class GameManager : MonoBehaviour
     
     public void EndRound()
     {
-        if (CurrentP1Score >= RoundToWin || CurrentP2Score >= RoundToWin)
+        if (CurrentP1Score >= RoundToWin)
+        {
+            hasWinner = true;
+            WinnerUI.SetActive(true);
+            WinnerUI.transform.rotation = Quaternion.Euler(0,0,180);
+        }
+
+        if (CurrentP2Score >= RoundToWin)
+        {
+            hasWinner = true;
+            WinnerUI.SetActive(true);
+            WinnerUI.transform.rotation = Quaternion.identity;
+        }
+    }
+
+    public void EndRoundTransition()
+    {
+        if (hasWinner)
         {
             EndGame();
-            
         }
-        CurrentRound += 1;
     }
 
     private void EndGame()
