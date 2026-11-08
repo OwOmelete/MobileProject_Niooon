@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviour
         CurrentP2Score = 0;
         CurrentRound = 0;
         ResetScoreUi();
+        UIRound.text = "Round " + (CurrentRound+1);
     }
 
     public void AddScore(int player)
@@ -126,7 +127,6 @@ public class GameManager : MonoBehaviour
 
     private void AddScoreToUi(int player)
     {
-        Debug.Log(CurrentRound);
         UIRound.text = "Round " + (CurrentRound+1);
         if (player == 1)
         {
@@ -153,7 +153,6 @@ public class GameManager : MonoBehaviour
             EndGame();
             
         }
-
         CurrentRound += 1;
     }
 

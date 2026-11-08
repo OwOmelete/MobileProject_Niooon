@@ -62,9 +62,7 @@ public class Stick : MonoBehaviour
                         
                         HandleTouchEnded();
                     }
-
                     return;
-                    
                 }
                 else
                 {
@@ -116,7 +114,6 @@ public class Stick : MonoBehaviour
         {
             parent.position = worldPosition;
         }
-
         handleTransform.anchoredPosition = Vector2.zero;
     }
     private void MoveImage()
@@ -141,5 +138,4 @@ public class Stick : MonoBehaviour
             y < stickZone.transform.position.y + OuterMaxRangeY &&
             y > stickZone.transform.position.y - OuterMaxRangeY) ;
     }
-    
 }
