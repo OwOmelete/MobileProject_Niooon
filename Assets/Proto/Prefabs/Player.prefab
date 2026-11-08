@@ -284,9 +284,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8496714235015893059}
   - component: {fileID: 3538351561277426141}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Hurtbox
-  m_TagString: Untagged
+  m_TagString: Hurtbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -299,12 +299,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3578406073588153557}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.007, y: -0.513, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.26500002, y: -0.6610006, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2748876562517728140}
+  m_Father: {fileID: 504274743231574040}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &3538351561277426141
 BoxCollider2D:
@@ -336,7 +336,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -5378,7 +5378,7 @@ GameObject:
   - component: {fileID: 843031255607078536}
   m_Layer: 7
   m_Name: Hitbox
-  m_TagString: Pointe
+  m_TagString: Hitbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5395,7 +5395,8 @@ Transform:
   m_LocalPosition: {x: -0.272, y: 0.148, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8496714235015893059}
   m_Father: {fileID: 2748876562517728140}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &7904552971764197890
@@ -5618,7 +5619,6 @@ Transform:
   m_Children:
   - {fileID: 1933516519562888396}
   - {fileID: 504274743231574040}
-  - {fileID: 8496714235015893059}
   - {fileID: 6032376239272735520}
   - {fileID: 90417066407951485}
   - {fileID: 7732222703694109571}

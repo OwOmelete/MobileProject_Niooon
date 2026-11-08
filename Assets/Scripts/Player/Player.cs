@@ -73,8 +73,6 @@ public class Player : MonoBehaviour
         if (isImmune) return;
         
         hp -= n;
-        
-        Debug.Log(hp);
         UpdateHpDisplay();
         StartCoroutine(damageAnim());
         if (hp < 0)

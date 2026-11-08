@@ -26,7 +26,7 @@ public class Pointe : MonoBehaviour
         }
         else if(other.CompareTag("Hurtbox"))
         {
-            Pointe opponentPoint = other.GetComponentInChildren<Pointe>();
+            Pointe opponentPoint = other.GetComponentInParent<Pointe>();
             opponentPoint.controller.player.takeDamage(CalculateDamage());
         }
         

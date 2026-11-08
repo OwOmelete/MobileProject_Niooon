@@ -9,16 +9,20 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private Player Player2;
 
 
+    public static event Action OnRoundEnd;
+    
     private void OnEnable()
     {
         Player.OnDeath += HandlePlayerDeath;
         GameManager.INSTANCE.OnGameStart += StartNewRound;
+        MenuManager.OnRoundTransitionEnd += StartNewRound;
     }
 
     private void OnDisable()
     {
         Player.OnDeath -= HandlePlayerDeath;
         GameManager.INSTANCE.OnGameStart -= StartNewRound;
+        MenuManager.OnRoundTransitionEnd -= StartNewRound;
     }
 
     private void HandlePlayerDeath(int n)
@@ -42,14 +46,13 @@ public class RoundManager : MonoBehaviour
     IEnumerator NewRoundDelay()
     {
         yield return new WaitForSeconds(3);
-        
-        StartNewRound();
-        
-        GameManager.INSTANCE.EndRound();
+        OnRoundEnd?.Invoke();
+
     }
     
     private void StartNewRound()
     {
+        if (GameManager.INSTANCE.currentState != GameManager.GameState.InGame) return;
         Player1.gameObject.SetActive(true);
         Player2.gameObject.SetActive(true);
         Player1.ResetPlayer();

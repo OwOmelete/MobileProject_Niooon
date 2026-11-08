@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,10 +11,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int RoundToWin;
     private int CurrentP1Score;
     private int CurrentP2Score;
+    private int CurrentRound;
 
-    [SerializeField] private MenuManager menuManager;
+    public MenuManager menuManager;
     [SerializeField] private TMP_Text UIScore;
-    
+    [SerializeField] private Image[] UIScoreNotches;
+    [SerializeField] private TMP_Text UIRound;
+
     public static GameManager INSTANCE;
 
     public event Action OnGameStart;
@@ -27,6 +31,16 @@ public class GameManager : MonoBehaviour
 
     public GameState currentState;
 
+
+    private void OnEnable()
+    {
+        MenuManager.OnRoundTransitionEnd += EndRound;
+    }
+
+    private void OnDisable()
+    {
+        MenuManager.OnRoundTransitionEnd -= EndRound;
+    }
 
     public void SwitchGameState(GameState newState)
     {
@@ -79,6 +93,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         UpdateScore();
+        ResetScoreUi();
     }
 
     public void Reload()
@@ -91,6 +106,8 @@ public class GameManager : MonoBehaviour
     {
         CurrentP1Score = 0;
         CurrentP2Score = 0;
+        CurrentRound = 0;
+        ResetScoreUi();
     }
 
     public void AddScore(int player)
@@ -103,7 +120,30 @@ public class GameManager : MonoBehaviour
         {
             CurrentP2Score++;
         }
+        AddScoreToUi(player);
         UpdateScore();
+    }
+
+    private void AddScoreToUi(int player)
+    {
+        Debug.Log(CurrentRound);
+        UIRound.text = "Round " + (CurrentRound+1);
+        if (player == 1)
+        {
+            UIScoreNotches[CurrentRound-1].color = Color.blue;
+        }
+        else
+        {
+            UIScoreNotches[CurrentRound-1].color = Color.red;
+        }
+    }
+
+    private void ResetScoreUi()
+    {
+        foreach (Image img in UIScoreNotches)
+        {
+            img.color = Color.gray;
+        }
     }
     
     public void EndRound()
@@ -113,6 +153,8 @@ public class GameManager : MonoBehaviour
             EndGame();
             
         }
+
+        CurrentRound += 1;
     }
 
     private void EndGame()
