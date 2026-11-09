@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     
     [Header("Movements")]
     private bool isOnWall = false;
-    [SerializeField] private Joystick joystick;
     [SerializeField] private Stick slidingStick;
     
 
@@ -75,14 +74,7 @@ public class PlayerController : MonoBehaviour
         
         maxSpeedPercent = CurrentSpeed / player.maxSpeed;
 
-        if (joystick.enabled)
-        {
-            StickInputs = joystick.Direction;
-        }
-        else
-        {
-            StickInputs = slidingStick.Direction.normalized;
-        }
+        StickInputs = slidingStick.Direction.normalized;
         
         CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, player.maxRotationSpeed * player.rotationCurve.Evaluate(maxSpeedPercent)).normalized;
  

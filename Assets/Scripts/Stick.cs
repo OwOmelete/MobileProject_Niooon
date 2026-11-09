@@ -18,6 +18,9 @@ public class Stick : MonoBehaviour
     [SerializeField] private float InnerMaxRangeY;
     [SerializeField] private float OuterMaxRangeX;
     [SerializeField] private float OuterMaxRangeY;
+    [SerializeField] private float InnerMaxRangeRadius;
+    [SerializeField] private float OuterMaxRangeRadius;
+    [SerializeField] private bool IsCircle;
 
     public Collider2D stickZone;
     public RectTransform stickZoneTransform;
@@ -45,33 +48,72 @@ public class Stick : MonoBehaviour
                 //RaycastHit2D hit = Physics2D.Raycast(touch.position, Vector2.zero, mask);
                 if (currentTouch == touch.fingerId)
                 {
-                    if (isInRange(touch.position.x, touch.position.y))
+                    if (IsCircle)
                     {
-                        switch (touch.phase)
+                        if (isInRangeCircle(touch.position.x, touch.position.y))
                         {
-                            case TouchPhase.Moved:
-                                HandleTouchMoved(touch.position);
-                                break;
-                            case TouchPhase.Ended:
-                                HandleTouchEnded();
-                                break;
+                            switch (touch.phase)
+                            {
+                                case TouchPhase.Moved:
+                                    HandleTouchMoved(touch.position);
+                                    break;
+                                case TouchPhase.Ended:
+                                    HandleTouchEnded();
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                        
+                            HandleTouchEnded();
+                        }
+                        return;
+                    }
+                    else
+                    {
+                        if (isInRange(touch.position.x, touch.position.y))
+                        {
+                            switch (touch.phase)
+                            {
+                                case TouchPhase.Moved:
+                                    HandleTouchMoved(touch.position);
+                                    break;
+                                case TouchPhase.Ended:
+                                    HandleTouchEnded();
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                        
+                            HandleTouchEnded();
+                        }
+                        return;
+                    }
+                    
+                }
+                else
+                {
+                    if (IsCircle)
+                    {
+                        if (isInRangeCircle(touch.position.x, touch.position.y))
+                        {
+                            if (touch.phase == TouchPhase.Began)
+                            {
+                                currentTouch = touch.fingerId;
+                                HandleTouchBegan(touch.position);
+                            }
                         }
                     }
                     else
                     {
-                        
-                        HandleTouchEnded();
-                    }
-                    return;
-                }
-                else
-                {
-                    if (isInRange(touch.position.x, touch.position.y))
-                    {
-                        if (touch.phase == TouchPhase.Began)
+                        if (isInRange(touch.position.x, touch.position.y))
                         {
-                            currentTouch = touch.fingerId;
-                            HandleTouchBegan(touch.position);
+                            if (touch.phase == TouchPhase.Began)
+                            {
+                                currentTouch = touch.fingerId;
+                                HandleTouchBegan(touch.position);
+                            }
                         }
                     }
                 }
@@ -92,7 +134,15 @@ public class Stick : MonoBehaviour
     {
         Position = (touchPosition - (Vector2)parent.position) / canvaScale;
         Direction = (Position + parent.anchoredPosition) - parent.anchoredPosition;
-        StickSlide();
+        if (IsCircle)
+        {
+            StickSlideCircle();
+        }
+        else
+        {
+            StickSlide();
+        }
+        
         
         MoveImage();
     }
@@ -131,11 +181,36 @@ public class Stick : MonoBehaviour
         }
     }
 
+    private void StickSlideCircle()
+    {
+        if (Direction.magnitude > StickRange)
+        {
+            parent.anchoredPosition += Direction - Direction.normalized * StickRange;
+
+            Vector2 offset = parent.anchoredPosition - startPosition;
+
+            if (offset.magnitude > InnerMaxRangeRadius)
+            {
+                offset = offset.normalized * InnerMaxRangeRadius;
+            }
+
+            parent.anchoredPosition = startPosition + offset;
+        }
+    }
+    
     private bool isInRange(float x, float y)
     {
         return (x < stickZone.transform.position.x + OuterMaxRangeX &&
             x > stickZone.transform.position.x - OuterMaxRangeX && 
             y < stickZone.transform.position.y + OuterMaxRangeY &&
             y > stickZone.transform.position.y - OuterMaxRangeY) ;
+    }
+
+    private bool isInRangeCircle(float x, float y)
+    {
+        Vector2 center = stickZone.transform.position;
+        Vector2 position = new Vector2(x, y);
+
+        return (position - center).sqrMagnitude < OuterMaxRangeRadius * OuterMaxRangeRadius;
     }
 }

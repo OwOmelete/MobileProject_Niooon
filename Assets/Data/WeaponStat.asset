@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WeaponStat
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   maxSpeed: 20
-  maxAcceleration: 4
+  maxAcceleration: 5
   accelerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -27,13 +27,13 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.07546303
     - serializedVersion: 3
-      time: 0.40188053
-      value: 0.44196197
-      inSlope: -0.8488412
-      outSlope: -0.8488412
+      time: 0.65022206
+      value: 0.27127963
+      inSlope: -0.3892841
+      outSlope: -0.3892841
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.08154361
       outWeight: 0.18870845
     - serializedVersion: 3
       time: 1.0041647
