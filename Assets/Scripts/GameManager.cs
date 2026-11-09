@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -101,6 +102,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        DebugManager.instance.enableRuntimeUI = false;
         UpdateScore();
         ResetScoreUi();
     }

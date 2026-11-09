@@ -108,8 +108,8 @@ public class PlayerController : MonoBehaviour
     private void RespawnPlayer()
     {
         CurrentSpeed = 0;
-        transform.position = player.startPos;
         
+        //player.ResetPlayer();
     }
     
     private void FinalMovement()
@@ -198,6 +198,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 CurrentDirection = Vector2.Perpendicular(leftHit.normal).normalized;
+                //AJOUTER CALCUL SPEED
             }
             isOnWall = true;
         }
@@ -226,6 +227,7 @@ public class PlayerController : MonoBehaviour
             {
 
                 CurrentDirection = -Vector2.Perpendicular(rightHit.normal).normalized;
+                //AJOUTER CALCUL SPEED
             }
             
             isOnWall = true;

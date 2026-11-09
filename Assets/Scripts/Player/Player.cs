@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
     private float maxHp;
     public float hp;
 
+    [SerializeField] private GameObject HitVisu;
+
     [HideInInspector] public bool isImmune;
 
     [SerializeField] private WeaponData weaponData;
@@ -70,11 +72,11 @@ public class Player : MonoBehaviour
 
     public void takeDamage(float n)
     {
-        if (isImmune) return;
+        if (isImmune || n == 0) return;
         
         hp -= n;
         UpdateHpDisplay();
-        StartCoroutine(damageAnim());
+        
         if (hp < 0)
         {
             hp = 0;
@@ -82,19 +84,32 @@ public class Player : MonoBehaviour
             OnDeath?.Invoke(ID);
             gameObject.SetActive(false);
         }
+        else
+        {
+            StartCoroutine(damageAnim());
+        }
     }
     IEnumerator damageAnim()
     {
         isImmune = true;
         for (int i = 0; i < blinkNumberAnim; i++)
         {
-            //sr.color = Color.white;
+            HitVisu.SetActive(true);
             yield return new WaitForSeconds(0.2f);
-            // sr.color = baseColor;
+            HitVisu.SetActive(false);
             yield return new WaitForSeconds(0.2f);
         }
 
         isImmune = false;
+    }
+
+    public void ResetPlayer()
+    {
+        HitVisu.SetActive(false);
+        hp = maxHp;
+        transform.position = startPos;
+        isImmune = false;
+        UpdateHpDisplay();
     }
 
     private void UpdateHpDisplay()

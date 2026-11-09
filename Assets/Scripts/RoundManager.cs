@@ -55,6 +55,8 @@ public class RoundManager : MonoBehaviour
         if (GameManager.INSTANCE.currentState != GameManager.GameState.InGame) return;
         Player1.gameObject.SetActive(true);
         Player2.gameObject.SetActive(true);
+        Player1.ResetPlayer();
+        Player2.ResetPlayer();
     }
     
 }
