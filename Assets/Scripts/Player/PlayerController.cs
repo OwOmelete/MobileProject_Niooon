@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 
 using TMPro;
@@ -36,6 +37,16 @@ public class PlayerController : MonoBehaviour
     private void DisplayHp()
     {
         //hpDisplay.text = (Mathf.Round(hp * 10) * 0.1f).ToString();
+    }
+
+    private void OnEnable()
+    {
+        MenuManager.OnRoundTransitionEnd += RespawnPlayer;
+    }
+
+    private void OnDisable()
+    {
+        MenuManager.OnRoundTransitionEnd -= RespawnPlayer;
     }
 
     public void changeMoveMode()
@@ -92,6 +103,13 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         UpdateTrail();
+    }
+
+    private void RespawnPlayer()
+    {
+        CurrentSpeed = 0;
+        transform.position = player.startPos;
+        
     }
     
     private void FinalMovement()

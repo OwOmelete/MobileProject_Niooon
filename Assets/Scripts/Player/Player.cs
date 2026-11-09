@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float blinkNumberAnim = 3;
 
-    [SerializeField] private Vector3 startPos;
+    [HideInInspector] public Vector3 startPos;
     
     public static Action<int> OnDeath;
     
@@ -83,15 +83,6 @@ public class Player : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-
-    public void ResetPlayer()
-    {
-        transform.position = startPos;
-        hp = maxHp;
-        isImmune = false;
-        UpdateHpDisplay();
-    }
-
     IEnumerator damageAnim()
     {
         isImmune = true;
