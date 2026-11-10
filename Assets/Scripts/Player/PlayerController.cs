@@ -263,6 +263,10 @@ public class PlayerController : MonoBehaviour
         float angleA = Vector2.Angle(vectorA, target);
         float angleB = Vector2.Angle(vectorB, target);
 
+        Debug.Log("angle " + angle + " A " + angleA + " B " + angleB);
+        Debug.Log(angle < angleA && angle < angleB);
+
+
         return angle < angleA && angle < angleB;
     }
 
