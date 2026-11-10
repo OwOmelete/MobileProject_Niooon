@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour
             float dotInput = Vector2.Dot(StickInputs, Vector2.Perpendicular(leftHit.normal));
             float angle = Vector2.Angle(Vector2.Perpendicular(leftHit.normal), -leftHit.normal);
             
-            if (Mathf.Acos((dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding || IsBetween(StickInputs, -rightHit.normal, Vector2.Perpendicular(rightHit.normal)))
+            if (Mathf.Acos((dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding || IsBetween(StickInputs, -leftHit.normal, Vector2.Perpendicular(rightHit.normal)))
             {
                 if (dot < -player.slideThreshold && !isOnWall)
                 {
