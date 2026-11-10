@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour
             float dotInput = Vector2.Dot(StickInputs, Vector2.Perpendicular(leftHit.normal));
             float angle = Vector2.Angle(Vector2.Perpendicular(leftHit.normal), -leftHit.normal);
             
-            if (Mathf.Acos((dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding || IsBetween(StickInputs, -rightHit.normal, Vector2.Perpendicular(rightHit.normal)))
+            if (Mathf.Acos((dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding && !IsBetween(StickInputs, -leftHit.normal, Vector2.Perpendicular(leftHit.normal)))
             {
                 if (dot < -player.slideThreshold && !isOnWall)
                 {
@@ -224,7 +224,7 @@ public class PlayerController : MonoBehaviour
             
             
             
-            if (Mathf.Acos((dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding || IsBetween(StickInputs, -rightHit.normal, -Vector2.Perpendicular(rightHit.normal)))
+            if (Mathf.Acos((dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding && !IsBetween(StickInputs, -rightHit.normal, -Vector2.Perpendicular(rightHit.normal)))
             {
                 if (dot < -player.slideThreshold && !isOnWall)
                 {
@@ -264,7 +264,7 @@ public class PlayerController : MonoBehaviour
         float angleB = Vector2.Angle(vectorB, target);
 
         Debug.Log("angle " + angle + " A " + angleA + " B " + angleB);
-        Debug.Log(angle < angleA && angle < angleB);
+        Debug.Log(angle > angleA && angle > angleB);
 
 
         return angle > angleA && angle > angleB;
