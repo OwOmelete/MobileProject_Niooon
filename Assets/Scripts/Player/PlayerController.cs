@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
     private void RespawnPlayer()
     {
         CurrentSpeed = 0;
-        
+        AutoMove = false;
         //player.ResetPlayer();
     }
     
