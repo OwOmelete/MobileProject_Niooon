@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
     [HideInInspector] public float mediumSpeedDamage;
     [HideInInspector] public float highSpeedDamage;
     [HideInInspector] public float maxAngleWhileSliding;
+    [HideInInspector] public float maxDeceleration;
+    [HideInInspector] public AnimationCurve decelerationCurve;
 
     [HideInInspector] public bool canMove = true;
     private float maxHp;
@@ -124,6 +126,9 @@ public class Player : MonoBehaviour
         accelerationCurve = data.accelerationCurve;
         maxRotationSpeed = data.maxRotationSpeed;
         rotationCurve = data.rotationCurve;
+
+        maxDeceleration = data.maxDeceleration;
+        decelerationCurve = data.decelerationCurve;
 
 
 

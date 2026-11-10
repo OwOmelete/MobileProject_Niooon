@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour
             CurrentSpeed += player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) *
                             Time.fixedDeltaTime;
         }
-        else if (isWallStick)
+        else if (isWallStick && AutoMove)
         {
             CurrentSpeed += player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) *
                             Time.fixedDeltaTime;
@@ -172,7 +172,11 @@ public class PlayerController : MonoBehaviour
         {
             CurrentSpeed += (Vector2.Dot(StickInputs, CurrentDirection) - player.forwardThreshold) * player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) / ((player.forwardThreshold - 1) * -1) * Time.fixedDeltaTime;
         }
-        CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0, player.maxSpeed);
+        else 
+        {
+            CurrentSpeed -= player.maxDeceleration * player.decelerationCurve.Evaluate(maxSpeedPercent) * Time.fixedDeltaTime;
+        }
+            CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0, player.maxSpeed);
     }
 
 
@@ -190,8 +194,6 @@ public class PlayerController : MonoBehaviour
         {
             dot = Vector2.Dot(CurrentDirection, leftHit.normal);
             float dotInput = Vector2.Dot(StickInputs, Vector2.Perpendicular(leftHit.normal));
-            
-            
             
             if (Mathf.Acos((dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding)
             {
