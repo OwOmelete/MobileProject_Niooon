@@ -267,7 +267,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log(angle < angleA && angle < angleB);
 
 
-        return angle < angleA && angle < angleB;
+        return angle > angleA && angle > angleB;
     }
 
     #region Visuals
