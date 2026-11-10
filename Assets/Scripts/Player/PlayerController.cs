@@ -85,13 +85,17 @@ public class PlayerController : MonoBehaviour
         CurrentDirection = Vector2.up;
     }
 
+    
+    
     private void FixedUpdate()
     {
         if (!player.canMove)
         {
             return;
         }
-        Arrow.transform.rotation = Quaternion.Euler(0,0, Mathf.Atan2(StickInputs.y, StickInputs.x) * Mathf.Rad2Deg - transform.rotation.eulerAngles.z);
+
+        
+        
 
 
         maxSpeedPercent = CurrentSpeed / player.maxSpeed;
@@ -114,6 +118,15 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         UpdateTrail();
+        if (StickInputs != Vector2.zero)
+        {
+            Arrow.SetActive(true);
+            Arrow.transform.rotation = Quaternion.Euler(0,0, Mathf.Atan2(StickInputs.y, StickInputs.x) * Mathf.Rad2Deg - 90);
+        }
+        else
+        {
+            Arrow.SetActive(false);
+        }
     }
 
     private void RespawnPlayer()

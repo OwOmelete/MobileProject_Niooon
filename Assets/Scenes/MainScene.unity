@@ -664,6 +664,10 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4009038482267430137, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: Arrow
+      value: 
+      objectReference: {fileID: 1375566594}
+    - target: {fileID: 4009038482267430137, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
       propertyPath: joystick
       value: 
       objectReference: {fileID: 0}
@@ -709,6 +713,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7283798928420759343, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
       propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7349408502072562658, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7349408502072562658, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7349408502072562658, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7349408502072562658, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7349408502072562658, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7658398491167526004, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
@@ -1532,6 +1556,10 @@ PrefabInstance:
       value: -179.211
       objectReference: {fileID: 0}
     - target: {fileID: 4009038482267430137, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: Arrow
+      value: 
+      objectReference: {fileID: 1172122518}
+    - target: {fileID: 4009038482267430137, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
       propertyPath: slidingStick
       value: 
       objectReference: {fileID: 1046789134}
@@ -1539,6 +1567,30 @@ PrefabInstance:
       propertyPath: speedDisplay
       value: 
       objectReference: {fileID: 1073317680}
+    - target: {fileID: 7349408502072562658, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7349408502072562658, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7349408502072562658, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7349408502072562658, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7349408502072562658, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 7349408502072562658, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9093718995677682698, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
       propertyPath: m_Name
       value: Player (2)
@@ -3560,6 +3612,11 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!1 &1172122518 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5620631112694152101, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+  m_PrefabInstance: {fileID: 321866373}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1178924758 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2140233776343572560, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
@@ -3948,6 +4005,11 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &1375566594 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5620631112694152101, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+  m_PrefabInstance: {fileID: 188782896}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1414812122
 GameObject:
   m_ObjectHideFlags: 0
