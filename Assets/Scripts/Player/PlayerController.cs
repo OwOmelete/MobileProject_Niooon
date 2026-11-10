@@ -6,6 +6,7 @@ using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public Player player;
 
     [SerializeField] private bool AutoMove = false;
+    [SerializeField] private Button Accel;
 
     bool c = false;
     private bool isWallStick = false;
@@ -50,9 +52,14 @@ public class PlayerController : MonoBehaviour
         MenuManager.OnRoundTransitionEnd -= RespawnPlayer;
     }
 
-    public void changeMoveMode()
+    public void AutoMoveTrue()
     {
-        AutoMove = !AutoMove;
+        AutoMove = true;
+    }
+
+    public void AutoMoveFalse()
+    {
+        AutoMove = false;
     }
 
     public void changeStick()
@@ -151,7 +158,7 @@ public class PlayerController : MonoBehaviour
 
     private void SpeedAmount()
     {
-        if ((StickInputs == Vector2.zero && AutoMove))
+        if (StickInputs == Vector2.zero && (AutoMove ))
         {
             CurrentSpeed += player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) *
                             Time.fixedDeltaTime;
