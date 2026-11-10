@@ -6,6 +6,7 @@ using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -31,8 +32,10 @@ public class PlayerController : MonoBehaviour
     public Player player;
 
     [SerializeField] private bool AutoMove = false;
+    [SerializeField] private Button Accel;
 
     bool c = false;
+    private bool isWallStick = false;
 
     private void DisplayHp()
     {
@@ -49,9 +52,14 @@ public class PlayerController : MonoBehaviour
         MenuManager.OnRoundTransitionEnd -= RespawnPlayer;
     }
 
-    public void changeMoveMode()
+    public void AutoMoveTrue()
     {
-        AutoMove = !AutoMove;
+        AutoMove = true;
+    }
+
+    public void AutoMoveFalse()
+    {
+        AutoMove = false;
     }
 
     public void changeStick()
@@ -150,23 +158,30 @@ public class PlayerController : MonoBehaviour
 
     private void SpeedAmount()
     {
-        if ((StickInputs == Vector2.zero && AutoMove))
+        if (StickInputs == Vector2.zero && (AutoMove ))
         {
             CurrentSpeed += player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) *
                             Time.fixedDeltaTime;
         }
-        else
+        else if (isWallStick && AutoMove)
         {
-            CurrentSpeed += (Vector2.Dot(StickInputs, CurrentDirection) - player.forwardThreshold) * player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) / ((player.forwardThreshold -1)*-1) * Time.fixedDeltaTime;
+            CurrentSpeed += player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) *
+                            Time.fixedDeltaTime;
         }
-        CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0, player.maxSpeed);
+        else if (AutoMove)
+        {
+            CurrentSpeed += (Vector2.Dot(StickInputs, CurrentDirection) - player.forwardThreshold) * player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) / ((player.forwardThreshold - 1) * -1) * Time.fixedDeltaTime;
+        }
+        else 
+        {
+            CurrentSpeed -= player.maxDeceleration * player.decelerationCurve.Evaluate(maxSpeedPercent) * Time.fixedDeltaTime;
+        }
+            CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0, player.maxSpeed);
     }
 
 
     void HandleSlide()
     {
-        
-
         RaycastHit2D leftHit = Physics2D.Raycast(transform.position - transform.up * 0.25f, (transform.up - transform.right * 0.8f), 0.6f, collisionMask);
 
         RaycastHit2D rightHit = Physics2D.Raycast(transform.position - transform.up * 0.25f, (transform.up + transform.right * 0.8f), 0.6f, collisionMask);
@@ -179,10 +194,9 @@ public class PlayerController : MonoBehaviour
         {
             dot = Vector2.Dot(CurrentDirection, leftHit.normal);
             float dotInput = Vector2.Dot(StickInputs, Vector2.Perpendicular(leftHit.normal));
+            float angle = Vector2.Angle(Vector2.Perpendicular(leftHit.normal), -leftHit.normal);
             
-            
-            
-            if (Mathf.Acos(Mathf.Abs(dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding)
+            if (Mathf.Acos((dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding || IsBetween(StickInputs, -rightHit.normal, Vector2.Perpendicular(rightHit.normal)))
             {
                 if (dot < -player.slideThreshold && !isOnWall)
                 {
@@ -194,22 +208,23 @@ public class PlayerController : MonoBehaviour
                 
                     CurrentDirection = Vector2.Lerp(CurrentDirection, newDir, 0.3f).normalized;
                 }
+                isWallStick = false;
             }
             else
             {
                 CurrentDirection = Vector2.Perpendicular(leftHit.normal).normalized;
-                //AJOUTER CALCUL SPEED
+                isWallStick = true;
             }
             isOnWall = true;
         }
         else if (rightHit)
         {
             dot = Vector2.Dot(CurrentDirection, rightHit.normal);
-            float dotInput = Vector2.Dot(StickInputs, Vector2.Perpendicular(rightHit.normal));
+            float dotInput = Vector2.Dot(StickInputs, -Vector2.Perpendicular(rightHit.normal));
             
             
             
-            if (Mathf.Acos(Mathf.Abs(dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding)
+            if (Mathf.Acos((dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding || IsBetween(StickInputs, -rightHit.normal, -Vector2.Perpendicular(rightHit.normal)))
             {
                 if (dot < -player.slideThreshold && !isOnWall)
                 {
@@ -221,13 +236,14 @@ public class PlayerController : MonoBehaviour
                     Vector2 newDir = CurrentDirection-rightHit.normal * dot;
                     CurrentDirection = Vector2.Lerp(CurrentDirection, newDir, 0.3f).normalized;
                 }
+                isWallStick = false;
                 
             }
             else
             {
 
                 CurrentDirection = -Vector2.Perpendicular(rightHit.normal).normalized;
-                //AJOUTER CALCUL SPEED
+                isWallStick = true;
             }
             
             isOnWall = true;
@@ -235,8 +251,23 @@ public class PlayerController : MonoBehaviour
         else
         {
             isOnWall = false;
+            isWallStick = false;
         }
         
+    }
+
+    bool IsBetween(Vector2 target, Vector2 vectorA, Vector2 vectorB)
+    {
+        float angle = Vector2.Angle(vectorA, vectorB);
+
+        float angleA = Vector2.Angle(vectorA, target);
+        float angleB = Vector2.Angle(vectorB, target);
+
+        Debug.Log("angle " + angle + " A " + angleA + " B " + angleB);
+        Debug.Log(angle < angleA && angle < angleB);
+
+
+        return angle < angleA && angle < angleB;
     }
 
     #region Visuals

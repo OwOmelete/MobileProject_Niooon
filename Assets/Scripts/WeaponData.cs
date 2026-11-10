@@ -11,6 +11,9 @@ public class WeaponData : ScriptableObject
     public float maxRotationSpeed;
     public AnimationCurve rotationCurve;
 
+    public float maxDeceleration;
+    public AnimationCurve decelerationCurve;
+
     public float hp;
 
     [Range(0, 1)] public float lowSpeedPercent;
