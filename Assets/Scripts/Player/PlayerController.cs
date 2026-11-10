@@ -168,9 +168,9 @@ public class PlayerController : MonoBehaviour
             CurrentSpeed += player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) *
                             Time.fixedDeltaTime;
         }
-        else
+        else if (AutoMove)
         {
-            //CurrentSpeed += (Vector2.Dot(StickInputs, CurrentDirection) - player.forwardThreshold) * player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) / ((player.forwardThreshold -1)*-1) * Time.fixedDeltaTime;
+            CurrentSpeed += (Vector2.Dot(StickInputs, CurrentDirection) - player.forwardThreshold) * player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) / ((player.forwardThreshold - 1) * -1) * Time.fixedDeltaTime;
         }
         CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0, player.maxSpeed);
     }
