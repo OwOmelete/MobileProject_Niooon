@@ -194,8 +194,9 @@ public class PlayerController : MonoBehaviour
         {
             dot = Vector2.Dot(CurrentDirection, leftHit.normal);
             float dotInput = Vector2.Dot(StickInputs, Vector2.Perpendicular(leftHit.normal));
+            float angle = Vector2.Angle(Vector2.Perpendicular(leftHit.normal), -leftHit.normal);
             
-            if (Mathf.Acos((dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding)
+            if (Mathf.Acos((dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding || IsBetween(StickInputs, -rightHit.normal, Vector2.Perpendicular(rightHit.normal)))
             {
                 if (dot < -player.slideThreshold && !isOnWall)
                 {
@@ -223,7 +224,7 @@ public class PlayerController : MonoBehaviour
             
             
             
-            if (Mathf.Acos((dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding)
+            if (Mathf.Acos((dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding || IsBetween(StickInputs, -rightHit.normal, -Vector2.Perpendicular(rightHit.normal)))
             {
                 if (dot < -player.slideThreshold && !isOnWall)
                 {
@@ -253,6 +254,16 @@ public class PlayerController : MonoBehaviour
             isWallStick = false;
         }
         
+    }
+
+    bool IsBetween(Vector2 target, Vector2 vectorA, Vector2 vectorB)
+    {
+        float angle = Vector2.Angle(vectorA, vectorB);
+
+        float angleA = Vector2.Angle(vectorA, target);
+        float angleB = Vector2.Angle(vectorB, target);
+
+        return angle < angleA && angle < angleB;
     }
 
     #region Visuals
