@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private bool AutoMove = false;
     [SerializeField] private Button Accel;
+    [SerializeField] private GameObject Arrow;
 
     bool c = false;
     private bool isWallStick = false;
@@ -90,7 +91,9 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        
+        Arrow.transform.rotation = Quaternion.Euler(0,0, Mathf.Atan2(StickInputs.y, StickInputs.x) * Mathf.Rad2Deg - transform.rotation.eulerAngles.z);
+
+
         maxSpeedPercent = CurrentSpeed / player.maxSpeed;
 
         StickInputs = slidingStick.Direction.normalized;
@@ -262,9 +265,6 @@ public class PlayerController : MonoBehaviour
 
         float angleA = Vector2.Angle(vectorA, target);
         float angleB = Vector2.Angle(vectorB, target);
-
-        Debug.Log("angle " + angle + " A " + angleA + " B " + angleB);
-        Debug.Log(angle > angleA && angle > angleB);
 
 
         return angle > angleA && angle > angleB;

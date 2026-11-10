@@ -699,6 +699,18 @@ PrefabInstance:
       propertyPath: m_Parameters.colorGradient.m_Mode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7283798928420759343, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: m_Color.b
+      value: 0.029988289
+      objectReference: {fileID: 0}
+    - target: {fileID: 7283798928420759343, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7283798928420759343, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7658398491167526004, guid: 7bb420763b02bdd47916db5031dea24a, type: 3}
       propertyPath: m_Sprite
       value: 
