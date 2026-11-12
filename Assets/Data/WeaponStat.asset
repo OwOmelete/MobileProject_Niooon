@@ -20,29 +20,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -0.49160963
-      outSlope: -0.49160963
+      inSlope: -0.4610443
+      outSlope: -0.4610443
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.13695091
+      outWeight: 0.5697153
     - serializedVersion: 3
-      time: 0.3267318
+      time: 0.3859332
       value: 0.42853707
-      inSlope: -0.832147
-      outSlope: -0.832147
+      inSlope: -1.226432
+      outSlope: -1.226432
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.08154361
-      outWeight: 0.0707651
+      inWeight: 0.23505083
+      outWeight: 0.27921167
     - serializedVersion: 3
       time: 1.0041647
       value: 0.16903512
-      inSlope: -0.42137843
-      outSlope: -0.42137843
+      inSlope: -0.21867198
+      outSlope: -0.21867198
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.08255428
+      inWeight: 0.38936257
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -54,15 +54,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.1468125
       value: 0.35748023
-      inSlope: -0.27028447
-      outSlope: -0.27028447
+      inSlope: 0.6792894
+      outSlope: 0.6792894
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.21924919
-      outWeight: 0.044676673
+      outWeight: 0.17666505
     - serializedVersion: 3
-      time: 0.34727284
-      value: 0.4638491
+      time: 0.16311845
+      value: 0.45416108
       inSlope: 0.04564768
       outSlope: 0.04564768
       tangentMode: 0
@@ -113,6 +113,6 @@ MonoBehaviour:
   lowSpeedDamage: 0
   mediumSpeedDamage: 4
   highSpeedDamage: 6
-  forwardThreshold: 0.9
+  forwardThreshold: 0.7
   slideThreshold: 1
   MaxAngleWallStick: 50
