@@ -4,6 +4,7 @@ using System.Collections;
 
 using TMPro;
 using Unity.Mathematics;
+using Unity.Multiplayer.PlayMode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -14,7 +15,8 @@ public class PlayerController : MonoBehaviour
     [Header("Movements")]
     private bool isOnWall = false;
     [SerializeField] private Stick slidingStick;
-    
+
+    [SerializeField] private float WalkSpeed;
 
     [Header("Other references")] [SerializeField]
    
@@ -34,6 +36,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool AutoMove = false;
     [SerializeField] private Button Accel;
     [SerializeField] private GameObject Arrow;
+
+    private enum PlayerState
+    {
+        OnHorse,
+        OnFoot
+    }
+
+    private PlayerState CurrentState = PlayerState.OnHorse;
 
     bool c = false;
     private bool isWallStick = false;
@@ -94,26 +104,37 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        
-        
-
-
-        maxSpeedPercent = CurrentSpeed / player.maxSpeed;
-
         StickInputs = slidingStick.Direction.normalized;
-        
-        CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, player.maxRotationSpeed * player.rotationCurve.Evaluate(maxSpeedPercent)).normalized;
- 
-        
-        SpeedAmount();
 
-        HandleSlide();
+        switch (CurrentState)
+        {
+            case (PlayerState.OnFoot):
+            {
+                    CurrentDirection = StickInputs;
 
-        DirectionToRotation();
+                    CurrentSpeed = WalkSpeed;
 
-        speedDisplay.text = CurrentSpeed.ToString();
+                    FinalMovement();
+                    break;
+            }
+            case (PlayerState.OnHorse):
+            {
+                    maxSpeedPercent = CurrentSpeed / player.maxSpeed;
 
-        FinalMovement();
+                    CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, player.maxRotationSpeed * player.rotationCurve.Evaluate(maxSpeedPercent)).normalized;
+
+                    SpeedAmount();
+
+                    HandleSlide();
+
+                    DirectionToRotation();
+
+                    speedDisplay.text = CurrentSpeed.ToString();
+
+                    FinalMovement();
+                    break;
+            }
+        }
     }
     private void Update()
     {
@@ -131,11 +152,31 @@ public class PlayerController : MonoBehaviour
 
     private void RespawnPlayer()
     {
+        SwitchState(PlayerState.OnHorse);
         CurrentSpeed = 0;
         AutoMove = false;
         //player.ResetPlayer();
     }
     
+    private void SwitchState(PlayerState state)
+    {
+        switch (state)
+        {
+            case (PlayerState.OnFoot):
+                {
+                    CurrentState = PlayerState.OnFoot;
+
+                    break;
+                }
+            case (PlayerState.OnHorse):
+                {
+                    CurrentState = PlayerState.OnHorse;
+
+                    break;
+                }
+        }
+    }
+
     private void FinalMovement()
     {
         if (!PositionInterpolation())
@@ -257,7 +298,6 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-
                 CurrentDirection = -Vector2.Perpendicular(rightHit.normal).normalized;
                 isWallStick = true;
             }
