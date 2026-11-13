@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 StickInputs;
     [SerializeField] private TMP_Text speedDisplay;
+    [SerializeField] private WalkController walkController;
     private float maxSpeedPercent;
 
     [SerializeField] private LayerMask collisionMask;
@@ -37,13 +38,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Button Accel;
     [SerializeField] private GameObject Arrow;
 
-    private enum PlayerState
-    {
-        OnHorse,
-        OnFoot
-    }
-
-    private PlayerState CurrentState = PlayerState.OnHorse;
+    
 
     bool c = false;
     private bool isWallStick = false;
@@ -93,6 +88,9 @@ public class PlayerController : MonoBehaviour
         player.canMove = true;
         DisplayHp();
         CurrentDirection = Vector2.up;
+
+        walkController.stick = slidingStick;
+        walkController.collisionMask = collisionMask;
     }
 
     
@@ -104,37 +102,25 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        StickInputs = slidingStick.Direction.normalized;
-
-        switch (CurrentState)
+        if (player.CurrentState == Player.PlayerState.OnHorse)
         {
-            case (PlayerState.OnFoot):
-            {
-                    CurrentDirection = StickInputs;
-
-                    CurrentSpeed = WalkSpeed;
-
-                    FinalMovement();
-                    break;
-            }
-            case (PlayerState.OnHorse):
-            {
-                    maxSpeedPercent = CurrentSpeed / player.maxSpeed;
-
-                    CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, player.maxRotationSpeed * player.rotationCurve.Evaluate(maxSpeedPercent)).normalized;
-
-                    SpeedAmount();
-
-                    HandleSlide();
-
-                    DirectionToRotation();
-
-                    speedDisplay.text = CurrentSpeed.ToString();
-
-                    FinalMovement();
-                    break;
-            }
+            StickInputs = slidingStick.Direction.normalized;
         }
+        
+        
+        maxSpeedPercent = CurrentSpeed / player.maxSpeed;
+
+        CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, player.maxRotationSpeed * player.rotationCurve.Evaluate(maxSpeedPercent)).normalized;
+
+        SpeedAmount();
+
+        HandleSlide();
+
+        DirectionToRotation();
+
+        speedDisplay.text = CurrentSpeed.ToString();
+
+        FinalMovement();
     }
     private void Update()
     {
@@ -152,30 +138,13 @@ public class PlayerController : MonoBehaviour
 
     private void RespawnPlayer()
     {
-        SwitchState(PlayerState.OnHorse);
+        
         CurrentSpeed = 0;
         AutoMove = false;
         //player.ResetPlayer();
     }
     
-    private void SwitchState(PlayerState state)
-    {
-        switch (state)
-        {
-            case (PlayerState.OnFoot):
-                {
-                    CurrentState = PlayerState.OnFoot;
-
-                    break;
-                }
-            case (PlayerState.OnHorse):
-                {
-                    CurrentState = PlayerState.OnHorse;
-
-                    break;
-                }
-        }
-    }
+    
 
     private void FinalMovement()
     {
@@ -215,7 +184,11 @@ public class PlayerController : MonoBehaviour
 
     private void SpeedAmount()
     {
-        if (StickInputs == Vector2.zero && (AutoMove ))
+        if (player.CurrentState == Player.PlayerState.OnFoot)
+        {
+            CurrentSpeed -= player.maxDeceleration * player.decelerationCurve.Evaluate(maxSpeedPercent) * Time.fixedDeltaTime;
+        }
+        else if (StickInputs == Vector2.zero && (AutoMove ))
         {
             CurrentSpeed += player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) *
                             Time.fixedDeltaTime;
@@ -233,7 +206,7 @@ public class PlayerController : MonoBehaviour
         {
             CurrentSpeed -= player.maxDeceleration * player.decelerationCurve.Evaluate(maxSpeedPercent) * Time.fixedDeltaTime;
         }
-            CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0, player.maxSpeed);
+        CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0, player.maxSpeed);
     }
 
 

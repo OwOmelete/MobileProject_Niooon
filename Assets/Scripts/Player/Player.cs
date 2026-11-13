@@ -43,6 +43,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float blinkNumberAnim = 3;
 
     [HideInInspector] public Vector3 startPos;
+
+    [SerializeField] private WalkController walkController;
     
     public static Action<int> OnDeath;
     
@@ -55,6 +57,14 @@ public class Player : MonoBehaviour
         medium,
         high
     }
+    
+    public enum PlayerState
+    {
+        OnHorse,
+        OnFoot
+    }
+
+    public PlayerState CurrentState = PlayerState.OnHorse;
 
     public Speed speedState;
 
@@ -75,6 +85,8 @@ public class Player : MonoBehaviour
     public void takeDamage(float n)
     {
         if (isImmune || n == 0) return;
+        
+        SwitchState(PlayerState.OnFoot);
         
         hp -= n;
         UpdateHpDisplay();
@@ -104,6 +116,31 @@ public class Player : MonoBehaviour
 
         isImmune = false;
     }
+    
+    private void SwitchState(PlayerState state)
+    {
+        switch (state)
+        {
+            case (PlayerState.OnFoot):
+            {
+                CurrentState = PlayerState.OnFoot;
+                walkController.gameObject.SetActive(true);
+                walkController.transform.position = transform.position;
+                walkController.enabled = true;
+                walkController.PlayerLaunched();
+
+                break;
+            }
+            case (PlayerState.OnHorse):
+            {
+                CurrentState = PlayerState.OnHorse;
+                    
+                walkController.enabled = false;
+                walkController.gameObject.SetActive(false);
+                break;
+            }
+        }
+    }
 
     public void ResetPlayer()
     {
@@ -111,6 +148,7 @@ public class Player : MonoBehaviour
         hp = maxHp;
         transform.position = startPos;
         isImmune = false;
+        SwitchState(PlayerState.OnHorse);
         UpdateHpDisplay();
     }
 

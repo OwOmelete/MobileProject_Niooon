@@ -5813,7 +5813,7 @@ GameObject:
   - component: {fileID: 4009038482267430137}
   - component: {fileID: 6236550775713841119}
   m_Layer: 6
-  m_Name: Player
+  m_Name: HorsePlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6153,9 +6153,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   slidingStick: {fileID: 0}
+  WalkSpeed: 0
   CurrentDirection: {x: 0, y: 0}
   CurrentSpeed: 0
   speedDisplay: {fileID: 0}
+  walkController: {fileID: 0}
   collisionMask:
     serializedVersion: 2
     m_Bits: 256
@@ -6163,6 +6165,7 @@ MonoBehaviour:
   player: {fileID: 2140233776343572560}
   AutoMove: 0
   Accel: {fileID: 0}
+  Arrow: {fileID: 0}
 --- !u!114 &6236550775713841119
 MonoBehaviour:
   m_ObjectHideFlags: 0
