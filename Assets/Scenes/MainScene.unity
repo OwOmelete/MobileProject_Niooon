@@ -2501,7 +2501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1068672416
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3503,6 +3503,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: dashSpeed
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
       propertyPath: slidingStick
       value: 
       objectReference: {fileID: 1144664034}
@@ -3510,6 +3514,18 @@ PrefabInstance:
       propertyPath: speedDisplay
       value: 
       objectReference: {fileID: 1465780602}
+    - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: dashLerpAmount
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: TimeForDashInput
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: dashRotationSpeed
+      value: 0.03
+      objectReference: {fileID: 0}
     - target: {fileID: 4425144408632096119, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
       propertyPath: ID
       value: 2
@@ -6531,6 +6547,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: Accel
+      value: 
+      objectReference: {fileID: 1508168117}
+    - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: dashSpeed
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -6542,6 +6566,18 @@ PrefabInstance:
       propertyPath: speedDisplay
       value: 
       objectReference: {fileID: 1073317680}
+    - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: dashLerpAmount
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: TimeForDashInput
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: dashRotationSpeed
+      value: 0.03
+      objectReference: {fileID: 0}
     - target: {fileID: 4425144408632096119, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
       propertyPath: hpDisplay
       value: 

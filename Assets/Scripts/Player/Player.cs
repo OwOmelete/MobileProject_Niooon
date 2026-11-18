@@ -86,6 +86,13 @@ public class Player : MonoBehaviour
     {
         if (isImmune || n == 0) return;
 
+        if (n == 2)
+        {
+            walkController.gameObject.SetActive(false);
+            OnDeath?.Invoke(ID);
+            gameObject.SetActive(false);
+        }
+        
         if (n == 1)
         {
             if (CurrentState == PlayerState.OnHorse)
@@ -93,7 +100,7 @@ public class Player : MonoBehaviour
                 SwitchState(PlayerState.OnFoot);
                 StartCoroutine(damageAnim());
             }
-            else
+            else if (CurrentState == PlayerState.OnFoot)
             {
                 walkController.gameObject.SetActive(false);
                 OnDeath?.Invoke(ID);

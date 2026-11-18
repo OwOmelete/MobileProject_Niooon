@@ -20,8 +20,16 @@ public class Pointe : MonoBehaviour
             Pointe opponentPoint = other.GetComponent<Pointe>();
             if (controller.CurrentSpeed < opponentPoint.controller.CurrentSpeed)
             {
+                if (opponentPoint.controller.IsDashing)
+                {
+                    controller.player.takeDamage(2);
+                }
+                else
+                {
+                    controller.player.takeDamage(1);
+                }
                 //controller.player.takeDamage(opponentPoint.CalculateDamage());
-                controller.player.takeDamage(1);
+                
             }
             
         }
@@ -31,7 +39,15 @@ public class Pointe : MonoBehaviour
             {
                 Pointe opponentPoint = other.GetComponentInParent<Pointe>();
                 //opponentPoint.controller.player.takeDamage(CalculateDamage());
-                opponentPoint.controller.player.takeDamage(1);
+
+                if (controller.IsDashing)
+                {
+                    opponentPoint.controller.player.takeDamage(2);
+                }
+                else
+                {
+                    opponentPoint.controller.player.takeDamage(1);
+                }
             }
         }
         else if (other.CompareTag("OnFoot"))

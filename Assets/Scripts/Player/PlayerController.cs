@@ -38,8 +38,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Button Accel;
     [SerializeField] private GameObject Arrow;
 
-    
+    [HideInInspector]
+    public bool IsDashing;
+    public float TimeForDashInput;
 
+    public float dashSpeed;
+    public float dashLerpAmount;
+    [Range(0,1)] private float lastButtonPress;
+    public float dashRotationSpeed;
+    
+    
     bool c = false;
     private bool isWallStick = false;
 
@@ -82,12 +90,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void DashDetection()
+    {
+        if (Time.time < lastButtonPress + TimeForDashInput)
+        {
+            IsDashing = true;
+        }
+        lastButtonPress = Time.time;
+    }
+    
 
     private void Start()
     {
         player.canMove = true;
         DisplayHp();
         CurrentDirection = Vector2.up;
+        
+        Accel.onClick.AddListener(DashDetection);
 
         walkController.stick = slidingStick;
         walkController.collisionMask = collisionMask;
@@ -108,9 +127,18 @@ public class PlayerController : MonoBehaviour
         }
         
         
+        
         maxSpeedPercent = CurrentSpeed / player.maxSpeed;
 
-        CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, player.maxRotationSpeed * player.rotationCurve.Evaluate(maxSpeedPercent)).normalized;
+        if (!IsDashing)
+        {
+            CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, player.maxRotationSpeed * player.rotationCurve.Evaluate(maxSpeedPercent)).normalized;
+        }
+        else
+        {
+            CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, dashRotationSpeed).normalized;
+        }
+        
 
         SpeedAmount();
 
@@ -138,9 +166,9 @@ public class PlayerController : MonoBehaviour
 
     private void RespawnPlayer()
     {
-        
-        CurrentSpeed = 0;
         AutoMove = false;
+
+        IsDashing = false;
         //player.ResetPlayer();
     }
     
@@ -188,7 +216,11 @@ public class PlayerController : MonoBehaviour
         {
             CurrentSpeed -= player.maxDeceleration * player.decelerationCurve.Evaluate(maxSpeedPercent) * Time.fixedDeltaTime;
         }
-        else if (StickInputs == Vector2.zero && (AutoMove ))
+        else if (IsDashing)
+        {
+            CurrentSpeed = Mathf.Lerp(CurrentSpeed, dashSpeed, dashLerpAmount);
+        }
+        else if (StickInputs == Vector2.zero && (AutoMove))
         {
             CurrentSpeed += player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) *
                             Time.fixedDeltaTime;
@@ -212,6 +244,8 @@ public class PlayerController : MonoBehaviour
 
     void HandleSlide()
     {
+        RaycastHit2D frontHit = Physics2D.Raycast(transform.position, (transform.up * 1.2f), 1.2f, collisionMask);
+        
         RaycastHit2D leftHit = Physics2D.Raycast(transform.position - transform.up * 0.25f, (transform.up - transform.right * 0.8f), 0.6f, collisionMask);
 
         RaycastHit2D rightHit = Physics2D.Raycast(transform.position - transform.up * 0.25f, (transform.up + transform.right * 0.8f), 0.6f, collisionMask);
@@ -220,6 +254,13 @@ public class PlayerController : MonoBehaviour
 
 
         float dot = 1;
+
+        if (IsDashing && frontHit)
+        {
+            transform.position = frontHit.point;
+            CurrentSpeed = 0;
+            IsDashing = false;
+        }
         if (leftHit)
         {
             dot = Vector2.Dot(CurrentDirection, leftHit.normal);
