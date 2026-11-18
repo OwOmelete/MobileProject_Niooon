@@ -85,22 +85,20 @@ public class Player : MonoBehaviour
     public void takeDamage(float n)
     {
         if (isImmune || n == 0) return;
-        
-        SwitchState(PlayerState.OnFoot);
-        
-        hp -= n;
-        UpdateHpDisplay();
-        
-        if (hp < 0)
+
+        if (n == 1)
         {
-            hp = 0;
-            UpdateHpDisplay();
-            OnDeath?.Invoke(ID);
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            StartCoroutine(damageAnim());
+            if (CurrentState == PlayerState.OnHorse)
+            {
+                SwitchState(PlayerState.OnFoot);
+                StartCoroutine(damageAnim());
+            }
+            else
+            {
+                walkController.gameObject.SetActive(false);
+                OnDeath?.Invoke(ID);
+                gameObject.SetActive(false);
+            }
         }
     }
     IEnumerator damageAnim()
@@ -115,6 +113,11 @@ public class Player : MonoBehaviour
         }
 
         isImmune = false;
+    }
+
+    public void OnHorse()
+    {
+        SwitchState(PlayerState.OnHorse);
     }
     
     private void SwitchState(PlayerState state)

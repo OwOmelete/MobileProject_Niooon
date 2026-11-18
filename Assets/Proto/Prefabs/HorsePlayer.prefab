@@ -391,7 +391,7 @@ Transform:
   m_GameObject: {fileID: 3578406073588153557}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.26500002, y: -0.6610006, z: 0}
+  m_LocalPosition: {x: 0.265, y: -0.66100097, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6137,7 +6137,9 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: 71402f3cafbd16c41b24812c8301dc90, type: 2}
   blinkNumberAnim: 3
   startPos: {x: 0, y: 0, z: 0}
+  walkController: {fileID: 0}
   ID: 0
+  CurrentState: 0
   speedState: 0
   hpDisplay: {fileID: 0}
 --- !u!114 &4009038482267430137

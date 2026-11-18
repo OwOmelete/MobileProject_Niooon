@@ -4,6 +4,7 @@ using UnityEngine;
 public class WalkController : MonoBehaviour
 {
     [SerializeField] private float WalkSpeed;
+    public Player player;
     
     public Stick stick;
     public LayerMask collisionMask;
@@ -11,6 +12,9 @@ public class WalkController : MonoBehaviour
     private Vector2 CurrentDirection;
     private float CurrentSpeed;
     [SerializeField]private CircleCollider2D collider;
+
+    private float lastEjectTime;
+    [SerializeField] private float DelayForMount;
 
     private Vector2 Input;
 
@@ -25,7 +29,20 @@ public class WalkController : MonoBehaviour
         FinalMovement();
         
     }
-    
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Hurtbox") && Time.time > lastEjectTime + DelayForMount)
+        {
+            Player p = other.transform.parent.parent.parent.GetComponent<Player>();
+            if (p.ID == player.ID)
+            {
+                p.OnHorse();
+            }
+        }
+    }
+
+
     private void FinalMovement()
     {
         transform.position += (Vector3)(CurrentDirection * CurrentSpeed * Time.fixedDeltaTime);
@@ -46,8 +63,9 @@ public class WalkController : MonoBehaviour
 
     public void PlayerLaunched()
     {
+        lastEjectTime = Time.time;
         //launch
-        
-        
+
+
     }
 }

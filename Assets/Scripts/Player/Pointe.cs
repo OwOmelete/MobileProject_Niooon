@@ -20,14 +20,25 @@ public class Pointe : MonoBehaviour
             Pointe opponentPoint = other.GetComponent<Pointe>();
             if (controller.CurrentSpeed < opponentPoint.controller.CurrentSpeed)
             {
-                controller.player.takeDamage(opponentPoint.CalculateDamage());
+                //controller.player.takeDamage(opponentPoint.CalculateDamage());
+                controller.player.takeDamage(1);
             }
             
         }
         else if(other.CompareTag("Hurtbox"))
         {
-            Pointe opponentPoint = other.GetComponentInParent<Pointe>();
-            opponentPoint.controller.player.takeDamage(CalculateDamage());
+            if (controller.player.speedState > Player.Speed.low)
+            {
+                Pointe opponentPoint = other.GetComponentInParent<Pointe>();
+                //opponentPoint.controller.player.takeDamage(CalculateDamage());
+                opponentPoint.controller.player.takeDamage(1);
+            }
+        }
+        else if (other.CompareTag("OnFoot"))
+        {
+            WalkController opponent = other.GetComponent<WalkController>();
+            if (controller.player.ID == opponent.player.ID) return;
+            opponent.player.takeDamage(1);
         }
         
     }
