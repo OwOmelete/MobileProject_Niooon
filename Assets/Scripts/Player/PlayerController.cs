@@ -39,6 +39,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject Arrow;
 
     [HideInInspector]
+    public bool IsStuned;
+    public float StunTime;
+    private float LastStunTime;
+
+    [HideInInspector]
     public bool IsDashing;
     public float TimeForDashInput;
 
@@ -130,7 +135,14 @@ public class PlayerController : MonoBehaviour
         
         maxSpeedPercent = CurrentSpeed / player.maxSpeed;
 
-        if (!IsDashing)
+        if (IsStuned)
+        {
+            if(Time.time > LastStunTime + StunTime)
+            {
+                IsStuned = false;
+            }
+        }
+        else if (!IsDashing)
         {
             CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, player.maxRotationSpeed * player.rotationCurve.Evaluate(maxSpeedPercent)).normalized;
         }
@@ -212,6 +224,12 @@ public class PlayerController : MonoBehaviour
 
     private void SpeedAmount()
     {
+        if (IsStuned)
+        {
+            return;
+        }
+
+
         if (player.CurrentState == Player.PlayerState.OnFoot)
         {
             CurrentSpeed -= player.maxDeceleration * player.decelerationCurve.Evaluate(maxSpeedPercent) * Time.fixedDeltaTime;
@@ -260,6 +278,8 @@ public class PlayerController : MonoBehaviour
             transform.position = frontHit.point;
             CurrentSpeed = 0;
             IsDashing = false;
+            IsStuned = true;
+            LastStunTime = Time.time;
         }
         if (leftHit)
         {
