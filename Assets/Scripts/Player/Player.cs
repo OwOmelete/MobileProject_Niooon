@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
             gameObject.SetActive(false);
         }
         
-        if (n == 1)
+        else if (n == 1)
         {
             if (CurrentState == PlayerState.OnHorse)
             {
@@ -105,6 +105,7 @@ public class Player : MonoBehaviour
                 walkController.gameObject.SetActive(false);
                 OnDeath?.Invoke(ID);
                 gameObject.SetActive(false);
+                Debug.Log("Death");
             }
         }
     }
