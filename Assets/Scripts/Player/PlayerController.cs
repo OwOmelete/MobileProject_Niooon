@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
 
     public void DashDetection()
     {
-        if (Time.time < lastButtonPress + TimeForDashInput && Time.time < lastTimeDash + dashCd)
+        if (Time.time < lastButtonPress + TimeForDashInput && Time.time > lastTimeDash + dashCd)
         {
             lastTimeDash = Time.time;
             IsDashing = true;

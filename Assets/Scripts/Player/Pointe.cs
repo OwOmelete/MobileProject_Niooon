@@ -18,6 +18,7 @@ public class Pointe : MonoBehaviour
         if (other.CompareTag("Hitbox"))
         {
             Pointe opponentPoint = other.GetComponent<Pointe>();
+            if (opponentPoint.controller.player.CurrentState == Player.PlayerState.OnFoot) return;
             if (controller.CurrentSpeed < opponentPoint.controller.CurrentSpeed)
             {
                 if (opponentPoint.controller.IsDashing)
@@ -38,6 +39,8 @@ public class Pointe : MonoBehaviour
             if (controller.player.speedState > Player.Speed.low)
             {
                 Pointe opponentPoint = other.GetComponentInParent<Pointe>();
+
+                if (opponentPoint.controller.player.CurrentState == Player.PlayerState.OnFoot) return;
                 //opponentPoint.controller.player.takeDamage(CalculateDamage());
 
                 if (controller.IsDashing)
