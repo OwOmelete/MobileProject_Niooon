@@ -18,7 +18,7 @@ public class Pointe : MonoBehaviour
         if (other.CompareTag("Hitbox"))
         {
             Pointe opponentPoint = other.GetComponent<Pointe>();
-            if (opponentPoint.controller.player.CurrentState == Player.PlayerState.OnFoot) return;
+            if (controller.player.CurrentState == Player.PlayerState.OnFoot) return;
             if (controller.CurrentSpeed < opponentPoint.controller.CurrentSpeed)
             {
                 if (opponentPoint.controller.IsDashing)
