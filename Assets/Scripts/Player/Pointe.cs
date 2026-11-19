@@ -55,6 +55,7 @@ public class Pointe : MonoBehaviour
         }
         else if (other.CompareTag("OnFoot"))
         {
+            Debug.Log("hit on foot");
             WalkController opponent = other.GetComponent<WalkController>();
             if (controller.player.ID == opponent.player.ID) return;
             opponent.player.takeDamage(1);
