@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6abfb1c0e2c0cd04e97014daabef4e35, type: 3}
   m_Name: WeaponStat
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  maxSpeed: 20
+  maxSpeed: 12
   maxAcceleration: 5
   accelerationCurve:
     serializedVersion: 2
@@ -27,22 +27,22 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.5697153
     - serializedVersion: 3
-      time: 0.3859332
-      value: 0.42853707
-      inSlope: -1.226432
-      outSlope: -1.226432
+      time: 0.7164707
+      value: 0.7510306
+      inSlope: -0.7173142
+      outSlope: -0.7173142
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.23505083
-      outWeight: 0.27921167
+      inWeight: 0.16588257
+      outWeight: 0.37032184
     - serializedVersion: 3
       time: 1.0041647
       value: 0.16903512
-      inSlope: -0.21867198
-      outSlope: -0.21867198
+      inSlope: -4.161236
+      outSlope: -4.161236
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.38936257
+      inWeight: 0.0727165
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -61,7 +61,7 @@ MonoBehaviour:
       inWeight: 0.21924919
       outWeight: 0.17666505
     - serializedVersion: 3
-      time: 0.16311845
+      time: 0.15249452
       value: 0.45416108
       inSlope: 0.04564768
       outSlope: 0.04564768
@@ -70,13 +70,13 @@ MonoBehaviour:
       inWeight: 0.25581354
       outWeight: 0.06466534
     - serializedVersion: 3
-      time: 0.99675596
-      value: 0.19294363
-      inSlope: -0.43211064
-      outSlope: -0.43211064
+      time: 1.0144631
+      value: 0.18857363
+      inSlope: -0.53513324
+      outSlope: -0.53513324
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.042443283
+      inWeight: 0.013376407
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
