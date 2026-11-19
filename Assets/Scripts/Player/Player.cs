@@ -42,6 +42,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float blinkNumberAnim = 3;
 
+    [SerializeField] private GameObject Hitboxes;
+
     [HideInInspector] public Vector3 startPos;
 
     [SerializeField] private WalkController walkController;
@@ -138,6 +140,7 @@ public class Player : MonoBehaviour
                 walkController.transform.position = transform.position;
                 walkController.enabled = true;
                 walkController.PlayerLaunched();
+                Hitboxes.SetActive(false);
 
                 break;
             }
@@ -147,7 +150,8 @@ public class Player : MonoBehaviour
                     
                 walkController.enabled = false;
                 walkController.gameObject.SetActive(false);
-                break;
+                    Hitboxes.SetActive(true);
+                    break;
             }
         }
     }

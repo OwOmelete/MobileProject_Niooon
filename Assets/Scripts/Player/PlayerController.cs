@@ -47,6 +47,10 @@ public class PlayerController : MonoBehaviour
     public bool IsDashing;
     public float TimeForDashInput;
 
+    private bool IsDashCD;
+    [SerializeField] private float dashCd;
+    private float lastTimeDash;
+
     public float dashSpeed;
     public float dashLerpAmount;
     [Range(0,1)] private float lastButtonPress;
@@ -97,8 +101,9 @@ public class PlayerController : MonoBehaviour
 
     public void DashDetection()
     {
-        if (Time.time < lastButtonPress + TimeForDashInput)
+        if (Time.time < lastButtonPress + TimeForDashInput && Time.time < lastTimeDash + dashCd)
         {
+            lastTimeDash = Time.time;
             IsDashing = true;
         }
         lastButtonPress = Time.time;
@@ -237,6 +242,7 @@ public class PlayerController : MonoBehaviour
         else if (IsDashing)
         {
             CurrentSpeed = Mathf.Lerp(CurrentSpeed, dashSpeed, dashLerpAmount);
+            return;
         }
         else if (StickInputs == Vector2.zero && (AutoMove))
         {
