@@ -65,8 +65,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6895061018438625326}
     - target: {fileID: 2791785292712627463, guid: 472882e261c2cd54a8cbef1e0a19508c, type: 3}
+      propertyPath: DashSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2791785292712627463, guid: 472882e261c2cd54a8cbef1e0a19508c, type: 3}
       propertyPath: WalkSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2791785292712627463, guid: 472882e261c2cd54a8cbef1e0a19508c, type: 3}
+      propertyPath: DashCooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2791785292712627463, guid: 472882e261c2cd54a8cbef1e0a19508c, type: 3}
+      propertyPath: DashDuration
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 2791785292712627463, guid: 472882e261c2cd54a8cbef1e0a19508c, type: 3}
       propertyPath: DelayForMount

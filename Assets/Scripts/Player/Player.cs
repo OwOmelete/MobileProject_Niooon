@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public Vector3 startPos;
 
     [SerializeField] private WalkController walkController;
+    public Button button;
     
     public static Action<int> OnDeath;
     

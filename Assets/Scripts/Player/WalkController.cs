@@ -18,16 +18,48 @@ public class WalkController : MonoBehaviour
 
     private Vector2 Input;
 
+    private Vector2 DashDir;
+    private bool isDashing;
+    [SerializeField] private float DashCooldown;
+    [SerializeField] private float DashDuration;
+    [SerializeField] private float DashSpeed;
+    private float LastDashTime;
+
     private void FixedUpdate()
     {
         Input = stick.Direction.normalized;
+
+        if(isDashing && Time.time > LastDashTime + DashDuration)
+        {
+            isDashing = false;
+        }
 
         CurrentDirection = Input;
         
         CurrentSpeed = WalkSpeed;
         
         FinalMovement();
-        
+    }
+
+    private void OnEnable()
+    {
+        player.button.onClick.AddListener(Dash);
+    }
+
+    private void OnDisable()
+    {
+        player.button.onClick.RemoveListener(Dash);
+    }
+
+    private void Dash()
+    {
+        if(Time.time > LastDashTime + DashCooldown)
+        {
+            
+            isDashing = true;
+            LastDashTime = Time.time;
+            DashDir = CurrentDirection;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -45,7 +77,9 @@ public class WalkController : MonoBehaviour
 
     private void FinalMovement()
     {
-        transform.position += (Vector3)(CurrentDirection * CurrentSpeed * Time.fixedDeltaTime);
+        Vector3 Displacement = (Vector3)(CurrentDirection * CurrentSpeed * Time.fixedDeltaTime);
+        if (isDashing) Displacement *= DashSpeed;
+        transform.position += Displacement;
     }
     
     /*private bool PositionInterpolation()
