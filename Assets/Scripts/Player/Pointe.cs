@@ -21,6 +21,10 @@ public class Pointe : MonoBehaviour
             if (controller.player.CurrentState == Player.PlayerState.OnFoot) return;
             if (controller.CurrentSpeed < opponentPoint.controller.CurrentSpeed)
             {
+
+                controller.player.hitDirection = opponentPoint.controller.CurrentDirection;
+                controller.player.hitSpeed = opponentPoint.controller.CurrentSpeed;
+
                 if (opponentPoint.controller.IsDashing)
                 {
                     controller.player.takeDamage(2);
@@ -42,6 +46,9 @@ public class Pointe : MonoBehaviour
 
                 if (opponentPoint.controller.player.CurrentState == Player.PlayerState.OnFoot) return;
                 //opponentPoint.controller.player.takeDamage(CalculateDamage());
+
+                opponentPoint.controller.player.hitDirection = controller.CurrentDirection;
+                opponentPoint.controller.player.hitSpeed = controller.CurrentSpeed;
 
                 if (controller.IsDashing)
                 {

@@ -13,6 +13,8 @@ public class WalkController : MonoBehaviour
     private float CurrentSpeed;
     [SerializeField]private CircleCollider2D collider;
 
+    private bool isLaunched;
+
     private float lastEjectTime;
     [SerializeField] private float DelayForMount;
 
@@ -23,10 +25,26 @@ public class WalkController : MonoBehaviour
     [SerializeField] private float DashCooldown;
     [SerializeField] private float DashDuration;
     [SerializeField] private float DashSpeed;
+    [SerializeField, Range(0, 1)] private float BounceCoefficient;
+    [SerializeField] private float LaunchedDeceleration;
     private float LastDashTime;
 
     private void FixedUpdate()
     {
+        if(CurrentSpeed <= 0)
+        {
+            isLaunched = false;
+            CurrentSpeed = 0;
+        }
+
+
+        if (isLaunched)
+        {
+            CurrentSpeed -= LaunchedDeceleration * Time.fixedDeltaTime;
+            FinalMovement();
+            return;
+        }
+
         Input = stick.Direction.normalized;
 
         if(isDashing && Time.time > LastDashTime + DashDuration)
@@ -74,6 +92,16 @@ public class WalkController : MonoBehaviour
         }
     }
 
+    private void checkBounce()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, CurrentDirection, CurrentSpeed * Time.fixedDeltaTime, collisionMask);
+        if (hit)
+        {
+            CurrentDirection = Vector2.Reflect(CurrentDirection, hit.normal);
+            CurrentSpeed *= BounceCoefficient;
+        }
+    }
+
 
     private void FinalMovement()
     {
@@ -95,10 +123,13 @@ public class WalkController : MonoBehaviour
         return false;
     }*/
 
-    public void PlayerLaunched()
+    public void PlayerLaunched(Vector2 dir, float speed)
     {
         lastEjectTime = Time.time;
-        //launch
+
+        isLaunched = true;
+        CurrentDirection = dir;
+        CurrentSpeed = speed;
 
 
     }

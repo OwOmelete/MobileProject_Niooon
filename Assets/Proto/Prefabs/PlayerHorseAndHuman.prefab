@@ -84,6 +84,14 @@ PrefabInstance:
       propertyPath: DelayForMount
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2791785292712627463, guid: 472882e261c2cd54a8cbef1e0a19508c, type: 3}
+      propertyPath: BounceCoefficient
+      value: 0.808
+      objectReference: {fileID: 0}
+    - target: {fileID: 2791785292712627463, guid: 472882e261c2cd54a8cbef1e0a19508c, type: 3}
+      propertyPath: LaunchedDeceleration
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 4569198311900305858, guid: 472882e261c2cd54a8cbef1e0a19508c, type: 3}
       propertyPath: walkController
       value: 

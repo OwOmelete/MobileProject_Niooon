@@ -31,6 +31,9 @@ public class Player : MonoBehaviour
     [HideInInspector] public float maxDeceleration;
     [HideInInspector] public AnimationCurve decelerationCurve;
 
+    [HideInInspector] public Vector2 hitDirection;
+    [HideInInspector] public float hitSpeed;
+
     [HideInInspector] public bool canMove = true;
     private float maxHp;
     public float hp;
@@ -140,7 +143,7 @@ public class Player : MonoBehaviour
                 walkController.gameObject.SetActive(true);
                 walkController.transform.position = transform.position;
                 walkController.enabled = true;
-                walkController.PlayerLaunched();
+                walkController.PlayerLaunched(hitDirection, hitSpeed);
 
                 break;
             }
