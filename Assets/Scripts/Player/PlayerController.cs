@@ -4,6 +4,7 @@ using System.Collections;
 
 using TMPro;
 using Unity.Mathematics;
+using Unity.Multiplayer.PlayMode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -14,7 +15,8 @@ public class PlayerController : MonoBehaviour
     [Header("Movements")]
     private bool isOnWall = false;
     [SerializeField] private Stick slidingStick;
-    
+
+    [SerializeField] private float WalkSpeed;
 
     [Header("Other references")] [SerializeField]
    
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 StickInputs;
     [SerializeField] private TMP_Text speedDisplay;
+    [SerializeField] private WalkController walkController;
     private float maxSpeedPercent;
 
     [SerializeField] private LayerMask collisionMask;
@@ -33,7 +36,27 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private bool AutoMove = false;
     [SerializeField] private Button Accel;
+    [SerializeField] private GameObject Arrow;
 
+    [HideInInspector]
+    public bool IsStuned;
+    public float StunTime;
+    private float LastStunTime;
+
+    [HideInInspector]
+    public bool IsDashing;
+    public float TimeForDashInput;
+
+    private bool IsDashCD;
+    [SerializeField] private float dashCd;
+    private float lastTimeDash;
+
+    public float dashSpeed;
+    public float dashLerpAmount;
+    [Range(0,1)] private float lastButtonPress;
+    public float dashRotationSpeed;
+    
+    
     bool c = false;
     private bool isWallStick = false;
 
@@ -76,28 +99,64 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void DashDetection()
+    {
+        if (Time.time < lastButtonPress + TimeForDashInput && Time.time > lastTimeDash + dashCd)
+        {
+            lastTimeDash = Time.time;
+            IsDashing = true;
+        }
+        lastButtonPress = Time.time;
+    }
+    
 
     private void Start()
     {
         player.canMove = true;
         DisplayHp();
         CurrentDirection = Vector2.up;
+        
+        Accel.onClick.AddListener(DashDetection);
+
+        walkController.stick = slidingStick;
+        walkController.collisionMask = collisionMask;
     }
 
+    
+    
     private void FixedUpdate()
     {
         if (!player.canMove)
         {
             return;
         }
+
+        if (player.CurrentState == Player.PlayerState.OnHorse)
+        {
+            StickInputs = slidingStick.Direction.normalized;
+        }
+        
+        
         
         maxSpeedPercent = CurrentSpeed / player.maxSpeed;
 
-        StickInputs = slidingStick.Direction.normalized;
+        if (IsStuned)
+        {
+            if(Time.time > LastStunTime + StunTime)
+            {
+                IsStuned = false;
+            }
+        }
+        else if (!IsDashing)
+        {
+            CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, player.maxRotationSpeed * player.rotationCurve.Evaluate(maxSpeedPercent)).normalized;
+        }
+        else
+        {
+            CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, dashRotationSpeed).normalized;
+        }
         
-        CurrentDirection = Vector2.Lerp(CurrentDirection, StickInputs, player.maxRotationSpeed * player.rotationCurve.Evaluate(maxSpeedPercent)).normalized;
- 
-        
+
         SpeedAmount();
 
         HandleSlide();
@@ -111,15 +170,27 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         UpdateTrail();
+        if (StickInputs != Vector2.zero)
+        {
+            Arrow.SetActive(true);
+            Arrow.transform.rotation = Quaternion.Euler(0,0, Mathf.Atan2(StickInputs.y, StickInputs.x) * Mathf.Rad2Deg - 90);
+        }
+        else
+        {
+            Arrow.SetActive(false);
+        }
     }
 
     private void RespawnPlayer()
     {
-        CurrentSpeed = 0;
-        
+        AutoMove = false;
+
+        IsDashing = false;
         //player.ResetPlayer();
     }
     
+    
+
     private void FinalMovement()
     {
         if (!PositionInterpolation())
@@ -158,7 +229,22 @@ public class PlayerController : MonoBehaviour
 
     private void SpeedAmount()
     {
-        if (StickInputs == Vector2.zero && (AutoMove ))
+        if (IsStuned)
+        {
+            return;
+        }
+
+
+        if (player.CurrentState == Player.PlayerState.OnFoot)
+        {
+            CurrentSpeed -= player.maxDeceleration * player.decelerationCurve.Evaluate(maxSpeedPercent) * Time.fixedDeltaTime;
+        }
+        else if (IsDashing)
+        {
+            CurrentSpeed = Mathf.Lerp(CurrentSpeed, dashSpeed, dashLerpAmount);
+            return;
+        }
+        else if (StickInputs == Vector2.zero && (AutoMove))
         {
             CurrentSpeed += player.acceleration * player.accelerationCurve.Evaluate(maxSpeedPercent) *
                             Time.fixedDeltaTime;
@@ -176,12 +262,14 @@ public class PlayerController : MonoBehaviour
         {
             CurrentSpeed -= player.maxDeceleration * player.decelerationCurve.Evaluate(maxSpeedPercent) * Time.fixedDeltaTime;
         }
-            CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0, player.maxSpeed);
+        CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0, player.maxSpeed);
     }
 
 
     void HandleSlide()
     {
+        RaycastHit2D frontHit = Physics2D.Raycast(transform.position, (transform.up * 1.2f), 1.2f, collisionMask);
+        
         RaycastHit2D leftHit = Physics2D.Raycast(transform.position - transform.up * 0.25f, (transform.up - transform.right * 0.8f), 0.6f, collisionMask);
 
         RaycastHit2D rightHit = Physics2D.Raycast(transform.position - transform.up * 0.25f, (transform.up + transform.right * 0.8f), 0.6f, collisionMask);
@@ -190,13 +278,22 @@ public class PlayerController : MonoBehaviour
 
 
         float dot = 1;
+
+        if (IsDashing && frontHit)
+        {
+            transform.position = frontHit.point;
+            CurrentSpeed = 0;
+            IsDashing = false;
+            IsStuned = true;
+            LastStunTime = Time.time;
+        }
         if (leftHit)
         {
             dot = Vector2.Dot(CurrentDirection, leftHit.normal);
             float dotInput = Vector2.Dot(StickInputs, Vector2.Perpendicular(leftHit.normal));
             float angle = Vector2.Angle(Vector2.Perpendicular(leftHit.normal), -leftHit.normal);
             
-            if (Mathf.Acos((dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding || IsBetween(StickInputs, -rightHit.normal, Vector2.Perpendicular(rightHit.normal)))
+            if (Mathf.Acos((dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding && !IsBetween(StickInputs, -leftHit.normal, Vector2.Perpendicular(leftHit.normal)))
             {
                 if (dot < -player.slideThreshold && !isOnWall)
                 {
@@ -224,7 +321,7 @@ public class PlayerController : MonoBehaviour
             
             
             
-            if (Mathf.Acos((dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding || IsBetween(StickInputs, -rightHit.normal, -Vector2.Perpendicular(rightHit.normal)))
+            if (Mathf.Acos((dotInput)) * Mathf.Rad2Deg > player.maxAngleWhileSliding && !IsBetween(StickInputs, -rightHit.normal, -Vector2.Perpendicular(rightHit.normal)))
             {
                 if (dot < -player.slideThreshold && !isOnWall)
                 {
@@ -241,7 +338,6 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-
                 CurrentDirection = -Vector2.Perpendicular(rightHit.normal).normalized;
                 isWallStick = true;
             }
@@ -263,11 +359,8 @@ public class PlayerController : MonoBehaviour
         float angleA = Vector2.Angle(vectorA, target);
         float angleB = Vector2.Angle(vectorB, target);
 
-        Debug.Log("angle " + angle + " A " + angleA + " B " + angleB);
-        Debug.Log(angle < angleA && angle < angleB);
 
-
-        return angle < angleA && angle < angleB;
+        return angle > angleA && angle > angleB;
     }
 
     #region Visuals
