@@ -6582,6 +6582,18 @@ PrefabInstance:
       propertyPath: dashRotationSpeed
       value: 0.03
       objectReference: {fileID: 0}
+    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: TimeForDashInput
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: BounceCoefficient
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: LaunchedDeceleration
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4425144408632096119, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
       propertyPath: button
       value: 

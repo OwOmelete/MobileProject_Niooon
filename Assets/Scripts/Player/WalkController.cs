@@ -27,6 +27,8 @@ public class WalkController : MonoBehaviour
     [SerializeField] private float DashSpeed;
     [SerializeField, Range(0, 1)] private float BounceCoefficient;
     [SerializeField] private float LaunchedDeceleration;
+    private float lastButtonPress;
+    [SerializeField] private float TimeForDashInput;
     private float LastDashTime;
 
     private void FixedUpdate()
@@ -41,6 +43,8 @@ public class WalkController : MonoBehaviour
         if (isLaunched)
         {
             CurrentSpeed -= LaunchedDeceleration * Time.fixedDeltaTime;
+            Debug.Log(CurrentSpeed);
+            checkBounce();
             FinalMovement();
             return;
         }
@@ -71,9 +75,9 @@ public class WalkController : MonoBehaviour
 
     private void Dash()
     {
-        if(Time.time > LastDashTime + DashCooldown)
+        if(Time.time > LastDashTime + DashCooldown && Time.time < lastButtonPress + TimeForDashInput)
         {
-            
+            lastButtonPress = Time.time;
             isDashing = true;
             LastDashTime = Time.time;
             DashDir = CurrentDirection;
@@ -94,7 +98,7 @@ public class WalkController : MonoBehaviour
 
     private void checkBounce()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, CurrentDirection, CurrentSpeed * Time.fixedDeltaTime, collisionMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + (Vector3)CurrentDirection* collider.radius * transform.localScale.x * 1.1f, CurrentDirection, CurrentSpeed * Time.fixedDeltaTime, collisionMask);
         if (hit)
         {
             CurrentDirection = Vector2.Reflect(CurrentDirection, hit.normal);
