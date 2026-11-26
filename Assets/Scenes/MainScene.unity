@@ -3508,11 +3508,11 @@ PrefabInstance:
       objectReference: {fileID: 245014008}
     - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
       propertyPath: dashCd
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
       propertyPath: StunTime
-      value: 0.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
       propertyPath: dashSpeed
@@ -3537,6 +3537,34 @@ PrefabInstance:
     - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
       propertyPath: dashRotationSpeed
       value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: DashSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: DashCooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: DashDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: DelayForMount
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: TimeForDashInput
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: BounceCoefficient
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: LaunchedDeceleration
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3186961148665380471, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
       propertyPath: m_Color.b
@@ -6684,11 +6712,11 @@ PrefabInstance:
       objectReference: {fileID: 1508168117}
     - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
       propertyPath: dashCd
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
       propertyPath: StunTime
-      value: 0.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1691120768814533086, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
       propertyPath: dashSpeed
@@ -6714,6 +6742,34 @@ PrefabInstance:
       propertyPath: dashRotationSpeed
       value: 0.04
       objectReference: {fileID: 0}
+    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: DashSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: DashCooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: DashDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: DelayForMount
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: TimeForDashInput
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: BounceCoefficient
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
+      propertyPath: LaunchedDeceleration
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3186961148665380471, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
       propertyPath: m_Color.b
       value: 0.9433962
@@ -6725,18 +6781,6 @@ PrefabInstance:
     - target: {fileID: 3186961148665380471, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
       propertyPath: m_Color.r
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
-      propertyPath: TimeForDashInput
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
-      propertyPath: BounceCoefficient
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2647590111188378034, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
-      propertyPath: LaunchedDeceleration
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4425144408632096119, guid: 41009ae2b28f5c640a17b6031ccdec87, type: 3}
       propertyPath: button

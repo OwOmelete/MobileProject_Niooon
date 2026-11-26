@@ -81,13 +81,13 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxDeceleration: 6
+  maxDeceleration: 10
   decelerationCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.11349332
-      value: 0.6702969
+      time: 0.08716428
+      value: 0.77765226
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -95,8 +95,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.88970274
-      value: 0.7518281
+      time: 0.7358071
+      value: 0.8602209
       inSlope: 0
       outSlope: 0
       tangentMode: 136
