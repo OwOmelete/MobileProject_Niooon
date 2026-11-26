@@ -109,8 +109,16 @@ public class WalkController : MonoBehaviour
 
     private void FinalMovement()
     {
-        Vector3 Displacement = (Vector3)(CurrentDirection * CurrentSpeed * Time.fixedDeltaTime);
-        if (isDashing) Displacement *= DashSpeed;
+        Vector3 Displacement;
+        if (isDashing)
+        {
+             Displacement = (Vector3)(DashDir * CurrentSpeed * Time.fixedDeltaTime * DashSpeed);
+        }
+        else
+        {
+            Displacement = (Vector3)(CurrentDirection * CurrentSpeed * Time.fixedDeltaTime);
+        }
+        
         transform.position += Displacement;
     }
     
