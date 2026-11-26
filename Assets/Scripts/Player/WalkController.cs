@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class WalkController : MonoBehaviour
@@ -12,6 +13,8 @@ public class WalkController : MonoBehaviour
     private Vector2 CurrentDirection;
     private float CurrentSpeed;
     [SerializeField]private CircleCollider2D collider;
+    private SpriteRenderer sr;
+    private Color baseColor;
 
     private bool isLaunched;
 
@@ -26,11 +29,32 @@ public class WalkController : MonoBehaviour
     [SerializeField] private float DashDuration;
     [SerializeField] private float DashSpeed;
     [SerializeField, Range(0, 1)] private float BounceCoefficient;
-    [SerializeField] private float LaunchedDeceleration;
+    [SerializeField] private float MaxDeceleration;
+    [SerializeField] private AnimationCurve DecelerationCurve;
     [SerializeField] private float LaunchSpeedToStop;
     private float lastButtonPress;
     [SerializeField] private float TimeForDashInput;
     private float LastDashTime = -1000;
+
+    private Coroutine dmgCoroutine;
+
+
+    private void Start()
+    {
+        sr = GetComponent<SpriteRenderer>();
+        baseColor = sr.color;
+    }
+
+    IEnumerator damageAnim()
+    {
+        while(player.isImmune)
+        {
+            sr.color = Color.white;
+            yield return new WaitForSeconds(0.2f);
+            sr.color = baseColor;
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
 
     private void FixedUpdate()
     {
@@ -43,7 +67,7 @@ public class WalkController : MonoBehaviour
 
         if (isLaunched)
         {
-            CurrentSpeed -= LaunchedDeceleration * Time.fixedDeltaTime;
+            CurrentSpeed -= MaxDeceleration * Time.fixedDeltaTime;
             Debug.Log(CurrentSpeed);
             checkBounce();
             FinalMovement();
@@ -86,6 +110,8 @@ public class WalkController : MonoBehaviour
             isDashing = true;
             LastDashTime = Time.time;
             DashDir = CurrentDirection;
+            StopCoroutine(dmgCoroutine);
+            dmgCoroutine = StartCoroutine("damageAnim");
         }
         lastButtonPress = Time.time;
     }
@@ -150,6 +176,8 @@ public class WalkController : MonoBehaviour
         CurrentDirection = dir;
         CurrentSpeed = speed;
 
+        StopCoroutine(dmgCoroutine);
+        dmgCoroutine = StartCoroutine("damageAnim");
 
     }
 }
