@@ -29,7 +29,7 @@ public class WalkController : MonoBehaviour
     [SerializeField] private float LaunchedDeceleration;
     private float lastButtonPress;
     [SerializeField] private float TimeForDashInput;
-    private float LastDashTime;
+    private float LastDashTime = -1000;
 
     private void FixedUpdate()
     {

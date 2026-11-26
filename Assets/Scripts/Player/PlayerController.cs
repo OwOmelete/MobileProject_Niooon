@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     private bool IsDashCD;
     [SerializeField] private float dashCd;
-    private float lastTimeDash;
+    private float lastTimeDash = -1000;
 
     public float dashSpeed;
     public float dashLerpAmount;
