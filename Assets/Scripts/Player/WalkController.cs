@@ -77,11 +77,11 @@ public class WalkController : MonoBehaviour
     {
         if(Time.time > LastDashTime + DashCooldown && Time.time < lastButtonPress + TimeForDashInput)
         {
-            lastButtonPress = Time.time;
             isDashing = true;
             LastDashTime = Time.time;
             DashDir = CurrentDirection;
         }
+        lastButtonPress = Time.time;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
