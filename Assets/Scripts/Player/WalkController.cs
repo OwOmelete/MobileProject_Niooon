@@ -27,18 +27,19 @@ public class WalkController : MonoBehaviour
     [SerializeField] private float DashSpeed;
     [SerializeField, Range(0, 1)] private float BounceCoefficient;
     [SerializeField] private float LaunchedDeceleration;
+    [SerializeField] private float LaunchSpeedToStop;
     private float lastButtonPress;
     [SerializeField] private float TimeForDashInput;
     private float LastDashTime = -1000;
 
     private void FixedUpdate()
     {
-        if(CurrentSpeed <= 0)
+        if(CurrentSpeed <= LaunchSpeedToStop)
         {
+            player.isImmune = false;
             isLaunched = false;
             CurrentSpeed = 0;
         }
-
 
         if (isLaunched)
         {
@@ -53,6 +54,10 @@ public class WalkController : MonoBehaviour
 
         if(isDashing && Time.time > LastDashTime + DashDuration)
         {
+            if (player.isImmune)
+            {
+                player.isImmune = false;
+            }
             isDashing = false;
         }
 
@@ -77,6 +82,7 @@ public class WalkController : MonoBehaviour
     {
         if(Time.time > LastDashTime + DashCooldown && Time.time < lastButtonPress + TimeForDashInput)
         {
+            player.isImmune = true;
             isDashing = true;
             LastDashTime = Time.time;
             DashDir = CurrentDirection;
@@ -138,6 +144,7 @@ public class WalkController : MonoBehaviour
     public void PlayerLaunched(Vector2 dir, float speed)
     {
         lastEjectTime = Time.time;
+        player.isImmune = true;
 
         isLaunched = true;
         CurrentDirection = dir;
