@@ -583,6 +583,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1404027478712917841, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1548836377553848934, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.25
@@ -629,7 +633,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3602671648680236209, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5777312065610237813, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
       propertyPath: m_Color.b
@@ -647,6 +651,10 @@ PrefabInstance:
       propertyPath: ExitPortal
       value: 
       objectReference: {fileID: 337259467}
+    - target: {fileID: 8200072631254670327, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8869204588930987303, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1338,6 +1346,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1404027478712917841, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1548836377553848934, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.269
@@ -1384,12 +1396,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3602671648680236209, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7897785673378738395, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
       propertyPath: ExitPortal
       value: 
       objectReference: {fileID: 236865597}
+    - target: {fileID: 8200072631254670327, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8869204588930987303, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1709,6 +1725,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1404027478712917841, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1548836377553848934, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.202
@@ -1755,7 +1775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3602671648680236209, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5777312065610237813, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
       propertyPath: m_Color.b
@@ -1773,6 +1793,10 @@ PrefabInstance:
       propertyPath: ExitPortal
       value: 
       objectReference: {fileID: 3223890014943524592}
+    - target: {fileID: 8200072631254670327, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8869204588930987303, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3256,6 +3280,7 @@ MonoBehaviour:
   - portal1: {fileID: 337259467}
     portal2: {fileID: 236865597}
   PortalNumberByRound: 0200000002000000020000000200000002000000
+  TimeBetweenSpawns: 5
 --- !u!4 &1126810760
 Transform:
   m_ObjectHideFlags: 0
@@ -7163,6 +7188,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1404027478712917841, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1548836377553848934, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.21
@@ -7209,12 +7238,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3602671648680236209, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7897785673378738395, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
       propertyPath: ExitPortal
       value: 
       objectReference: {fileID: 935759404}
+    - target: {fileID: 8200072631254670327, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8869204588930987303, guid: a78c0ec768cdc264a986ae7f9c336c85, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

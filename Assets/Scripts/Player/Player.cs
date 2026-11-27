@@ -157,6 +157,9 @@ public class Player : MonoBehaviour
                     
                 walkController.enabled = false;
                 walkController.gameObject.SetActive(false);
+
+                isImmune = false;
+                
                 break;
             }
         }
