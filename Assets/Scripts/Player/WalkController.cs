@@ -41,8 +41,7 @@ public class WalkController : MonoBehaviour
 
     private void Start()
     {
-        sr = GetComponent<SpriteRenderer>();
-        baseColor = sr.color;
+        
     }
 
     IEnumerator damageAnim()
@@ -68,7 +67,6 @@ public class WalkController : MonoBehaviour
         if (isLaunched)
         {
             CurrentSpeed -= MaxDeceleration * Time.fixedDeltaTime;
-            Debug.Log(CurrentSpeed);
             checkBounce();
             FinalMovement();
             return;
@@ -110,8 +108,7 @@ public class WalkController : MonoBehaviour
             isDashing = true;
             LastDashTime = Time.time;
             DashDir = CurrentDirection;
-            StopCoroutine(dmgCoroutine);
-            dmgCoroutine = StartCoroutine("damageAnim");
+            PlayCoroutine();
         }
         lastButtonPress = Time.time;
     }
@@ -169,6 +166,12 @@ public class WalkController : MonoBehaviour
 
     public void PlayerLaunched(Vector2 dir, float speed)
     {
+        if (!sr)
+        {
+            sr = GetComponent<SpriteRenderer>();
+            baseColor = sr.color;
+        }
+        
         lastEjectTime = Time.time;
         player.isImmune = true;
 
@@ -176,8 +179,17 @@ public class WalkController : MonoBehaviour
         CurrentDirection = dir;
         CurrentSpeed = speed;
 
-        StopCoroutine(dmgCoroutine);
-        dmgCoroutine = StartCoroutine("damageAnim");
+        PlayCoroutine();
 
+    }
+
+    private void PlayCoroutine()
+    {
+        if (dmgCoroutine != null)
+        {
+            StopCoroutine(dmgCoroutine);
+        }
+
+        dmgCoroutine = StartCoroutine(damageAnim());
     }
 }

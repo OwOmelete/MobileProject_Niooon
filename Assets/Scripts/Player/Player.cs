@@ -110,13 +110,11 @@ public class Player : MonoBehaviour
                 walkController.gameObject.SetActive(false);
                 OnDeath?.Invoke(ID);
                 gameObject.SetActive(false);
-                Debug.Log("Death");
             }
         }
     }
     IEnumerator damageAnim()
     {
-        isImmune = true;
         for (int i = 0; i < blinkNumberAnim; i++)
         {
             HitVisu.SetActive(true);
@@ -124,8 +122,6 @@ public class Player : MonoBehaviour
             HitVisu.SetActive(false);
             yield return new WaitForSeconds(0.2f);
         }
-
-        isImmune = false;
     }
 
     public void OnHorse()

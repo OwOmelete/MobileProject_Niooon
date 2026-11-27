@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int RoundToWin;
     private int CurrentP1Score;
     private int CurrentP2Score;
-    private int CurrentRound;
+    public int CurrentRound;
 
     public MenuManager menuManager;
     [SerializeField] private TMP_Text UIScore;
