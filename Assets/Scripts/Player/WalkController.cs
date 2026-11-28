@@ -55,6 +55,17 @@ public class WalkController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (player.IsController)
+        {
+            if (player.gamepad.xButton.wasPressedThisFrame)
+            {
+                Dash();
+            }
+        }
+    }
+
     private void FixedUpdate()
     {
         if(CurrentSpeed <= LaunchSpeedToStop)
@@ -73,6 +84,12 @@ public class WalkController : MonoBehaviour
         }
 
         Input = stick.Direction.normalized;
+
+        if (player.IsController)
+        {
+            Input = player.gamepad.leftStick.value;
+        }
+        
 
         if(isDashing && Time.time > LastDashTime + DashDuration)
         {

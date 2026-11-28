@@ -53,6 +53,9 @@ public class Player : MonoBehaviour
     
     public static Action<int> OnDeath;
     
+    public bool IsController;
+    public Gamepad gamepad;
+    
     public int ID;
     
     public enum Speed
@@ -85,6 +88,11 @@ public class Player : MonoBehaviour
     {
         GetWeaponStats(weaponData);
         startPos = transform.position;
+        if (Gamepad.all.Count >= ID)
+        {
+            IsController = true;
+            gamepad = Gamepad.all[ID - 1];
+        }
     }
 
     public void takeDamage(float n)
@@ -149,6 +157,9 @@ public class Player : MonoBehaviour
                     
                 walkController.enabled = false;
                 walkController.gameObject.SetActive(false);
+
+                isImmune = false;
+                
                 break;
             }
         }

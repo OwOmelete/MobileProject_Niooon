@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
     public float dashLerpAmount;
     [Range(0,1)] private float lastButtonPress;
     public float dashRotationSpeed;
+
     
     
     bool c = false;
@@ -120,10 +121,32 @@ public class PlayerController : MonoBehaviour
 
         walkController.stick = slidingStick;
         walkController.collisionMask = collisionMask;
+        
+        
     }
 
-    
-    
+    private void LateUpdate()
+    {
+        if (player.IsController)
+        {
+            if (player.gamepad.aButton.wasPressedThisFrame)
+            {
+                AutoMove = true;
+            }
+
+            if (player.gamepad.aButton.wasReleasedThisFrame)
+            {
+                AutoMove = false;
+            }
+
+            if (player.gamepad.xButton.wasPressedThisFrame)
+            {
+                DashDetection();
+            }
+        }
+    }
+
+
     private void FixedUpdate()
     {
         if (!player.canMove)
@@ -133,9 +156,15 @@ public class PlayerController : MonoBehaviour
 
         if (player.CurrentState == Player.PlayerState.OnHorse)
         {
+            
             StickInputs = slidingStick.Direction.normalized;
+
+            if (player.IsController)
+            {
+                StickInputs = player.gamepad.leftStick.value;
+            }
+
         }
-        
         
         
         maxSpeedPercent = CurrentSpeed / player.maxSpeed;
