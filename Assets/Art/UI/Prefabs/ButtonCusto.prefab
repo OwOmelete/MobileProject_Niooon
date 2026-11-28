@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6312956271786793996}
   - component: {fileID: 2099396365613521749}
   - component: {fileID: 2618416133111824306}
+  - component: {fileID: 5176899241208907817}
   m_Layer: 5
   m_Name: ButtonCusto
   m_TagString: Untagged
@@ -130,7 +131,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6312956271786793996}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5176899241208907817}
+        m_TargetAssemblyTypeName: CustoButton, Assembly-CSharp
+        m_MethodName: ButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &2618416133111824306
 Animator:
   serializedVersion: 7
@@ -153,6 +166,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5176899241208907817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21064398983491910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ceb9537b555beb458a3a2fddd0bb178, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CustoButton
+  animator: {fileID: 2618416133111824306}
 --- !u!1 &695966912074465247
 GameObject:
   m_ObjectHideFlags: 0
@@ -798,7 +824,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2741261570016636629}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5176899241208907817}
+        m_TargetAssemblyTypeName: CustoButton, Assembly-CSharp
+        m_MethodName: selected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8097742866120046047
 GameObject:
   m_ObjectHideFlags: 0

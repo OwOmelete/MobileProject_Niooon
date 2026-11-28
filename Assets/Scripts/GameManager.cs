@@ -77,6 +77,18 @@ public class GameManager : MonoBehaviour
         currentState = newState;
     }
 
+    public void MainToPrep()
+    {
+        SwitchGameState(GameState.PreparingGame);
+        menuManager.MainToPrep();
+    }
+
+    public void PrepToGame()
+    {
+        SwitchGameState(GameState.InGame);
+        menuManager.PrepToGame();
+    }
+    
     public void MainToGame()
     {
         SwitchGameState(GameManager.GameState.InGame);
