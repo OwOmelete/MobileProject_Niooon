@@ -5,8 +5,8 @@ public class CustoButton : MonoBehaviour
 {
     [SerializeField] private Animator animator;
 
-    public static event Action OnBtnSelected;
-    public static event Action OnBtnEquip;
+    public event Action<CustoButton> OnBtnSelected;
+    public event Action<CustoButton> OnBtnEquip;
 
     public enum BtnState
     {
@@ -23,17 +23,19 @@ public class CustoButton : MonoBehaviour
 
     public void SwitchState(BtnState state)
     {
+        if (state == currentState) return;
+        
         switch (state)
         {
             case BtnState.idle:
                 animator.SetTrigger("Deselec");
                 break;
             case BtnState.selected:
-                OnBtnSelected?.Invoke();
+                OnBtnSelected?.Invoke(this);
                 animator.SetTrigger("Pressed");
                 break;
             case BtnState.equiped:
-                OnBtnEquip?.Invoke();
+                OnBtnEquip?.Invoke(this);
                 animator.SetTrigger("Equipped");
                 break;
             case BtnState.idle_equiped:
@@ -53,6 +55,11 @@ public class CustoButton : MonoBehaviour
     public void selected()
     {
         SwitchState(BtnState.equiped);
+    }
+
+    public void deselec()
+    {
+        SwitchState(BtnState.idle);
     }
     
 }

@@ -11,7 +11,57 @@ public class CustoMenuManager : MonoBehaviour
     [SerializeField] private GridLayoutGroup gridLayout;
     [SerializeField] private float SelectedYSpacing = 83;
     [SerializeField] private float UnselectedYSpacing = 3;
-    
+
+    [SerializeField] private CustoButton[] buttons;
+
+    public static event Action Ready;
+    public static event Action UnReady;
+
+    private bool isSelected;
+    private CustoButton currentSelect;
+
+    private void OnEnable()
+    {
+        foreach (CustoButton button in buttons)
+        {
+            button.OnBtnEquip += btnEquiped;
+            button.OnBtnSelected += btnSelected;
+        }
+    }
+
+    private void OnDisable()
+    {
+        foreach (CustoButton button in buttons)
+        {
+            button.OnBtnEquip -= btnEquiped;
+            button.OnBtnSelected -= btnSelected;
+        }
+    }
+
+    private void btnEquiped(CustoButton btn)
+    {
+        if (currentSelect!=null&& btn != currentSelect)
+        {
+            currentSelect.deselec();
+        }
+
+        currentSelect = btn;
+        gridLayout.spacing = new Vector2(gridLayout.spacing.x, UnselectedYSpacing);
+    }
+
+    private void btnSelected(CustoButton btn)
+    {
+        foreach (CustoButton btns in buttons)
+        {
+            if (btns != btn && btns!=currentSelect)
+            {
+                btns.deselec();
+            }
+        }
+
+        gridLayout.spacing = new Vector2(gridLayout.spacing.x, SelectedYSpacing);
+    }
+
     private enum CustoState
     {
         Weapon,
@@ -25,7 +75,7 @@ public class CustoMenuManager : MonoBehaviour
 
     private void Start()
     {
-        WeaponAnimator.SetTrigger("T_ComingBack");
+        
     }
 
     public void LeftArrow()
@@ -110,12 +160,16 @@ public class CustoMenuManager : MonoBehaviour
                     TrailAnimator.SetTrigger("T_ComingBack");
                     ReadyAnimator.SetTrigger("T_BackFromReady");
                     
+                    UnReady?.Invoke();
+                    
                 }
                 break;
             case CustoState.Ready:
                 
                 ReadyAnimator.SetTrigger("T_Ready");
                 TrailAnimator.SetTrigger("T_Leaving");
+                
+                Ready?.Invoke();
                 
                 break;
                 
@@ -124,7 +178,16 @@ public class CustoMenuManager : MonoBehaviour
         }
 
         currentState = state;
+    }
 
+    public void ResetMenu()
+    {
+        WeaponAnimator.SetTrigger("T_OpeningMenu");
+        ColorAnimator.ResetControllerState();
+        WeaponAnimator.ResetControllerState();
+        TrailAnimator.ResetControllerState();
+        ReadyAnimator.ResetControllerState();
+        currentState = CustoState.Weapon;
     }
     
 }
